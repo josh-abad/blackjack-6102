@@ -8,6 +8,7 @@ package blackjack;
 import java.awt.Color;
 import java.awt.Frame;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
@@ -282,6 +283,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        pnlDealerHand.setBackground(new java.awt.Color(51, 153, 0));
         pnlDealerHand.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Dealer", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         lbDealerCard1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -319,7 +321,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
                 .addComponent(lbDealerCard5)
                 .addGap(72, 72, 72)
                 .addComponent(lbDealerCard6)
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlDealerHandLayout.setVerticalGroup(
             pnlDealerHandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -335,6 +337,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
                 .addContainerGap(44, Short.MAX_VALUE))
         );
 
+        pnlPlayerHand.setBackground(new java.awt.Color(0, 153, 0));
         pnlPlayerHand.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Player (" + this.player.stand() + ")", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         lbPlayerCard1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -580,12 +583,54 @@ public class BlackjackGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHitActionPerformed
 
     private void drawHand() {
+        int i = 0;
         for (JLabel playerCard : playerHand) {
-            playerCard.setVisible(!playerCard.getText().equals("Empty"));
+            if (playerCard.getText().equals("Empty")) {
+                playerCard.setVisible(false);
+            } else if (!playerCard.getText().equals("")) {
+                String value;
+                if (player.getHand().get(i) instanceof Ace) {
+                    value = "Ace";
+                } else if (player.getHand().get(i) instanceof FaceCard) {
+                    FaceCard faceCard = (FaceCard) player.getHand().get(i);
+                    value = faceCard.getFace();
+                } else {
+                    value = Integer.toString(player.getHand().get(i).getValue());
+                }
+                
+                String suite = player.getHand().get(i).getSuite();
+                playerCard.setIcon(new ImageIcon(getClass().getResource("/blackjack/cards/" + value + suite + ".png")));
+                playerCard.setText("");
+                playerCard.setVisible(true);
+            }
+            i++;
         }
 
+        i = 0;
         for (JLabel dealerCard : dealerHand) {
-            dealerCard.setVisible(!dealerCard.getText().equals("Empty"));
+            if (dealerCard.getText().equals("Empty")) {
+                dealerCard.setVisible(false);
+            } else if (dealerCard.getText().equals("Hidden")) {
+                dealerCard.setIcon(new ImageIcon(getClass().getResource("/blackjack/cards/Hidden.png")));
+                dealerCard.setText("");
+                dealerCard.setVisible(true);
+            } else if (!dealerCard.getText().equals("")) {
+                String value;
+                if (dealer.getHand().get(i) instanceof Ace) {
+                    value = "Ace";
+                } else if (dealer.getHand().get(i) instanceof FaceCard) {
+                    FaceCard faceCard = (FaceCard) dealer.getHand().get(i);
+                    value = faceCard.getFace();
+                } else {
+                    value = Integer.toString(dealer.getHand().get(i).getValue());
+                }
+                
+                String suite = dealer.getHand().get(i).getSuite();
+                dealerCard.setIcon(new ImageIcon(getClass().getResource("/blackjack/cards/" + value + suite + ".png")));
+                dealerCard.setText("");
+                dealerCard.setVisible(true);
+            }
+            i++;
         }
     }
 
@@ -646,6 +691,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
                     break;
                 }
             }
+            drawHand();
         }
 
         final int playerHand = player.stand();
