@@ -591,6 +591,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
                 }
                 break;
             }
+            i++;
         }
         
         if (player.stand() > 21) {
@@ -700,13 +701,11 @@ public class BlackjackGUI extends javax.swing.JFrame {
         }
         drawHand();
 
-        final int playerHand = player.stand();
-        final int dealerHand = dealer.stand();
+        final int playerFinalHand = player.stand();
+        final int dealerFinalHand = dealer.stand();
 
-        pnlDealerHand.setBorder(
-            BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), 
-                "Dealer (" + dealerHand + ")", 
+        pnlDealerHand.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), 
+                "Dealer (" + dealerFinalHand + ")", 
                 TitledBorder.DEFAULT_JUSTIFICATION, 
                 TitledBorder.DEFAULT_POSITION, 
                 new Font("Segoe UI", 1, 12)
@@ -715,28 +714,32 @@ public class BlackjackGUI extends javax.swing.JFrame {
 
         Player winner = null;
         if (player.isBelowLimit() && dealer.isBelowLimit()) {
-            if (playerHand == dealerHand) {
+            if (playerFinalHand == dealerFinalHand) {
                 lbMessage.setText("Draw");
                 player.addChips(pot / 2);
                 dealer.addChips(pot / 2);
                 pot = 0;
             } else {
-                winner = playerHand > dealerHand ? player : dealer;
+                winner = playerFinalHand > dealerFinalHand ? player : dealer;
             }
 
-        // If only one went past the limit
-        } else if (playerHand > 21 ^ dealerHand > 21){
-            winner = playerHand <= 21 ? player : dealer;
+        // If either the player or the dealer went past the limit, but not both
+        } else if (playerFinalHand > 21 ^ dealerFinalHand > 21){
+            winner = playerFinalHand <= 21 ? player : dealer;
         } else {
             displayMessage("You lost", Color.red);
         }
 
         if (winner != null) {
             if (winner instanceof Dealer) {
-                displayMessage((dealer.hasBlackjack()) ? "The Dealer got blackjack" : "The Dealer won this round", Color.red);
+                displayMessage((dealer.hasBlackjack()) ? 
+                    "The Dealer got blackjack" : "The Dealer won this round", 
+                    Color.red);
                 dealer.addChips(pot);
             } else {
-                displayMessage((player.hasBlackjack()) ? "You got blackjack" : "You won this round", Color.green);
+                displayMessage((player.hasBlackjack()) ? 
+                    "You got blackjack" : "You won this round", 
+                    Color.green);
                 player.addChips(pot);
             }
             pot = 0;
@@ -744,7 +747,9 @@ public class BlackjackGUI extends javax.swing.JFrame {
 
         // End the game if either the player or the dealer are out of chips
         if (player.getChips() <= 0 || dealer.getChips() <= 0) {
-            displayMessage((player.getChips() > 0) ? "You won the game" : "You lost the game", (player.getChips() > 0) ? Color.green : Color.red);
+            displayMessage((player.getChips() > 0) ? 
+                "You won the game" : "You lost the game", 
+                (player.getChips() > 0) ? Color.green : Color.red);
         } else {
             btnNextHand.setEnabled(true);
         }
@@ -768,8 +773,21 @@ public class BlackjackGUI extends javax.swing.JFrame {
         btnNextHand.setEnabled(false);
         player.resetHand(this.deck);
         dealer.resetHand(this.deck);
-        pnlPlayerHand.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Player (" + player.stand() + ")", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12)));
-        pnlDealerHand.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Dealer", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12)));
+
+        pnlPlayerHand.setBorder(BorderFactory.createTitledBorder(
+            BorderFactory.createEtchedBorder(), 
+            "Player (" + player.stand() + ")", 
+            TitledBorder.DEFAULT_JUSTIFICATION, 
+            TitledBorder.DEFAULT_POSITION, 
+            new java.awt.Font("Segoe UI", 1, 12)
+        ));
+
+        pnlDealerHand.setBorder(BorderFactory.createTitledBorder(
+            BorderFactory.createEtchedBorder(), 
+            "Dealer", TitledBorder.DEFAULT_JUSTIFICATION, 
+            TitledBorder.DEFAULT_POSITION, 
+            new java.awt.Font("Segoe UI", 1, 12)
+        ));
         drawHand();
     }//GEN-LAST:event_btnNextHandActionPerformed
 
