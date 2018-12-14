@@ -1,8 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * A GUI implementation of blackjack in Swing for ITE-6102 final
+ * 
+ * @author Joshua Timothy E. Abad
  */
+
 package blackjack;
 
 import java.awt.Color;
@@ -573,13 +574,15 @@ public class BlackjackGUI extends javax.swing.JFrame {
         player.hit(card);
 
         displayMessage("You drew " + card);
-        pnlPlayerHand.setBorder(BorderFactory.createTitledBorder(
+        pnlPlayerHand.setBorder(
+            BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), 
                 "Player (" + player.stand() + ")",
                 TitledBorder.DEFAULT_JUSTIFICATION, 
                 TitledBorder.DEFAULT_POSITION, 
                 new Font("Segoe UI", 1, 12)
-        ));
+            )
+        );
         
         int i = 0;
         for (JLabel playerCard : playerHand) {
@@ -704,7 +707,9 @@ public class BlackjackGUI extends javax.swing.JFrame {
         final int playerFinalHand = player.stand();
         final int dealerFinalHand = dealer.stand();
 
-        pnlDealerHand.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), 
+        pnlDealerHand.setBorder(
+            BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), 
                 "Dealer (" + dealerFinalHand + ")", 
                 TitledBorder.DEFAULT_JUSTIFICATION, 
                 TitledBorder.DEFAULT_POSITION, 
@@ -774,20 +779,24 @@ public class BlackjackGUI extends javax.swing.JFrame {
         player.resetHand(this.deck);
         dealer.resetHand(this.deck);
 
-        pnlPlayerHand.setBorder(BorderFactory.createTitledBorder(
-            BorderFactory.createEtchedBorder(), 
-            "Player (" + player.stand() + ")", 
-            TitledBorder.DEFAULT_JUSTIFICATION, 
-            TitledBorder.DEFAULT_POSITION, 
-            new java.awt.Font("Segoe UI", 1, 12)
-        ));
+        pnlPlayerHand.setBorder(
+            BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), 
+                "Player (" + player.stand() + ")", 
+                TitledBorder.DEFAULT_JUSTIFICATION, 
+                TitledBorder.DEFAULT_POSITION, 
+                new java.awt.Font("Segoe UI", 1, 12)
+            )
+        );
 
-        pnlDealerHand.setBorder(BorderFactory.createTitledBorder(
-            BorderFactory.createEtchedBorder(), 
-            "Dealer", TitledBorder.DEFAULT_JUSTIFICATION, 
-            TitledBorder.DEFAULT_POSITION, 
-            new java.awt.Font("Segoe UI", 1, 12)
-        ));
+        pnlDealerHand.setBorder(
+            BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), 
+                "Dealer", TitledBorder.DEFAULT_JUSTIFICATION, 
+                TitledBorder.DEFAULT_POSITION, 
+                new java.awt.Font("Segoe UI", 1, 12)
+            )
+        );
         drawHand();
     }//GEN-LAST:event_btnNextHandActionPerformed
 
