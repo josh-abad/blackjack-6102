@@ -1,5 +1,7 @@
 package blackjack;
 
+import javax.swing.ImageIcon;
+
 public class FaceCard extends Card {
 
     private final String face;
@@ -11,6 +13,9 @@ public class FaceCard extends Card {
     public FaceCard(String face, String suite) {
         super(10, suite);
         this.face = face;
+        this.icon = new ImageIcon(getClass().getResource(
+            "/blackjack/cards/" + face + suite + ".png"
+        ));
     }
 
     @Override

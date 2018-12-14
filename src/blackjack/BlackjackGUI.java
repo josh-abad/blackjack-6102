@@ -6,6 +6,7 @@
 package blackjack;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Frame;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -113,6 +114,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
         lbPot = new javax.swing.JLabel();
         lbChipsValue = new javax.swing.JLabel();
         lbChips = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Blackjack");
@@ -184,6 +186,11 @@ public class BlackjackGUI extends javax.swing.JFrame {
         btnDoubleDown.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnDoubleDown.setText("Double Down");
         btnDoubleDown.setEnabled(false);
+        btnDoubleDown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoubleDownActionPerformed(evt);
+            }
+        });
 
         btnSurrender.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSurrender.setText("Surrender");
@@ -334,7 +341,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
                     .addComponent(lbDealerCard4)
                     .addComponent(lbDealerCard5)
                     .addComponent(lbDealerCard6))
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addGap(44, 44, 44))
         );
 
         pnlPlayerHand.setBackground(new java.awt.Color(0, 153, 0));
@@ -388,7 +395,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
                     .addComponent(lbPlayerCard4)
                     .addComponent(lbPlayerCard5)
                     .addComponent(lbPlayerCard6))
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addGap(44, 44, 44))
         );
 
         pnlMessage.setBackground(new java.awt.Color(153, 153, 153));
@@ -472,6 +479,9 @@ public class BlackjackGUI extends javax.swing.JFrame {
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
+        jLabel3.setFont(new java.awt.Font("Futura LT", 1, 24)); // NOI18N
+        jLabel3.setText("BLACKJACK");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -486,7 +496,8 @@ public class BlackjackGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(pnlMessage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -495,16 +506,18 @@ public class BlackjackGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlMessage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlMessage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlDealerHand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlPlayerHand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         pack();
@@ -560,7 +573,13 @@ public class BlackjackGUI extends javax.swing.JFrame {
         player.hit(card);
 
         displayMessage("You drew " + card);
-        pnlPlayerHand.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Player (" + player.stand() + ")"));
+        pnlPlayerHand.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), 
+                "Player (" + player.stand() + ")",
+                TitledBorder.DEFAULT_JUSTIFICATION, 
+                TitledBorder.DEFAULT_POSITION, 
+                new Font("Segoe UI", 1, 12)
+        ));
         
         int i = 0;
         for (JLabel playerCard : playerHand) {
@@ -588,18 +607,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
             if (playerCard.getText().equals("Empty")) {
                 playerCard.setVisible(false);
             } else if (!playerCard.getText().equals("")) {
-                String value;
-                if (player.getHand().get(i) instanceof Ace) {
-                    value = "Ace";
-                } else if (player.getHand().get(i) instanceof FaceCard) {
-                    FaceCard faceCard = (FaceCard) player.getHand().get(i);
-                    value = faceCard.getFace();
-                } else {
-                    value = Integer.toString(player.getHand().get(i).getValue());
-                }
-                
-                String suite = player.getHand().get(i).getSuite();
-                playerCard.setIcon(new ImageIcon(getClass().getResource("/blackjack/cards/" + value + suite + ".png")));
+                playerCard.setIcon(player.getHand().get(i).icon);
                 playerCard.setText("");
                 playerCard.setVisible(true);
             }
@@ -611,22 +619,13 @@ public class BlackjackGUI extends javax.swing.JFrame {
             if (dealerCard.getText().equals("Empty")) {
                 dealerCard.setVisible(false);
             } else if (dealerCard.getText().equals("Hidden")) {
-                dealerCard.setIcon(new ImageIcon(getClass().getResource("/blackjack/cards/Hidden.png")));
+                dealerCard.setIcon(new ImageIcon(getClass().getResource(
+                    "/blackjack/cards/Hidden.png"
+                )));
                 dealerCard.setText("");
                 dealerCard.setVisible(true);
             } else if (!dealerCard.getText().equals("")) {
-                String value;
-                if (dealer.getHand().get(i) instanceof Ace) {
-                    value = "Ace";
-                } else if (dealer.getHand().get(i) instanceof FaceCard) {
-                    FaceCard faceCard = (FaceCard) dealer.getHand().get(i);
-                    value = faceCard.getFace();
-                } else {
-                    value = Integer.toString(dealer.getHand().get(i).getValue());
-                }
-                
-                String suite = dealer.getHand().get(i).getSuite();
-                dealerCard.setIcon(new ImageIcon(getClass().getResource("/blackjack/cards/" + value + suite + ".png")));
+                dealerCard.setIcon(dealer.getHand().get(i).icon);
                 dealerCard.setText("");
                 dealerCard.setVisible(true);
             }
@@ -639,13 +638,9 @@ public class BlackjackGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSurrenderActionPerformed
 
     private void btnDealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDealActionPerformed
-        for (JButton betOption : betOptions) {
-            betOption.setEnabled(false);
-        }
+        setOptions(betOptions, false);
 
-        for (JButton playOption : playOptions) {
-            playOption.setEnabled(true);
-        }
+        setOptions(playOptions, true);
         
         for (int i = 0; i < 2; i++) {
             Card playerCard = deck.getCard();
@@ -660,8 +655,19 @@ public class BlackjackGUI extends javax.swing.JFrame {
                 lbDealerCard2.setText(dealerCard.toString());
             }
         }
+
         btnDeal.setEnabled(false);
-        pnlPlayerHand.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Player (" + player.stand() + ")", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12)));
+
+        pnlPlayerHand.setBorder(
+            BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), 
+                "Player (" + player.stand() + ")", 
+                TitledBorder.DEFAULT_JUSTIFICATION, 
+                TitledBorder.DEFAULT_POSITION, 
+                new Font("Segoe UI", 1, 12)
+            )
+        );
+
         drawHand();
     }//GEN-LAST:event_btnDealActionPerformed
 
@@ -691,13 +697,21 @@ public class BlackjackGUI extends javax.swing.JFrame {
                     break;
                 }
             }
-            drawHand();
         }
+        drawHand();
 
         final int playerHand = player.stand();
         final int dealerHand = dealer.stand();
 
-        pnlDealerHand.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Dealer (" + dealerHand + ")", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12)));
+        pnlDealerHand.setBorder(
+            BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), 
+                "Dealer (" + dealerHand + ")", 
+                TitledBorder.DEFAULT_JUSTIFICATION, 
+                TitledBorder.DEFAULT_POSITION, 
+                new Font("Segoe UI", 1, 12)
+            )
+        );
 
         Player winner = null;
         if (player.isBelowLimit() && dealer.isBelowLimit()) {
@@ -709,6 +723,8 @@ public class BlackjackGUI extends javax.swing.JFrame {
             } else {
                 winner = playerHand > dealerHand ? player : dealer;
             }
+
+        // If only one went past the limit
         } else if (playerHand > 21 ^ dealerHand > 21){
             winner = playerHand <= 21 ? player : dealer;
         } else {
@@ -717,26 +733,18 @@ public class BlackjackGUI extends javax.swing.JFrame {
 
         if (winner != null) {
             if (winner instanceof Dealer) {
-                if (dealer.hasBlackjack()) {
-                    displayMessage("The Dealer got blackjack", Color.red);
-                } else {
-                    displayMessage("The Dealer won this round", Color.red);
-                }
+                displayMessage((dealer.hasBlackjack()) ? "The Dealer got blackjack" : "The Dealer won this round", Color.red);
                 dealer.addChips(pot);
-                pot = 0;
             } else {
-                if (player.hasBlackjack()) {
-                    displayMessage("You got blackjack", Color.green);
-                } else {
-                    displayMessage("You won this round", Color.green);
-                }
+                displayMessage((player.hasBlackjack()) ? "You got blackjack" : "You won this round", Color.green);
                 player.addChips(pot);
-                pot = 0;
             }
+            pot = 0;
         }
+
+        // End the game if either the player or the dealer are out of chips
         if (player.getChips() <= 0 || dealer.getChips() <= 0) {
-            displayMessage((player.getChips() > 0) ? "You won the game" : "You lost the game",
-                    (player.getChips() > 0) ? Color.green : Color.red);
+            displayMessage((player.getChips() > 0) ? "You won the game" : "You lost the game", (player.getChips() > 0) ? Color.green : Color.red);
         } else {
             btnNextHand.setEnabled(true);
         }
@@ -765,6 +773,10 @@ public class BlackjackGUI extends javax.swing.JFrame {
         drawHand();
     }//GEN-LAST:event_btnNextHandActionPerformed
 
+    private void btnDoubleDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoubleDownActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDoubleDownActionPerformed
+
     private void bet(int amount) {
         pot += player.bet(amount);
         pot += dealer.bet(amount);
@@ -772,12 +784,6 @@ public class BlackjackGUI extends javax.swing.JFrame {
         lbChipsValue.setText(String.valueOf(player.getChips()));
         if (pot / 2 >= minimumBet) {
             btnDeal.setEnabled(true);
-        }
-    }
-
-    private void toggleOptions(JButton[] options) {
-        for (JButton option : options) {
-            option.setEnabled(!option.isEnabled());
         }
     }
 
@@ -831,6 +837,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnSurrender;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lbBet;

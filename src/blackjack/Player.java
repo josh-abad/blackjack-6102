@@ -71,9 +71,9 @@ public class Player {
 
     public void printHand() {
         System.out.println("Your hand:\n");
-        for (Card card : this.hand) {
+        this.hand.forEach((card) -> {
             System.out.println("    " + card);
-        }
+        });
     }
 
     /**
@@ -126,12 +126,7 @@ public class Player {
     }
 
     public boolean hasAce() {
-        for (Card card : this.hand) {
-            if (card instanceof Ace) {
-                return true;
-            }
-        }
-        return false;
+        return this.hand.stream().anyMatch((card) -> (card instanceof Ace));
     }
 }
 

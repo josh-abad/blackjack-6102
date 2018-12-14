@@ -19,9 +19,9 @@ public class Dealer extends Player {
     @Override
     public void printHand() {
         System.out.println("The dealer's hand:\n");
-        for (Card card : this.getHand()) {
+        this.getHand().forEach((card) -> {
             System.out.println("    " + card);
-        }
+        });
     }
 
     public boolean hasSoft17() {

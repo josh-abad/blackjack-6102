@@ -98,19 +98,18 @@ public class Deck {
     }
 
     public void add(ArrayList<Card> hand) {
-        for (Card card : hand) {
+        hand.forEach((card) -> {
             this.deck.add(card);
-        }
+        });
     }
 
     public void shuffle() {
-        for (Card card : this.deck) {
-            Card firstCard = card;
+        this.deck.stream().map((card) -> card).forEachOrdered((firstCard) -> {
             int index = (int) (Math.random() * this.deck.size());
             Card secondCard = this.deck.get(index);
             this.deck.set(index, firstCard);
             this.deck.set(this.deck.indexOf(firstCard), secondCard);
-        }
+        });
     }
 }
 

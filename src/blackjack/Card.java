@@ -1,15 +1,23 @@
 package blackjack;
 
+import javax.swing.ImageIcon;
+
 public class Card {
 
     private int value;
     final private String suite;
+    protected ImageIcon icon;
 
     public Card(int value, String suite) {
         if (value > 1 && value <= 10) {
             this.value = value;
         }
         this.suite = suite;
+        if (value != 0) {
+            this.icon = new ImageIcon(getClass().getResource(
+                "/blackjack/cards/" + value + suite + ".png"
+            ));
+        }
     }
 
     @Override
@@ -25,4 +33,3 @@ public class Card {
         return this.value;
     }
 }
-
