@@ -747,10 +747,10 @@ public class BlackjackGUI extends javax.swing.JFrame {
         }
 
         // End the game if either the player or the dealer are out of chips
-        if (player.getChips() <= 0 || dealer.getChips() <= 0) {
-            displayMessage((player.getChips() > 0) ? 
+        if (player.getChips() < minimumBet || dealer.getChips() <= 0) {
+            displayMessage((player.getChips() >= 25) ? 
                 "You won the game" : "You lost the game", 
-                (player.getChips() > 0) ? Color.green : Color.red);
+                (player.getChips() >= 25) ? Color.green : Color.red);
         } else {
             btnNextHand.setEnabled(true);
         }
@@ -768,7 +768,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
             cardLabel.setText("Empty");
         }
 
-        setOptions(betOptions, true);
+        updateBetOptions();
 
         clearMessage();
         btnNextHand.setEnabled(false);
@@ -794,16 +794,18 @@ public class BlackjackGUI extends javax.swing.JFrame {
             btnDeal.setEnabled(true);
         }
 
-        if (player.getChips() < 100)
-            btn100Chips.setEnabled(false);
-        if (player.getChips() < 50)
-            btn50Chips.setEnabled(false);
-        if (player.getChips() < 25)
-            btn25Chips.setEnabled(false);
-        if (player.getChips() < 10)
-            btn10Chips.setEnabled(false);
-        if (player.getChips() < 5)
-            btn5Chips.setEnabled(false);
+        updateBetOptions();
+    }
+
+    private void updateBetOptions() {
+        final int[] BET_VALUES = {5, 10, 25, 50, 100};
+        for (int i = 0, len = BET_VALUES.length; i < len; i++) {
+            if (player.getChips() < BET_VALUES[i]) {
+                betOptions[i].setEnabled(false);
+            } else if (!betOptions[i].isEnabled()) {
+                betOptions[i].setEnabled(true);
+            }
+        }
     }
 
     /**
