@@ -6,8 +6,17 @@ public class Ace extends Card {
 
     public Ace(String suite) {
         super(0, suite);
-        this.icon = new ImageIcon(getClass().getResource(
-            "/blackjack/cards/Ace" + suite + ".png"
+
+        // Images from https://github.com/htdebeer/SVG-cards
+        this.frontIcon = ImageResizer.getScaledImage(
+            new ImageIcon(getClass().getResource(
+                "/blackjack/cards/" + suite + "/Ace.png"
+            )
+        ));
+        this.backIcon = ImageResizer.getScaledImage(
+            new ImageIcon(getClass().getResource(
+                "/blackjack/cards/" + suite + "/Back.png"
+            )
         ));
     }
 
@@ -16,4 +25,3 @@ public class Ace extends Card {
         return "Ace of " + this.getSuite();
     }
 }
-

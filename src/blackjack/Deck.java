@@ -87,6 +87,7 @@ public class Deck {
                 add(new FaceCard("King", "Spades"));          // King of ♠
                 add(new FaceCard("King", "Clubs"));           // King of ♣
             }
+            // final String VALID_VALUES = {"Ace"
         };
     }
 

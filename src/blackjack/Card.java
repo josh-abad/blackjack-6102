@@ -1,21 +1,32 @@
 package blackjack;
 
+import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class Card {
 
     private int value;
     final private String suite;
-    protected ImageIcon icon;
+    protected ImageIcon frontIcon;
+    protected ImageIcon backIcon;
 
     public Card(int value, String suite) {
         if (value > 1 && value <= 10) {
             this.value = value;
         }
         this.suite = suite;
+
+        // Images from https://github.com/htdebeer/SVG-cards
         if (value != 0) {
-            this.icon = new ImageIcon(getClass().getResource(
-                "/blackjack/cards/" + value + suite + ".png"
+            this.frontIcon = ImageResizer.getScaledImage(
+                new ImageIcon(getClass().getResource(
+                    "/blackjack/cards/" + suite + "/" + value + ".png"
+                )
+            ));
+            this.backIcon = ImageResizer.getScaledImage(
+                new ImageIcon(getClass().getResource(
+                    "/blackjack/cards/" + suite + "/Back.png"
+                )
             ));
         }
     }

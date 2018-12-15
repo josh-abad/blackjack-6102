@@ -13,8 +13,17 @@ public class FaceCard extends Card {
     public FaceCard(String face, String suite) {
         super(10, suite);
         this.face = face;
-        this.icon = new ImageIcon(getClass().getResource(
-            "/blackjack/cards/" + face + suite + ".png"
+
+        // Images from https://github.com/htdebeer/SVG-cards
+        this.frontIcon = ImageResizer.getScaledImage(
+            new ImageIcon(getClass().getResource(
+                "/blackjack/cards/" + suite + "/" + face + ".png"
+            )
+        ));
+        this.backIcon = ImageResizer.getScaledImage(
+            new ImageIcon(getClass().getResource(
+                "/blackjack/cards/" + suite + "/Back.png"
+            )
         ));
     }
 

@@ -13,7 +13,7 @@ public class Dealer extends Player {
 
     @Override
     public String toString() {
-        return "dealer";
+        return "Dealer";
     }
 
     @Override

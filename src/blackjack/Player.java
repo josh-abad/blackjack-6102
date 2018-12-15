@@ -58,7 +58,7 @@ public class Player {
 
     @Override
     public String toString() {
-        return "You";
+        return "Player";
     }
 
     public void speak(String message) {
