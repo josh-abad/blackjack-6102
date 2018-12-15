@@ -793,6 +793,17 @@ public class BlackjackGUI extends javax.swing.JFrame {
         if (pot / 2 >= minimumBet) {
             btnDeal.setEnabled(true);
         }
+
+        if (player.getChips() < 100)
+            btn100Chips.setEnabled(false);
+        if (player.getChips() < 50)
+            btn50Chips.setEnabled(false);
+        if (player.getChips() < 25)
+            btn25Chips.setEnabled(false);
+        if (player.getChips() < 10)
+            btn10Chips.setEnabled(false);
+        if (player.getChips() < 5)
+            btn5Chips.setEnabled(false);
     }
 
     /**
