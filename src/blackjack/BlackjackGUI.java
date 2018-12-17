@@ -66,7 +66,8 @@ public class BlackjackGUI extends javax.swing.JFrame {
         betOptions[3] = btn50Chips;
         betOptions[4] = btn100Chips;
 
-        drawHand();
+        updateCardImages(player, playerHand);
+        updateCardImages(dealer, dealerHand);
     }
 
     /**
@@ -618,40 +619,35 @@ public class BlackjackGUI extends javax.swing.JFrame {
             btnDoubleDown.setEnabled(false);
             btnSurrender.setEnabled(false);
         }
-        drawHand();
+        updateCardImages(player, playerHand);
+        updateCardImages(dealer, dealerHand);
     }//GEN-LAST:event_btnHitActionPerformed
 
-    private void drawHand() {
+    private void updateCardImages(Player player, JLabel[] playerHand) {
         int i = 0;
-        for (JLabel playerCard : playerHand) {
-            if (playerCard.getText().equals("Empty")) {
-                playerCard.setVisible(false);
-            } else if (!playerCard.getText().equals("")) {
-                playerCard.setIcon(player.getHand().get(i).frontIcon);
-                playerCard.setText("");
-                playerCard.setVisible(true);
-            }
-            i++;
-        }
-
-        i = 0;
-        for (JLabel dealerCard : dealerHand) {
-            if (dealerCard.getText().equals("Empty")) {
-                dealerCard.setVisible(false);
-            } else if (dealerCard.getText().equals("Hidden")) {
-                dealerCard.setIcon(dealer.getHand().get(i).backIcon);
-                dealerCard.setText("");
-                dealerCard.setVisible(true);
-            } else if (!dealerCard.getText().equals("")) {
-                dealerCard.setIcon(dealer.getHand().get(i).frontIcon);
-                dealerCard.setText("");
-                dealerCard.setVisible(true);
+        for (JLabel card : playerHand) {
+            if (card.getText().equals("Empty")) {
+                card.setVisible(false);
+            } else if (card.getText().equals("Hidden")) {
+                card.setIcon(player.getHand().get(i).backIcon);
+                card.setText("");
+                card.setVisible(true);
+            } else if (!card.getText().equals("")) {
+                card.setIcon(player.getHand().get(i).frontIcon);
+                card.setText("");
+                card.setVisible(true);
             }
             i++;
         }
     } 
+
     private void btnSurrenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSurrenderActionPerformed
-        // TODO add your handling code here:
+        displayMessage("You surrendered and got half of your bet");
+        player.addChips(player.getBet() / 2);
+        player.setBet(0);
+        updatePlayerStats();
+        setOptions(playOptions, false);
+        btnNextHand.setEnabled(true);
     }//GEN-LAST:event_btnSurrenderActionPerformed
 
     private void btnDealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDealActionPerformed
@@ -680,7 +676,8 @@ public class BlackjackGUI extends javax.swing.JFrame {
 
         updateHandValue(player, lbPlayerHand);
 
-        drawHand();
+        updateCardImages(player, playerHand);
+        updateCardImages(dealer, dealerHand);
     }//GEN-LAST:event_btnDealActionPerformed
 
     private void btnQuitGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitGameActionPerformed
@@ -710,7 +707,8 @@ public class BlackjackGUI extends javax.swing.JFrame {
                 }
             }
         }
-        drawHand();
+        updateCardImages(player, playerHand);
+        updateCardImages(dealer, dealerHand);
 
         final int playerFinalHand = player.stand();
         final int dealerFinalHand = dealer.stand();
@@ -719,7 +717,9 @@ public class BlackjackGUI extends javax.swing.JFrame {
 
         Player winner = null;
         if (player.isBelowLimit() && dealer.isBelowLimit()) {
-            if (playerFinalHand == dealerFinalHand) {
+            if (player.hasBlackjack() ^ dealer.hasBlackjack()) {
+                winner = player.hasBlackjack() ? player : dealer;
+            } else if (playerFinalHand == dealerFinalHand) {
                 lbMessage.setText("Draw");
                 player.addChips(player.getBet());
                 player.setBet(0);
@@ -741,13 +741,12 @@ public class BlackjackGUI extends javax.swing.JFrame {
                     Color.red);
             } else {
                 if (player.hasBlackjack()) {
-                    displayMessage("You got blackjack");
+                    displayMessage("You got blackjack", Color.green);
                     player.addChips(player.getBet() + (player.getBet() * 1.5));
+                } else {
+                    displayMessage("You won this round", Color.green);
+                    player.addChips(player.getBet() * 2);
                 }
-                displayMessage((player.hasBlackjack()) ? 
-                    "You got blackjack" : "You won this round", 
-                    Color.green);
-                player.addChips(player.getBet() * 2);
             }
             player.setBet(0);
         }
@@ -763,6 +762,10 @@ public class BlackjackGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnStandActionPerformed
 
     private void btnNextHandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextHandActionPerformed
+        newGame();
+    }//GEN-LAST:event_btnNextHandActionPerformed
+
+    private void newGame() {
         for (JLabel cardLabel : playerHand) {
             cardLabel.setText("Empty");
         }
@@ -771,21 +774,25 @@ public class BlackjackGUI extends javax.swing.JFrame {
             cardLabel.setText("Empty");
         }
 
-        updateBetOptions();
-
         clearMessage();
         btnNextHand.setEnabled(false);
         player.resetHand(this.deck);
         dealer.resetHand(this.deck);
 
+        setOptions(playOptions, false);
+        if (player.getBet() * 2 > player.getChips()) {
+            btnDoubleDown.setEnabled(false);
+        }
+
+        updateBetOptions();
+        updatePlayerStats();
         updateHandValue(player, lbPlayerHand);
         updateHandValue(dealer, lbDealerHand);
-
-        drawHand();
-    }//GEN-LAST:event_btnNextHandActionPerformed
+        updateCardImages(player, playerHand);
+        updateCardImages(dealer, dealerHand);
+    }
 
     private void btnDoubleDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoubleDownActionPerformed
-        // TODO add your handling code here:
         player.doubleBet();
         Card card = deck.getCard();
         player.hit(card);
@@ -810,7 +817,8 @@ public class BlackjackGUI extends javax.swing.JFrame {
         btnHit.setEnabled(false);
         btnDoubleDown.setEnabled(false);
         btnSurrender.setEnabled(false);
-        drawHand();
+        updateCardImages(player, playerHand);
+        updateCardImages(dealer, dealerHand);
     }//GEN-LAST:event_btnDoubleDownActionPerformed
 
     private void bet(int amount) {
@@ -819,11 +827,12 @@ public class BlackjackGUI extends javax.swing.JFrame {
         } else {
             player.addBet(amount);
         }
-        updatePlayerStats();
+
         if (player.getBet() >= minimumBet) {
             btnDeal.setEnabled(true);
         }
 
+        updatePlayerStats();
         updateBetOptions();
     }
 
