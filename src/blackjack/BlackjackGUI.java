@@ -571,6 +571,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
         }
         pnlMessage.setBackground(color);
         lbMessage.setText(message);
+        lbMessage.setFont(new Font("Segoe UI", 1, 12));
     }
 
     private void displayMessage(String message) {
@@ -674,7 +675,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
         btnDeal.setEnabled(false);
 
         updateHandValue(player, lbPlayerHand);
-        updateHandValue(dealer, lbDealerHand);
+        // updateHandValue(dealer, lbDealerHand);
 
         drawHand();
     }//GEN-LAST:event_btnDealActionPerformed
