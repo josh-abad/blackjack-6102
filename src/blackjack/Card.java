@@ -21,12 +21,12 @@ public class Card {
                 new ImageIcon(getClass().getResource(
                     "/blackjack/cards/" + suite + "/" + value + ".png"
                 )
-            ));
+            ), 100);
             this.backIcon = ImageResizer.getScaledImage(
                 new ImageIcon(getClass().getResource(
                     "/blackjack/cards/" + suite + "/Back.png"
                 )
-            ));
+            ), 100);
         }
     }
 

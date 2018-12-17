@@ -19,12 +19,12 @@ public class FaceCard extends Card {
             new ImageIcon(getClass().getResource(
                 "/blackjack/cards/" + suite + "/" + face + ".png"
             )
-        ));
+        ), 100);
         this.backIcon = ImageResizer.getScaledImage(
             new ImageIcon(getClass().getResource(
                 "/blackjack/cards/" + suite + "/Back.png"
             )
-        ));
+        ), 100);
     }
 
     @Override

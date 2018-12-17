@@ -14,10 +14,10 @@ import javax.swing.ImageIcon;
  */
 public class ImageResizer {
     
-    public static ImageIcon getScaledImage(ImageIcon icon) {
+    public static ImageIcon getScaledImage(ImageIcon icon, int scale) {
         Image image = icon.getImage();
         Image scaledImg = image.getScaledInstance(
-            100, -100, Image.SCALE_SMOOTH
+            scale, -scale, Image.SCALE_SMOOTH
         );
         
         return new ImageIcon(scaledImg);

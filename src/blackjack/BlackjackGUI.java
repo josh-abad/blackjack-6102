@@ -68,6 +68,12 @@ public class BlackjackGUI extends javax.swing.JFrame {
 
         updateCardImages(player, playerHand);
         updateCardImages(dealer, dealerHand);
+
+        lbChipsValue.setIcon(ImageResizer.getScaledImage(new ImageIcon(
+            getClass().getResource(
+                "/blackjack/chipRedWhite_border.png"
+            )
+        ), lbChipsValue.getFont().getSize()));
     }
 
     /**
@@ -114,11 +120,10 @@ public class BlackjackGUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         lbBetValue = new javax.swing.JLabel();
         lbCurrentBet = new javax.swing.JLabel();
-        lbChipsValue = new javax.swing.JLabel();
-        lbChips = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         lbDealerHand = new javax.swing.JLabel();
         lbPlayerHand = new javax.swing.JLabel();
+        lbChipsValue = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Blackjack");
@@ -437,52 +442,37 @@ public class BlackjackGUI extends javax.swing.JFrame {
         lbCurrentBet.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbCurrentBet.setText("Bet:");
 
-        lbChipsValue.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbChipsValue.setText(Format.currency(player.getChips())
-        );
-
-        lbChips.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbChips.setText("Chips:");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
+                .addContainerGap(32, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lbCurrentBet)
-                    .addComponent(lbChips)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbChipsValue)
                     .addComponent(lbBetValue)
                     .addComponent(jLabel2))
-                .addGap(30, 30, 30))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
+                .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lbChips)
-                        .addComponent(lbChipsValue))
+                    .addComponent(lbBetValue)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbBetValue)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lbCurrentBet)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2))))))
-                .addContainerGap(16, Short.MAX_VALUE))
+                        .addComponent(lbCurrentBet)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
-        jLabel3.setFont(new java.awt.Font("Futura LT", 1, 24)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setText("BLACKJACK");
 
         lbDealerHand.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -491,6 +481,10 @@ public class BlackjackGUI extends javax.swing.JFrame {
 
         lbPlayerHand.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbPlayerHand.setText("Player (0)");
+
+        lbChipsValue.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lbChipsValue.setText(Format.currency(player.getChips())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -509,12 +503,12 @@ public class BlackjackGUI extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(pnlMessage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbChipsValue))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbDealerHand)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbPlayerHand)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbDealerHand)
+                            .addComponent(lbPlayerHand))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -525,7 +519,9 @@ public class BlackjackGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlMessage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(lbChipsValue))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lbDealerHand)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -910,7 +906,6 @@ public class BlackjackGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lbBet;
     private javax.swing.JLabel lbBetValue;
-    private javax.swing.JLabel lbChips;
     private javax.swing.JLabel lbChipsValue;
     private javax.swing.JLabel lbCurrentBet;
     private javax.swing.JLabel lbDealerCard1;
