@@ -99,6 +99,13 @@ public class BlackjackGUI extends javax.swing.JFrame {
         btnDeal = new javax.swing.JButton();
         btnNextHand = new javax.swing.JButton();
         btnQuitGame = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        lbBetValue = new javax.swing.JLabel();
+        lbCurrentBet = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         pnlDealerHand = new javax.swing.JPanel();
         lbDealerCard1 = new javax.swing.JLabel();
         lbDealerCard2 = new javax.swing.JLabel();
@@ -106,6 +113,8 @@ public class BlackjackGUI extends javax.swing.JFrame {
         lbDealerCard4 = new javax.swing.JLabel();
         lbDealerCard5 = new javax.swing.JLabel();
         lbDealerCard6 = new javax.swing.JLabel();
+        lbDealerHand = new javax.swing.JLabel();
+        lbChipsValue = new javax.swing.JLabel();
         pnlPlayerHand = new javax.swing.JPanel();
         lbPlayerCard1 = new javax.swing.JLabel();
         lbPlayerCard2 = new javax.swing.JLabel();
@@ -113,17 +122,9 @@ public class BlackjackGUI extends javax.swing.JFrame {
         lbPlayerCard4 = new javax.swing.JLabel();
         lbPlayerCard5 = new javax.swing.JLabel();
         lbPlayerCard6 = new javax.swing.JLabel();
+        lbPlayerHand = new javax.swing.JLabel();
         pnlMessage = new javax.swing.JPanel();
         lbMessage = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        lbBetValue = new javax.swing.JLabel();
-        lbCurrentBet = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        lbDealerHand = new javax.swing.JLabel();
-        lbPlayerHand = new javax.swing.JLabel();
-        lbChipsValue = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Blackjack");
@@ -272,7 +273,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
                                 .addComponent(btnDoubleDown)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnSurrender)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -297,132 +298,6 @@ public class BlackjackGUI extends javax.swing.JFrame {
                     .addComponent(btnNextHand)
                     .addComponent(btnQuitGame))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        pnlDealerHand.setBackground(new java.awt.Color(0, 102, 51));
-
-        lbDealerCard1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbDealerCard1.setText("Empty");
-
-        lbDealerCard2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbDealerCard2.setText("Empty");
-
-        lbDealerCard3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbDealerCard3.setText("Empty");
-
-        lbDealerCard4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbDealerCard4.setText("Empty");
-
-        lbDealerCard5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbDealerCard5.setText("Empty");
-
-        lbDealerCard6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbDealerCard6.setText("Empty");
-
-        javax.swing.GroupLayout pnlDealerHandLayout = new javax.swing.GroupLayout(pnlDealerHand);
-        pnlDealerHand.setLayout(pnlDealerHandLayout);
-        pnlDealerHandLayout.setHorizontalGroup(
-            pnlDealerHandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDealerHandLayout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(lbDealerCard1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbDealerCard2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbDealerCard3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbDealerCard4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbDealerCard5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbDealerCard6)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        pnlDealerHandLayout.setVerticalGroup(
-            pnlDealerHandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDealerHandLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(pnlDealerHandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbDealerCard1)
-                    .addComponent(lbDealerCard2)
-                    .addComponent(lbDealerCard3)
-                    .addComponent(lbDealerCard4)
-                    .addComponent(lbDealerCard5)
-                    .addComponent(lbDealerCard6))
-                .addGap(44, 44, 44))
-        );
-
-        pnlPlayerHand.setBackground(new java.awt.Color(0, 102, 51));
-
-        lbPlayerCard1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbPlayerCard1.setText("Empty");
-
-        lbPlayerCard2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbPlayerCard2.setText("Empty");
-
-        lbPlayerCard3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbPlayerCard3.setText("Empty");
-
-        lbPlayerCard4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbPlayerCard4.setText("Empty");
-
-        lbPlayerCard5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbPlayerCard5.setText("Empty");
-
-        lbPlayerCard6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbPlayerCard6.setText("Empty");
-
-        javax.swing.GroupLayout pnlPlayerHandLayout = new javax.swing.GroupLayout(pnlPlayerHand);
-        pnlPlayerHand.setLayout(pnlPlayerHandLayout);
-        pnlPlayerHandLayout.setHorizontalGroup(
-            pnlPlayerHandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlPlayerHandLayout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(lbPlayerCard1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbPlayerCard2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbPlayerCard3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbPlayerCard4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbPlayerCard5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbPlayerCard6)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        pnlPlayerHandLayout.setVerticalGroup(
-            pnlPlayerHandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlPlayerHandLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(pnlPlayerHandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbPlayerCard1)
-                    .addComponent(lbPlayerCard2)
-                    .addComponent(lbPlayerCard3)
-                    .addComponent(lbPlayerCard4)
-                    .addComponent(lbPlayerCard5)
-                    .addComponent(lbPlayerCard6))
-                .addGap(44, 44, 44))
-        );
-
-        pnlMessage.setBackground(new java.awt.Color(153, 153, 153));
-        pnlMessage.setOpaque(false);
-
-        javax.swing.GroupLayout pnlMessageLayout = new javax.swing.GroupLayout(pnlMessage);
-        pnlMessage.setLayout(pnlMessageLayout);
-        pnlMessageLayout.setHorizontalGroup(
-            pnlMessageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMessageLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(lbMessage)
-                .addContainerGap(30, Short.MAX_VALUE))
-        );
-        pnlMessageLayout.setVerticalGroup(
-            pnlMessageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMessageLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbMessage)
-                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -472,18 +347,195 @@ public class BlackjackGUI extends javax.swing.JFrame {
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
+        jPanel3.setBackground(new java.awt.Color(0, 102, 51));
+
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("BLACKJACK");
 
-        lbDealerHand.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        pnlDealerHand.setBackground(new java.awt.Color(0, 102, 51));
+
+        lbDealerCard1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbDealerCard1.setText("Empty");
+
+        lbDealerCard2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbDealerCard2.setText("Empty");
+
+        lbDealerCard3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbDealerCard3.setText("Empty");
+
+        lbDealerCard4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbDealerCard4.setText("Empty");
+
+        lbDealerCard5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbDealerCard5.setText("Empty");
+
+        lbDealerCard6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbDealerCard6.setText("Empty");
+
+        javax.swing.GroupLayout pnlDealerHandLayout = new javax.swing.GroupLayout(pnlDealerHand);
+        pnlDealerHand.setLayout(pnlDealerHandLayout);
+        pnlDealerHandLayout.setHorizontalGroup(
+            pnlDealerHandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlDealerHandLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(lbDealerCard1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbDealerCard2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbDealerCard3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbDealerCard4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbDealerCard5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbDealerCard6)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnlDealerHandLayout.setVerticalGroup(
+            pnlDealerHandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlDealerHandLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(pnlDealerHandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbDealerCard1)
+                    .addComponent(lbDealerCard2)
+                    .addComponent(lbDealerCard3)
+                    .addComponent(lbDealerCard4)
+                    .addComponent(lbDealerCard5)
+                    .addComponent(lbDealerCard6))
+                .addGap(20, 20, 20))
+        );
+
+        lbDealerHand.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbDealerHand.setForeground(new java.awt.Color(255, 255, 255));
         lbDealerHand.setText("Dealer");
         lbDealerHand.setToolTipText("");
+        lbDealerHand.setText("");
 
-        lbPlayerHand.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbPlayerHand.setText("Player (0)");
-
-        lbChipsValue.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lbChipsValue.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lbChipsValue.setForeground(new java.awt.Color(255, 255, 255));
         lbChipsValue.setText(Format.currency(player.getChips())
+        );
+
+        pnlPlayerHand.setBackground(new java.awt.Color(0, 102, 51));
+
+        lbPlayerCard1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbPlayerCard1.setText("Empty");
+
+        lbPlayerCard2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbPlayerCard2.setText("Empty");
+
+        lbPlayerCard3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbPlayerCard3.setText("Empty");
+
+        lbPlayerCard4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbPlayerCard4.setText("Empty");
+
+        lbPlayerCard5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbPlayerCard5.setText("Empty");
+
+        lbPlayerCard6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbPlayerCard6.setText("Empty");
+
+        javax.swing.GroupLayout pnlPlayerHandLayout = new javax.swing.GroupLayout(pnlPlayerHand);
+        pnlPlayerHand.setLayout(pnlPlayerHandLayout);
+        pnlPlayerHandLayout.setHorizontalGroup(
+            pnlPlayerHandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPlayerHandLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(lbPlayerCard1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbPlayerCard2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbPlayerCard3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbPlayerCard4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbPlayerCard5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbPlayerCard6)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnlPlayerHandLayout.setVerticalGroup(
+            pnlPlayerHandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPlayerHandLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(pnlPlayerHandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbPlayerCard1)
+                    .addComponent(lbPlayerCard2)
+                    .addComponent(lbPlayerCard3)
+                    .addComponent(lbPlayerCard4)
+                    .addComponent(lbPlayerCard5)
+                    .addComponent(lbPlayerCard6))
+                .addGap(20, 20, 20))
+        );
+
+        lbPlayerHand.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbPlayerHand.setForeground(new java.awt.Color(255, 255, 255));
+        lbPlayerHand.setText("Player (0)");
+        lbPlayerHand.setText("");
+
+        pnlMessage.setBackground(new java.awt.Color(153, 153, 153));
+        pnlMessage.setOpaque(false);
+
+        javax.swing.GroupLayout pnlMessageLayout = new javax.swing.GroupLayout(pnlMessage);
+        pnlMessage.setLayout(pnlMessageLayout);
+        pnlMessageLayout.setHorizontalGroup(
+            pnlMessageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMessageLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(lbMessage)
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
+        pnlMessageLayout.setVerticalGroup(
+            pnlMessageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMessageLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbMessage)
+                .addContainerGap(10, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlDealerHand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pnlMessage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbChipsValue))
+                    .addComponent(pnlPlayerHand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbDealerHand)
+                            .addComponent(lbPlayerHand))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(lbChipsValue)))
+                    .addComponent(pnlMessage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbDealerHand)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlDealerHand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbPlayerHand)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlPlayerHand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -492,48 +544,20 @@ public class BlackjackGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlPlayerHand, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlDealerHand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pnlMessage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lbChipsValue))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbDealerHand)
-                            .addComponent(lbPlayerHand))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(73, Short.MAX_VALUE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlMessage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(lbChipsValue))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lbDealerHand)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlDealerHand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbPlayerHand)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlPlayerHand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -570,6 +594,8 @@ public class BlackjackGUI extends javax.swing.JFrame {
         pnlMessage.setBackground(color);
         lbMessage.setText(message);
         lbMessage.setFont(new Font("Segoe UI", 1, 12));
+        lbMessage.setForeground(color.equals(Color.green) 
+            ? Color.black : Color.white);
     }
 
     private void displayMessage(String message) {
@@ -647,6 +673,20 @@ public class BlackjackGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSurrenderActionPerformed
 
     private void btnDealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDealActionPerformed
+        lbDealerHand.setText("Dealer");
+
+        pnlPlayerHand.setBorder(
+            javax.swing.BorderFactory.createLineBorder(
+                new java.awt.Color(255, 255, 255), 5
+            )
+        );
+
+        pnlDealerHand.setBorder(
+            javax.swing.BorderFactory.createLineBorder(
+                new java.awt.Color(255, 255, 255), 5
+            )
+        );
+
         setOptions(betOptions, false);
 
         setOptions(playOptions, true);
@@ -716,7 +756,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
             if (player.hasBlackjack() ^ dealer.hasBlackjack()) {
                 winner = player.hasBlackjack() ? player : dealer;
             } else if (playerFinalHand == dealerFinalHand) {
-                lbMessage.setText("Draw");
+                displayMessage("Draw");
                 player.addChips(player.getBet());
                 player.setBet(0);
             } else {
@@ -727,7 +767,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
         } else if (playerFinalHand > 21 ^ dealerFinalHand > 21){
             winner = playerFinalHand <= 21 ? player : dealer;
         } else {
-            displayMessage("You lost", Color.red);
+            displayMessage("You both lost", Color.red);
         }
 
         if (winner != null) {
@@ -770,6 +810,11 @@ public class BlackjackGUI extends javax.swing.JFrame {
             cardLabel.setText("Empty");
         }
 
+        lbPlayerHand.setText("");
+        lbDealerHand.setText("");
+        pnlPlayerHand.setBorder(BorderFactory.createEmptyBorder());
+        pnlDealerHand.setBorder(BorderFactory.createEmptyBorder());
+
         clearMessage();
         btnNextHand.setEnabled(false);
         player.resetHand(this.deck);
@@ -782,8 +827,8 @@ public class BlackjackGUI extends javax.swing.JFrame {
 
         updateBetOptions();
         updatePlayerStats();
-        updateHandValue(player, lbPlayerHand);
-        updateHandValue(dealer, lbDealerHand);
+        // updateHandValue(player, lbPlayerHand);
+        // updateHandValue(dealer, lbDealerHand);
         updateCardImages(player, playerHand);
         updateCardImages(dealer, dealerHand);
     }
@@ -904,6 +949,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lbBet;
     private javax.swing.JLabel lbBetValue;
     private javax.swing.JLabel lbChipsValue;
