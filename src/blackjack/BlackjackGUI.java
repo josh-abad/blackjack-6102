@@ -18,9 +18,8 @@ import javax.swing.border.TitledBorder;
 public class BlackjackGUI extends javax.swing.JFrame {
 
     private final Deck deck;
-    private final Player player;
+    private final UserPlayer player;
     private final Dealer dealer;
-    private int pot;
     private final int minimumBet;
     private final JLabel[] playerHand;
     private final JLabel[] dealerHand;
@@ -31,9 +30,8 @@ public class BlackjackGUI extends javax.swing.JFrame {
      */
     public BlackjackGUI() {
         deck = new Deck();
-        player = new Player();
+        player = new UserPlayer();
         dealer = new Dealer();
-        pot = 0;
         minimumBet = 25;
         initComponents();
 
@@ -111,8 +109,8 @@ public class BlackjackGUI extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        lbPotValue = new javax.swing.JLabel();
-        lbPot = new javax.swing.JLabel();
+        lbBetValue = new javax.swing.JLabel();
+        lbCurrentBet = new javax.swing.JLabel();
         lbChipsValue = new javax.swing.JLabel();
         lbChips = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -429,12 +427,12 @@ public class BlackjackGUI extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Minimum Bet:");
 
-        lbPotValue.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbPotValue.setText(String.valueOf(this.pot)
+        lbBetValue.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbBetValue.setText(String.valueOf(player.getBet())
         );
 
-        lbPot.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbPot.setText("Pot:");
+        lbCurrentBet.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbCurrentBet.setText("Bet:");
 
         lbChipsValue.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbChipsValue.setText(String.valueOf(this.player.getChips()));
@@ -449,13 +447,13 @@ public class BlackjackGUI extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(14, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lbPot)
+                    .addComponent(lbCurrentBet)
                     .addComponent(lbChips)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbChipsValue)
-                    .addComponent(lbPotValue)
+                    .addComponent(lbBetValue)
                     .addComponent(jLabel2))
                 .addGap(30, 30, 30))
         );
@@ -470,9 +468,9 @@ public class BlackjackGUI extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbPotValue)
+                            .addComponent(lbBetValue)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lbPot)
+                                .addComponent(lbCurrentBet)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel1)
@@ -718,9 +716,8 @@ public class BlackjackGUI extends javax.swing.JFrame {
         if (player.isBelowLimit() && dealer.isBelowLimit()) {
             if (playerFinalHand == dealerFinalHand) {
                 lbMessage.setText("Draw");
-                player.addChips(pot / 2);
-                dealer.addChips(pot / 2);
-                pot = 0;
+                player.addChips(player.getBet());
+                player.setBet(0);
             } else {
                 winner = playerFinalHand > dealerFinalHand ? player : dealer;
             }
@@ -737,27 +734,24 @@ public class BlackjackGUI extends javax.swing.JFrame {
                 displayMessage((dealer.hasBlackjack()) ? 
                     "The Dealer got blackjack" : "The Dealer won this round", 
                     Color.red);
-                dealer.addChips(pot);
             } else {
                 displayMessage((player.hasBlackjack()) ? 
                     "You got blackjack" : "You won this round", 
                     Color.green);
-                player.addChips(pot);
+                player.addChips(player.getBet() * 2);
             }
-            pot = 0;
+            player.setBet(0);
         }
 
-        // End the game if either the player or the dealer are out of chips
-        if (player.getChips() < minimumBet || dealer.getChips() <= 0) {
-            displayMessage((player.getChips() >= 25) ? 
-                "You won the game" : "You lost the game", 
-                (player.getChips() >= 25) ? Color.green : Color.red);
+        // End the game if the player is out of chips
+        if (player.getChips() < minimumBet) {
+            displayMessage("You lost the game", Color.red);
         } else {
             btnNextHand.setEnabled(true);
         }
         
         lbChipsValue.setText(String.valueOf(player.getChips()));
-        lbPotValue.setText("0");
+        lbBetValue.setText("0");
     }//GEN-LAST:event_btnStandActionPerformed
 
     private void btnNextHandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextHandActionPerformed
@@ -784,14 +778,15 @@ public class BlackjackGUI extends javax.swing.JFrame {
 
     private void btnDoubleDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoubleDownActionPerformed
         // TODO add your handling code here:
+        // Double the player's bet
+        // Player's get one last card
     }//GEN-LAST:event_btnDoubleDownActionPerformed
 
     private void bet(int amount) {
-        pot += player.bet(amount);
-        pot += dealer.bet(amount);
-        lbPotValue.setText(String.valueOf(pot));
+        player.setBet(player.getBet() == 0 ? amount : player.getBet() + amount);
+        lbBetValue.setText(String.valueOf(player.getBet()));
         lbChipsValue.setText(String.valueOf(player.getChips()));
-        if (pot / 2 >= minimumBet) {
+        if (player.getBet() >= minimumBet) {
             btnDeal.setEnabled(true);
         }
 
@@ -863,8 +858,10 @@ public class BlackjackGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lbBet;
+    private javax.swing.JLabel lbBetValue;
     private javax.swing.JLabel lbChips;
     private javax.swing.JLabel lbChipsValue;
+    private javax.swing.JLabel lbCurrentBet;
     private javax.swing.JLabel lbDealerCard1;
     private javax.swing.JLabel lbDealerCard2;
     private javax.swing.JLabel lbDealerCard3;
@@ -880,8 +877,6 @@ public class BlackjackGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lbPlayerCard5;
     private javax.swing.JLabel lbPlayerCard6;
     private javax.swing.JLabel lbPlayerHand;
-    private javax.swing.JLabel lbPot;
-    private javax.swing.JLabel lbPotValue;
     private javax.swing.JPanel pnlDealerHand;
     private javax.swing.JPanel pnlMessage;
     private javax.swing.JPanel pnlPlayerHand;

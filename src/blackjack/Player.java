@@ -5,11 +5,9 @@ import java.util.ArrayList;
 public class Player {
 
     final private ArrayList<Card> hand;
-    private int chips;
 
     public Player() {
         this.hand = new ArrayList<>();
-        this.chips = 1000;
     }
 
     /**
@@ -31,29 +29,6 @@ public class Player {
     public void resetHand(Deck deck) {
         deck.add(this.hand);
         this.hand.clear();
-    }
-
-    public void addChips(int amount) {
-        this.chips += amount;
-    }
-
-    public int getChips() {
-        return this.chips;
-    }
-    
-    /**
-     * Bets the specified amount of chips
-     * @param amount the amount of chips to be removed from the player
-     * @return the specified amount of chips
-     */
-    public int bet(int amount) {
-        if (amount <= this.chips) {
-            this.chips -= amount;
-        } else {
-            amount = this.chips;
-            this.chips = 0;
-        }
-        return amount;
     }
 
     @Override
@@ -108,19 +83,11 @@ public class Player {
      */
     public boolean hasBlackjack() {
         if (this.hand.size() == 2) {
-            Card ace = null;
-            Card tenValue = null;
             for (Card card : this.hand) {
                 if (card.getValue() == 10) {
-                    tenValue = card;
-                }
-
-                if (card instanceof Ace) {
-                    ace = card;
+                    return hasAce();
                 }
             }
-
-            return ace != null && tenValue != null;
         }
         return false;
     }
@@ -129,4 +96,3 @@ public class Player {
         return this.hand.stream().anyMatch((card) -> (card instanceof Ace));
     }
 }
-

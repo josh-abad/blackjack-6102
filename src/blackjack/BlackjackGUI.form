@@ -568,14 +568,14 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace pref="14" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="lbPot" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbCurrentBet" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="lbChips" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="lbChipsValue" min="-2" max="-2" attributes="0"/>
-                      <Component id="lbPotValue" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbBetValue" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
@@ -594,9 +594,9 @@
                       <Group type="102" attributes="0">
                           <EmptySpace min="24" pref="24" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lbPotValue" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="lbBetValue" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="lbPot" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbCurrentBet" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -630,22 +630,22 @@
             <Property name="text" type="java.lang.String" value="Minimum Bet:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lbPotValue">
+        <Component class="javax.swing.JLabel" name="lbBetValue">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="12" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="String.valueOf(this.pot)&#xd;&#xa;" type="code"/>
+              <Connection code="String.valueOf(player.getBet())&#xd;&#xa;" type="code"/>
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lbPot">
+        <Component class="javax.swing.JLabel" name="lbCurrentBet">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="12" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Pot:"/>
+            <Property name="text" type="java.lang.String" value="Bet:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lbChipsValue">
