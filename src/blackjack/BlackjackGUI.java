@@ -9,6 +9,8 @@ package blackjack;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Frame;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -428,14 +430,15 @@ public class BlackjackGUI extends javax.swing.JFrame {
         jLabel1.setText("Minimum Bet:");
 
         lbBetValue.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbBetValue.setText(String.valueOf(player.getBet())
+        lbBetValue.setText(Format.currency(player.getBet())
         );
 
         lbCurrentBet.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbCurrentBet.setText("Bet:");
 
         lbChipsValue.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbChipsValue.setText(String.valueOf(this.player.getChips()));
+        lbChipsValue.setText(Format.currency(player.getChips())
+        );
 
         lbChips.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbChips.setText("Chips:");
@@ -737,6 +740,10 @@ public class BlackjackGUI extends javax.swing.JFrame {
                     "The Dealer got blackjack" : "The Dealer won this round", 
                     Color.red);
             } else {
+                if (player.hasBlackjack()) {
+                    displayMessage("You got blackjack");
+                    player.addChips(player.getBet() + (player.getBet() * 1.5));
+                }
                 displayMessage((player.hasBlackjack()) ? 
                     "You got blackjack" : "You won this round", 
                     Color.green);
@@ -752,8 +759,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
             btnNextHand.setEnabled(true);
         }
         
-        lbChipsValue.setText(String.valueOf(player.getChips()));
-        lbBetValue.setText("0");
+        updatePlayerStats();
     }//GEN-LAST:event_btnStandActionPerformed
 
     private void btnNextHandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextHandActionPerformed
@@ -800,8 +806,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
             i++;
         }
         
-        lbBetValue.setText(String.valueOf(player.getBet()));
-        lbChipsValue.setText(String.valueOf(player.getChips()));
+        updatePlayerStats();
         btnHit.setEnabled(false);
         btnDoubleDown.setEnabled(false);
         btnSurrender.setEnabled(false);
@@ -814,8 +819,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
         } else {
             player.addBet(amount);
         }
-        lbBetValue.setText(String.valueOf(player.getBet()));
-        lbChipsValue.setText(String.valueOf(player.getChips()));
+        updatePlayerStats();
         if (player.getBet() >= minimumBet) {
             btnDeal.setEnabled(true);
         }
@@ -823,6 +827,9 @@ public class BlackjackGUI extends javax.swing.JFrame {
         updateBetOptions();
     }
 
+    /**
+     * Checks if the player still has sufficient chips to bet a certain amount
+     */
     private void updateBetOptions() {
         final int[] BET_VALUES = {5, 10, 25, 50, 100};
         for (int i = 0, len = BET_VALUES.length; i < len; i++) {
@@ -832,6 +839,11 @@ public class BlackjackGUI extends javax.swing.JFrame {
                 betOptions[i].setEnabled(true);
             }
         }
+    }
+
+    private void updatePlayerStats() {
+        lbChipsValue.setText(Format.currency(player.getChips()));
+        lbBetValue.setText(Format.currency(player.getBet()));
     }
 
     /**

@@ -636,7 +636,7 @@
               <Font name="Segoe UI" size="12" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="String.valueOf(player.getBet())&#xd;&#xa;" type="code"/>
+              <Connection code="Format.currency(player.getBet())&#xd;&#xa;" type="code"/>
             </Property>
           </Properties>
         </Component>
@@ -654,7 +654,7 @@
               <Font name="Segoe UI" size="12" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="String.valueOf(this.player.getChips())" type="code"/>
+              <Connection code="Format.currency(player.getChips())&#xd;&#xa;" type="code"/>
             </Property>
           </Properties>
         </Component>
