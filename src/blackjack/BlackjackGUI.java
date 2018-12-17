@@ -655,6 +655,9 @@ public class BlackjackGUI extends javax.swing.JFrame {
         setOptions(betOptions, false);
 
         setOptions(playOptions, true);
+        if (player.getBet() * 2 > player.getChips()) {
+            btnDoubleDown.setEnabled(false);
+        }
         
         for (int i = 0; i < 2; i++) {
             Card playerCard = deck.getCard();
@@ -673,7 +676,6 @@ public class BlackjackGUI extends javax.swing.JFrame {
         btnDeal.setEnabled(false);
 
         updateHandValue(player, lbPlayerHand);
-        // updateHandValue(dealer, lbDealerHand);
 
         drawHand();
     }//GEN-LAST:event_btnDealActionPerformed
@@ -778,12 +780,40 @@ public class BlackjackGUI extends javax.swing.JFrame {
 
     private void btnDoubleDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoubleDownActionPerformed
         // TODO add your handling code here:
-        // Double the player's bet
-        // Player's get one last card
+        player.doubleBet();
+        Card card = deck.getCard();
+        player.hit(card);
+
+        displayMessage("You drew " + card);
+        updateHandValue(player, lbPlayerHand);
+        
+        int i = 0;
+        for (JLabel playerCard : playerHand) {
+            if (playerCard.getText().equals("Empty")) {
+                playerCard.setText(card.toString());
+                if (i == 5) {
+                    btnHit.setEnabled(false);
+                    btnDoubleDown.setEnabled(false);
+                }
+                break;
+            }
+            i++;
+        }
+        
+        lbBetValue.setText(String.valueOf(player.getBet()));
+        lbChipsValue.setText(String.valueOf(player.getChips()));
+        btnHit.setEnabled(false);
+        btnDoubleDown.setEnabled(false);
+        btnSurrender.setEnabled(false);
+        drawHand();
     }//GEN-LAST:event_btnDoubleDownActionPerformed
 
     private void bet(int amount) {
-        player.setBet(player.getBet() == 0 ? amount : player.getBet() + amount);
+        if (player.getBet() == 0) {
+            player.setBet(amount);
+        } else {
+            player.addBet(amount);
+        }
         lbBetValue.setText(String.valueOf(player.getBet()));
         lbChipsValue.setText(String.valueOf(player.getChips()));
         if (player.getBet() >= minimumBet) {

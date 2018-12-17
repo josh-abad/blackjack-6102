@@ -20,6 +20,13 @@ public class UserPlayer extends Player {
         this.bet = 0;
     }    
 
+    public void doubleBet() {
+        if (this.bet * 2 <= this.chips) {
+            this.chips -= this.bet;
+            this.bet *= 2;
+        }
+    }
+
     public int getBet() {
         return this.bet;
     }
@@ -36,6 +43,16 @@ public class UserPlayer extends Player {
             this.chips = 0;
         }
         this.bet = amount;
+    }
+
+    public void addBet(int amount) {
+        if (amount <= this.chips) {
+            this.chips -= amount;
+        } else {
+            amount = this.chips;
+            this.chips = 0;
+        }
+        this.bet += amount;
     }
 
     public void addChips(int amount) {
