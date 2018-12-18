@@ -8,21 +8,17 @@ public class Deck {
     
     public Deck() {
         deck = new ArrayList<>(); 
-        final String VALID_VALUES[] = {
-            "Ace", "2", "3", "4", "5", "6", "7", 
-            "8", "9", "10", "Jack", "Queen", "King"
-        };
         final String VALID_SUITS[] = {
             "Diamonds", "Clubs", "Spades", "Hearts"
         };
         for (String suit : VALID_SUITS) {
-            for (String value : VALID_VALUES) {
-                if (value.equals("Ace")) {
+            for (int i = 1; i <= 13; i++) {
+                if (i == 1) {
                     deck.add(new Ace(suit));
-                } else if (value.chars().allMatch(Character::isDigit)) {
-                    deck.add(new Card(Integer.parseInt(value), suit));
+                } else if (i > 10) {
+                    deck.add(new FaceCard(i, suit));
                 } else {
-                    deck.add(new FaceCard(value, suit));
+                    deck.add(new Card(i, suit));
                 }
             }
         }

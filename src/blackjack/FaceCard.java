@@ -1,6 +1,6 @@
 package blackjack;
 
-import javax.swing.ImageIcon;
+import java.util.HashMap;
 
 public class FaceCard extends Card {
 
@@ -10,16 +10,17 @@ public class FaceCard extends Card {
         return face;
     }
 
-    public FaceCard(String face, String suite) {
-        super(10, suite);
-        this.face = face;
+    public FaceCard(int value, String suite) {
+        super(value, suite);
 
-        // Images from https://github.com/htdebeer/SVG-cards
-        this.frontIcon = ImageResizer.getScaledImage(
-            new ImageIcon(getClass().getResource(
-                "/blackjack/withshadow/" + suite + "/" + face + ".png"
-            )
-        ), 100);
+        HashMap<Integer, String> faces = new HashMap<Integer, String>() {
+            {
+                put(11, "Jack");
+                put(12, "Queen");
+                put(13, "King");
+            }
+        }; 
+        this.face = faces.get(value);
     }
 
     @Override

@@ -122,7 +122,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
         setTitle("Blackjack");
         setExtendedState(Frame.MAXIMIZED_BOTH);
         setIconImage(new ImageIcon(getClass().getResource(
-            "/blackjack/logo2.png"
+            "/blackjack/images/logo2.png"
         )).getImage());
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -346,7 +346,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
         lbLogo.setForeground(new java.awt.Color(255, 255, 255));
         lbLogo.setIcon(ImageResizer.getScaledImage(
             new ImageIcon(getClass().getResource(
-                "/blackjack/logo1alt.png"
+                "/blackjack/images/logo1.png"
             )), 150)
         );
         lbLogo.setText("BLACKJACK");
@@ -416,7 +416,8 @@ public class BlackjackGUI extends javax.swing.JFrame {
         lbChipsValue.setIcon(ImageResizer.getScaledImage(
             new ImageIcon(
                 getClass().getResource(
-                    "/blackjack/chipalt.png"
+                    "/blackjack/images/"
+                    + "chip.png"
                 )
             ), 
             lbChipsValue.getFont().getSize()
@@ -651,7 +652,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
                 card.setText("");
                 card.setVisible(true);
             } else if (!card.getText().equals("")) {
-                card.setIcon(player.getHand().get(i).frontIcon);
+                card.setIcon(player.getHand().get(i).getFrontIcon());
                 card.setText("");
                 card.setVisible(true);
             }

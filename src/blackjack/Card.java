@@ -5,31 +5,31 @@ import javax.swing.ImageIcon;
 public class Card {
 
     private int value;
-    final private String suit;
-    protected ImageIcon frontIcon;
-    private ImageIcon backIcon;
+    private final String suit;
+    private final ImageIcon frontIcon;
+    private final ImageIcon backIcon;
 
     public Card(int value, String suit) {
-        if (value > 1 && value <= 10) {
+        if (value >= 1 && value <= 10) {
             this.value = value;
+        } else if (value > 10 && value <= 13) {
+            this.value = 10;
         }
         this.suit = suit;
 
         // Images from https://github.com/htdebeer/SVG-cards
-        if (value != 0) {
-            this.frontIcon = ImageResizer.getScaledImage(
-                new ImageIcon(getClass().getResource(
-                    "/blackjack/withshadow/" + suit + "/" + value + ".png"
-                )), 
-                100
-            );
-            this.backIcon = ImageResizer.getScaledImage(
-                new ImageIcon(getClass().getResource(
-                    "/blackjack/withshadow/" + suit + "/Back.png"
-                )), 
-                100
-            );
-        }
+        this.frontIcon = ImageResizer.getScaledImage(
+            new ImageIcon(getClass().getResource(
+                "/blackjack/images/cards/" + suit + "/" + value + ".png"
+            )), 
+            100
+        );
+        this.backIcon = ImageResizer.getScaledImage(
+            new ImageIcon(getClass().getResource(
+                "/blackjack/images/cards/" + suit + "/Back.png"
+            )), 
+            100
+        );
     }
 
     @Override
@@ -43,6 +43,10 @@ public class Card {
 
     public int getValue() {
         return this.value;
+    }
+
+    public ImageIcon getFrontIcon() {
+        return this.frontIcon;
     }
 
     public ImageIcon getBackIcon() {
