@@ -10,12 +10,12 @@ public class Ace extends Card {
         // Images from https://github.com/htdebeer/SVG-cards
         this.frontIcon = ImageResizer.getScaledImage(
             new ImageIcon(getClass().getResource(
-                "/blackjack/cards/" + suite + "/Ace.png"
+                "/blackjack/withshadow/" + suite + "/Ace.png"
             )
         ), 100);
         this.backIcon = ImageResizer.getScaledImage(
             new ImageIcon(getClass().getResource(
-                "/blackjack/cards/" + suite + "/Back.png"
+                "/blackjack/withshadow/" + suite + "/Back.png"
             )
         ), 100);
     }

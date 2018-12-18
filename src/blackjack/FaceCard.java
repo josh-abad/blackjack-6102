@@ -17,12 +17,12 @@ public class FaceCard extends Card {
         // Images from https://github.com/htdebeer/SVG-cards
         this.frontIcon = ImageResizer.getScaledImage(
             new ImageIcon(getClass().getResource(
-                "/blackjack/cards/" + suite + "/" + face + ".png"
+                "/blackjack/withshadow/" + suite + "/" + face + ".png"
             )
         ), 100);
         this.backIcon = ImageResizer.getScaledImage(
             new ImageIcon(getClass().getResource(
-                "/blackjack/cards/" + suite + "/Back.png"
+                "/blackjack/withshadow/" + suite + "/Back.png"
             )
         ), 100);
     }

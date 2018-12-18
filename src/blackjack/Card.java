@@ -19,12 +19,12 @@ public class Card {
         if (value != 0) {
             this.frontIcon = ImageResizer.getScaledImage(
                 new ImageIcon(getClass().getResource(
-                    "/blackjack/cards/" + suite + "/" + value + ".png"
+                    "/blackjack/withshadow/" + suite + "/" + value + ".png"
                 )
             ), 100);
             this.backIcon = ImageResizer.getScaledImage(
                 new ImageIcon(getClass().getResource(
-                    "/blackjack/cards/" + suite + "/Back.png"
+                    "/blackjack/withshadow/" + suite + "/Back.png"
                 )
             ), 100);
         }
