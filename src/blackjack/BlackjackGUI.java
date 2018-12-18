@@ -9,78 +9,63 @@ package blackjack;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Frame;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.border.TitledBorder;
 
 public class BlackjackGUI extends javax.swing.JFrame {
 
-    private final Deck deck;
-    private final UserPlayer player;
-    private final Dealer dealer;
-    private final int minimumBet;
-    private final JLabel[] playerHand;
-    private final JLabel[] dealerHand;
-    private final JButton[] playOptions;
-    private final JButton[] betOptions;
+    private final Deck DECK;
+    private final UserPlayer PLAYER;
+    private final Dealer DEALER;
+    private final int MINIMUM_BET;
+    private final JLabel[] PLAYER_HAND;
+    private final JLabel[] DEALER_HAND;
+    private final JButton[] PLAY_OPTIONS;
+    private final JButton[] BET_OPTIONS;
+
     /**
      * Creates new form BlackjackGUI
      */
     public BlackjackGUI() {
-        deck = new Deck();
-        player = new UserPlayer();
-        dealer = new Dealer();
-        minimumBet = 25;
+        DECK = new Deck();
+        PLAYER = new UserPlayer();
+        DEALER = new Dealer();
+        MINIMUM_BET = 25;
         initComponents();
 
-        playerHand = new JLabel[6];
-        playerHand[0] = lbPlayerCard1;
-        playerHand[1] = lbPlayerCard2;
-        playerHand[2] = lbPlayerCard3;
-        playerHand[3] = lbPlayerCard4;
-        playerHand[4] = lbPlayerCard5;
-        playerHand[5] = lbPlayerCard6;
+        PLAYER_HAND = new JLabel[6];
+        PLAYER_HAND[0] = lbPlayerCard1;
+        PLAYER_HAND[1] = lbPlayerCard2;
+        PLAYER_HAND[2] = lbPlayerCard3;
+        PLAYER_HAND[3] = lbPlayerCard4;
+        PLAYER_HAND[4] = lbPlayerCard5;
+        PLAYER_HAND[5] = lbPlayerCard6;
 
-        dealerHand = new JLabel[6];
-        dealerHand[0] = lbDealerCard1;
-        dealerHand[1] = lbDealerCard2;
-        dealerHand[2] = lbDealerCard3;
-        dealerHand[3] = lbDealerCard4;
-        dealerHand[4] = lbDealerCard5;
-        dealerHand[5] = lbDealerCard6;
+        DEALER_HAND = new JLabel[6];
+        DEALER_HAND[0] = lbDealerCard1;
+        DEALER_HAND[1] = lbDealerCard2;
+        DEALER_HAND[2] = lbDealerCard3;
+        DEALER_HAND[3] = lbDealerCard4;
+        DEALER_HAND[4] = lbDealerCard5;
+        DEALER_HAND[5] = lbDealerCard6;
         
-        playOptions = new JButton[4];
-        playOptions[0] = btnHit;
-        playOptions[1] = btnStand;
-        playOptions[2] = btnDoubleDown;
-        playOptions[3] = btnSurrender;
+        PLAY_OPTIONS = new JButton[4];
+        PLAY_OPTIONS[0] = btnHit;
+        PLAY_OPTIONS[1] = btnStand;
+        PLAY_OPTIONS[2] = btnDoubleDown;
+        PLAY_OPTIONS[3] = btnSurrender;
 
-        betOptions = new JButton[5];
-        betOptions[0] = btn5Chips;
-        betOptions[1] = btn10Chips;
-        betOptions[2] = btn25Chips;
-        betOptions[3] = btn50Chips;
-        betOptions[4] = btn100Chips;
+        BET_OPTIONS = new JButton[5];
+        BET_OPTIONS[0] = btn5Chips;
+        BET_OPTIONS[1] = btn10Chips;
+        BET_OPTIONS[2] = btn25Chips;
+        BET_OPTIONS[3] = btn50Chips;
+        BET_OPTIONS[4] = btn100Chips;
 
-        updateCardImages(player, playerHand);
-        updateCardImages(dealer, dealerHand);
-
-        lbChipsValue.setIcon(ImageResizer.getScaledImage(new ImageIcon(
-            getClass().getResource(
-                "/blackjack/chipalt.png"
-            )
-        ), lbChipsValue.getFont().getSize()));
-
-        lbLogo.setIcon(ImageResizer.getScaledImage(new ImageIcon(
-            getClass().getResource(
-                "/blackjack/logo1alt.png"
-            )
-        ), 150));
-        lbLogo.setText("");
+        updateCardImages(PLAYER, PLAYER_HAND);
+        updateCardImages(DEALER, DEALER_HAND);
     }
 
     /**
@@ -313,15 +298,13 @@ public class BlackjackGUI extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel2.setText(
-            String.valueOf(this.minimumBet)
-        );
+        jLabel2.setText(String.valueOf(this.MINIMUM_BET) );
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Minimum Bet:");
 
         lbBetValue.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbBetValue.setText(Format.currency(player.getBet())
+        lbBetValue.setText(Format.currency(PLAYER.getBet())
         );
 
         lbCurrentBet.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -361,7 +344,13 @@ public class BlackjackGUI extends javax.swing.JFrame {
 
         lbLogo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lbLogo.setForeground(new java.awt.Color(255, 255, 255));
+        lbLogo.setIcon(ImageResizer.getScaledImage(
+            new ImageIcon(getClass().getResource(
+                "/blackjack/logo1alt.png"
+            )), 150)
+        );
         lbLogo.setText("BLACKJACK");
+        lbLogo.setText("");
 
         pnlDealerHand.setBackground(new java.awt.Color(0, 102, 51));
 
@@ -424,7 +413,15 @@ public class BlackjackGUI extends javax.swing.JFrame {
 
         lbChipsValue.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         lbChipsValue.setForeground(new java.awt.Color(255, 255, 255));
-        lbChipsValue.setText(Format.currency(player.getChips())
+        lbChipsValue.setIcon(ImageResizer.getScaledImage(
+            new ImageIcon(
+                getClass().getResource(
+                    "/blackjack/chipalt.png"
+                )
+            ), 
+            lbChipsValue.getFont().getSize()
+        ));
+        lbChipsValue.setText(Format.currency(PLAYER.getChips())
         );
 
         pnlPlayerHand.setBackground(new java.awt.Color(0, 102, 51));
@@ -594,6 +591,11 @@ public class BlackjackGUI extends javax.swing.JFrame {
         bet(100);
     }//GEN-LAST:event_btn100ChipsActionPerformed
 
+    /**
+     * Displays a panel with a message at the top of the screen
+     * @param message the message to be displayed
+     * @param color the background color of the the message
+     */
     private void displayMessage(String message, Color color) {
         if (!pnlMessage.isVisible()) {
             pnlMessage.setVisible(true);
@@ -615,6 +617,9 @@ public class BlackjackGUI extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Removes the message panel from view
+     */
     private void clearMessage() {
         lbMessage.setText("");
         if (pnlMessage.isOpaque()) {
@@ -622,46 +627,27 @@ public class BlackjackGUI extends javax.swing.JFrame {
         }
     }
    
+    /**
+     * Updates the total of the PLAYER hand
+     * @param player the PLAYER whose hand will be updated
+     * @param playerLabel label where the updated information is displayed
+     */
     private void updateHandValue(Player player, JLabel playerLabel) {
-        playerLabel.setText(player + " (" + player.stand() + ")");
+        playerLabel.setText(player + " (" + player.getHandValue() + ")");
     }
 
-    private void btnHitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHitActionPerformed
-        Card card = deck.getCard();
-        player.hit(card);
-
-        displayMessage("You drew " + card);
-        updateHandValue(player, lbPlayerHand);
-        
-        int i = 0;
-        for (JLabel playerCard : playerHand) {
-            if (playerCard.getText().equals("Empty")) {
-                playerCard.setText(card.toString());
-                if (i == 5) {
-                    btnHit.setEnabled(false);
-                    btnDoubleDown.setEnabled(false);
-                }
-                break;
-            }
-            i++;
-        }
-        
-        if (player.stand() > 21) {
-            btnHit.setEnabled(false);
-            btnDoubleDown.setEnabled(false);
-            btnSurrender.setEnabled(false);
-        }
-        updateCardImages(player, playerHand);
-        updateCardImages(dealer, dealerHand);
-    }//GEN-LAST:event_btnHitActionPerformed
-
+    /**
+     * Displays the appropriate card images on the screen
+     * @param player the PLAYER from which the hand of cards is displayed
+     * @param playerHand an array of labels where the images will be shown
+     */
     private void updateCardImages(Player player, JLabel[] playerHand) {
         int i = 0;
         for (JLabel card : playerHand) {
             if (card.getText().equals("Empty")) {
                 card.setVisible(false);
             } else if (card.getText().equals("Hidden")) {
-                card.setIcon(player.getHand().get(i).backIcon);
+                card.setIcon(player.getHand().get(i).getBackIcon());
                 card.setText("");
                 card.setVisible(true);
             } else if (!card.getText().equals("")) {
@@ -673,19 +659,61 @@ public class BlackjackGUI extends javax.swing.JFrame {
         }
     } 
 
+    /**
+     * Enables or disables a set of buttons
+     * @param options an array of buttons to be set
+     * @param state a boolean to enable or disable
+     */
+    private void setOptions(JButton[] options, boolean state) {
+        for (JButton option : options) {
+            if (option.isEnabled() != state) {
+                option.setEnabled(state);
+            }
+        }
+    }
+
+    private void btnHitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHitActionPerformed
+        Card card = DECK.getCard();
+        PLAYER.hit(card);
+
+        displayMessage("You drew " + card);
+        updateHandValue(PLAYER, lbPlayerHand);
+        
+        int i = 0;
+        for (JLabel playerCard : PLAYER_HAND) {
+            if (playerCard.getText().equals("Empty")) {
+                playerCard.setText(card.toString());
+                if (i == 5) {
+                    btnHit.setEnabled(false);
+                    btnDoubleDown.setEnabled(false);
+                }
+                break;
+            }
+            i++;
+        }
+        
+        if (PLAYER.getHandValue() > 21) {
+            btnHit.setEnabled(false);
+            btnDoubleDown.setEnabled(false);
+            btnSurrender.setEnabled(false);
+        }
+        updateCardImages(PLAYER, PLAYER_HAND);
+        updateCardImages(DEALER, DEALER_HAND);
+    }//GEN-LAST:event_btnHitActionPerformed
+
     private void btnSurrenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSurrenderActionPerformed
         displayMessage("You surrendered and got half of your bet");
-        player.addChips(player.getBet() / 2);
-        player.setBet(0);
+        PLAYER.addChips(PLAYER.getBet() / 2);
+        PLAYER.setBet(0);
         updatePlayerStats();
-        setOptions(playOptions, false);
+        setOptions(PLAY_OPTIONS, false);
         btnNextHand.setEnabled(true);
     }//GEN-LAST:event_btnSurrenderActionPerformed
 
     private void btnDealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDealActionPerformed
         lbDealerHand.setText("Dealer");
 
-        this.deck.shuffle();
+        this.DECK.shuffle();
 
         pnlPlayerHand.setBorder(
             javax.swing.BorderFactory.createLineBorder(
@@ -699,18 +727,18 @@ public class BlackjackGUI extends javax.swing.JFrame {
             )
         );
 
-        setOptions(betOptions, false);
+        setOptions(BET_OPTIONS, false);
 
-        setOptions(playOptions, true);
-        if (player.getBet() * 2 > player.getChips()) {
+        setOptions(PLAY_OPTIONS, true);
+        if (PLAYER.getBet() * 2 > PLAYER.getChips()) {
             btnDoubleDown.setEnabled(false);
         }
         
         for (int i = 0; i < 2; i++) {
-            Card playerCard = deck.getCard();
-            Card dealerCard = deck.getCard();
-            player.hit(playerCard);
-            dealer.hit(dealerCard);
+            Card playerCard = DECK.getCard();
+            Card dealerCard = DECK.getCard();
+            PLAYER.hit(playerCard);
+            DEALER.hit(dealerCard);
             if (i == 0) {
                 lbPlayerCard1.setText(playerCard.toString());
                 lbDealerCard1.setText("Hidden");
@@ -722,85 +750,77 @@ public class BlackjackGUI extends javax.swing.JFrame {
 
         btnDeal.setEnabled(false);
 
-        updateHandValue(player, lbPlayerHand);
+        updateHandValue(PLAYER, lbPlayerHand);
 
-        updateCardImages(player, playerHand);
-        updateCardImages(dealer, dealerHand);
+        updateCardImages(PLAYER, PLAYER_HAND);
+        updateCardImages(DEALER, DEALER_HAND);
     }//GEN-LAST:event_btnDealActionPerformed
 
     private void btnQuitGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitGameActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnQuitGameActionPerformed
 
-    private void setOptions(JButton[] options, boolean state) {
-        for (JButton option : options) {
-            if (option.isEnabled() != state) {
-                option.setEnabled(state);
-            }
-        }
-    }
-
     private void btnStandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStandActionPerformed
-        setOptions(playOptions, false);
+        setOptions(PLAY_OPTIONS, false);
         pnlMessage.setVisible(true);
-        lbDealerCard1.setText(dealer.getHand().get(0).toString());
+        lbDealerCard1.setText(DEALER.getHand().get(0).toString());
 
-        if (dealer.hasSoft17() || dealer.stand() <= 16) {
-            Card card = deck.getCard();
-            dealer.hit(card);
-            for (JLabel cardLabel : dealerHand) {
+        if (DEALER.hasSoft17() || DEALER.getHandValue() <= 16) {
+            Card card = DECK.getCard();
+            DEALER.hit(card);
+            for (JLabel cardLabel : DEALER_HAND) {
                 if (cardLabel.getText().equals("Empty")) {
                     cardLabel.setText(card.toString());
                     break;
                 }
             }
         }
-        updateCardImages(player, playerHand);
-        updateCardImages(dealer, dealerHand);
+        updateCardImages(PLAYER, PLAYER_HAND);
+        updateCardImages(DEALER, DEALER_HAND);
 
-        final int playerFinalHand = player.stand();
-        final int dealerFinalHand = dealer.stand();
+        final int playerFinalHand = PLAYER.getHandValue();
+        final int dealerFinalHand = DEALER.getHandValue();
 
-        updateHandValue(dealer, lbDealerHand);
+        updateHandValue(DEALER, lbDealerHand);
 
         Player winner = null;
-        if (player.isBelowLimit() && dealer.isBelowLimit()) {
-            if (player.hasBlackjack() ^ dealer.hasBlackjack()) {
-                winner = player.hasBlackjack() ? player : dealer;
+        if (PLAYER.isBelowLimit() && DEALER.isBelowLimit()) {
+            if (PLAYER.hasBlackjack() ^ DEALER.hasBlackjack()) {
+                winner = PLAYER.hasBlackjack() ? PLAYER : DEALER;
             } else if (playerFinalHand == dealerFinalHand) {
                 displayMessage("Draw");
-                player.addChips(player.getBet());
-                player.setBet(0);
+                PLAYER.addChips(PLAYER.getBet());
+                PLAYER.setBet(0);
             } else {
-                winner = playerFinalHand > dealerFinalHand ? player : dealer;
+                winner = playerFinalHand > dealerFinalHand ? PLAYER : DEALER;
             }
 
-        // If either the player or the dealer went past the limit, but not both
+        // If either the PLAYER or the DEALER went past the limit, but not both
         } else if (playerFinalHand > 21 ^ dealerFinalHand > 21){
-            winner = playerFinalHand <= 21 ? player : dealer;
+            winner = playerFinalHand <= 21 ? PLAYER : DEALER;
         } else {
             displayMessage("You both lost", Color.red);
         }
 
         if (winner != null) {
             if (winner instanceof Dealer) {
-                displayMessage((dealer.hasBlackjack()) ? 
+                displayMessage((DEALER.hasBlackjack()) ? 
                     "The Dealer got blackjack" : "The Dealer won this round", 
                     Color.red);
             } else {
-                if (player.hasBlackjack()) {
+                if (PLAYER.hasBlackjack()) {
                     displayMessage("You got blackjack", Color.green);
-                    player.addChips(player.getBet() + (player.getBet() * 1.5));
+                    PLAYER.addChips(PLAYER.getBet() + (PLAYER.getBet() * 1.5));
                 } else {
                     displayMessage("You won this round", Color.green);
-                    player.addChips(player.getBet() * 2);
+                    PLAYER.addChips(PLAYER.getBet() * 2);
                 }
             }
-            player.setBet(0);
+            PLAYER.setBet(0);
         }
 
-        // End the game if the player is out of chips
-        if (player.getChips() < minimumBet) {
+        // End the game if the PLAYER is out of chips
+        if (PLAYER.getChips() < MINIMUM_BET) {
             displayMessage("You lost the game", Color.red);
         } else {
             btnNextHand.setEnabled(true);
@@ -814,11 +834,11 @@ public class BlackjackGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNextHandActionPerformed
 
     private void newGame() {
-        for (JLabel cardLabel : playerHand) {
+        for (JLabel cardLabel : PLAYER_HAND) {
             cardLabel.setText("Empty");
         }
 
-        for (JLabel cardLabel : dealerHand) {
+        for (JLabel cardLabel : DEALER_HAND) {
             cardLabel.setText("Empty");
         }
 
@@ -829,32 +849,30 @@ public class BlackjackGUI extends javax.swing.JFrame {
 
         clearMessage();
         btnNextHand.setEnabled(false);
-        player.resetHand(this.deck);
-        dealer.resetHand(this.deck);
+        PLAYER.resetHand(this.DECK);
+        DEALER.resetHand(this.DECK);
 
-        setOptions(playOptions, false);
-        if (player.getBet() * 2 > player.getChips()) {
+        setOptions(PLAY_OPTIONS, false);
+        if (PLAYER.getBet() * 2 > PLAYER.getChips()) {
             btnDoubleDown.setEnabled(false);
         }
 
         updateBetOptions();
         updatePlayerStats();
-        // updateHandValue(player, lbPlayerHand);
-        // updateHandValue(dealer, lbDealerHand);
-        updateCardImages(player, playerHand);
-        updateCardImages(dealer, dealerHand);
+        updateCardImages(PLAYER, PLAYER_HAND);
+        updateCardImages(DEALER, DEALER_HAND);
     }
 
     private void btnDoubleDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoubleDownActionPerformed
-        player.doubleBet();
-        Card card = deck.getCard();
-        player.hit(card);
+        PLAYER.doubleBet();
+        Card card = DECK.getCard();
+        PLAYER.hit(card);
 
         displayMessage("You drew " + card);
-        updateHandValue(player, lbPlayerHand);
+        updateHandValue(PLAYER, lbPlayerHand);
         
         int i = 0;
-        for (JLabel playerCard : playerHand) {
+        for (JLabel playerCard : PLAYER_HAND) {
             if (playerCard.getText().equals("Empty")) {
                 playerCard.setText(card.toString());
                 if (i == 5) {
@@ -870,18 +888,18 @@ public class BlackjackGUI extends javax.swing.JFrame {
         btnHit.setEnabled(false);
         btnDoubleDown.setEnabled(false);
         btnSurrender.setEnabled(false);
-        updateCardImages(player, playerHand);
-        updateCardImages(dealer, dealerHand);
+        updateCardImages(PLAYER, PLAYER_HAND);
+        updateCardImages(DEALER, DEALER_HAND);
     }//GEN-LAST:event_btnDoubleDownActionPerformed
 
     private void bet(int amount) {
-        if (player.getBet() == 0) {
-            player.setBet(amount);
+        if (PLAYER.getBet() == 0) {
+            PLAYER.setBet(amount);
         } else {
-            player.addBet(amount);
+            PLAYER.addBet(amount);
         }
 
-        if (player.getBet() >= minimumBet) {
+        if (PLAYER.getBet() >= MINIMUM_BET) {
             btnDeal.setEnabled(true);
         }
 
@@ -890,22 +908,22 @@ public class BlackjackGUI extends javax.swing.JFrame {
     }
 
     /**
-     * Checks if the player still has sufficient chips to bet a certain amount
+     * Checks if the PLAYER still has sufficient chips to bet a certain amount
      */
     private void updateBetOptions() {
         final int[] BET_VALUES = {5, 10, 25, 50, 100};
         for (int i = 0, len = BET_VALUES.length; i < len; i++) {
-            if (player.getChips() < BET_VALUES[i]) {
-                betOptions[i].setEnabled(false);
-            } else if (!betOptions[i].isEnabled()) {
-                betOptions[i].setEnabled(true);
+            if (PLAYER.getChips() < BET_VALUES[i]) {
+                BET_OPTIONS[i].setEnabled(false);
+            } else if (!BET_OPTIONS[i].isEnabled()) {
+                BET_OPTIONS[i].setEnabled(true);
             }
         }
     }
 
     private void updatePlayerStats() {
-        lbChipsValue.setText(Format.currency(player.getChips()));
-        lbBetValue.setText(Format.currency(player.getBet()));
+        lbChipsValue.setText(Format.currency(PLAYER.getChips()));
+        lbBetValue.setText(Format.currency(PLAYER.getBet()));
     }
 
     /**

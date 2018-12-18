@@ -5,41 +5,47 @@ import javax.swing.ImageIcon;
 public class Card {
 
     private int value;
-    final private String suite;
+    final private String suit;
     protected ImageIcon frontIcon;
-    protected ImageIcon backIcon;
+    private ImageIcon backIcon;
 
-    public Card(int value, String suite) {
+    public Card(int value, String suit) {
         if (value > 1 && value <= 10) {
             this.value = value;
         }
-        this.suite = suite;
+        this.suit = suit;
 
         // Images from https://github.com/htdebeer/SVG-cards
         if (value != 0) {
             this.frontIcon = ImageResizer.getScaledImage(
                 new ImageIcon(getClass().getResource(
-                    "/blackjack/withshadow/" + suite + "/" + value + ".png"
-                )
-            ), 100);
+                    "/blackjack/withshadow/" + suit + "/" + value + ".png"
+                )), 
+                100
+            );
             this.backIcon = ImageResizer.getScaledImage(
                 new ImageIcon(getClass().getResource(
-                    "/blackjack/withshadow/" + suite + "/Back.png"
-                )
-            ), 100);
+                    "/blackjack/withshadow/" + suit + "/Back.png"
+                )), 
+                100
+            );
         }
     }
 
     @Override
     public String toString() {
-        return this.value + " of " + this.suite;
+        return this.value + " of " + this.suit;
     }
 
-    public String getSuite() {
-        return this.suite;
+    public String getSuit() {
+        return this.suit;
     }
 
     public int getValue() {
         return this.value;
+    }
+
+    public ImageIcon getBackIcon() {
+        return this.backIcon;
     }
 }

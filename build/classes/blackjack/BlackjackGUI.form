@@ -354,7 +354,7 @@
               <Font name="Segoe UI" size="12" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="&#xd;&#xa;String.valueOf(this.minimumBet)&#xd;&#xa;" type="code"/>
+              <Connection code="String.valueOf(this.MINIMUM_BET) " type="code"/>
             </Property>
           </Properties>
         </Component>
@@ -372,7 +372,7 @@
               <Font name="Segoe UI" size="12" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="Format.currency(player.getBet())&#xd;&#xa;" type="code"/>
+              <Connection code="Format.currency(PLAYER.getBet())&#xd;&#xa;" type="code"/>
             </Property>
           </Properties>
         </Component>
@@ -455,8 +455,14 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="ImageResizer.getScaledImage(&#xd;&#xa;    new ImageIcon(getClass().getResource(&#xd;&#xa;        &quot;/blackjack/logo1alt.png&quot;&#xd;&#xa;    )), 150)&#xd;&#xa;" type="code"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="BLACKJACK"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="lbLogo.setText(&quot;&quot;);"/>
+          </AuxValues>
         </Component>
         <Container class="javax.swing.JPanel" name="pnlDealerHand">
           <Properties>
@@ -576,8 +582,11 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="ImageResizer.getScaledImage(&#xd;&#xa;    new ImageIcon(&#xd;&#xa;        getClass().getResource(&#xd;&#xa;            &quot;/blackjack/chipalt.png&quot;&#xd;&#xa;        )&#xd;&#xa;    ), &#xd;&#xa;    lbChipsValue.getFont().getSize()&#xd;&#xa;)" type="code"/>
+            </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="Format.currency(player.getChips())&#xd;&#xa;" type="code"/>
+              <Connection code="Format.currency(PLAYER.getChips())&#xd;&#xa;" type="code"/>
             </Property>
           </Properties>
         </Component>

@@ -41,21 +41,14 @@ public class Player {
     }
 
     public boolean isBelowLimit() {
-        return this.stand() <= 21;
-    }
-
-    public void printHand() {
-        System.out.println("Your hand:\n");
-        this.hand.forEach((card) -> {
-            System.out.println("    " + card);
-        });
+        return this.getHandValue() <= 21;
     }
 
     /**
      * Counts the value of the player's hand
      * @return the total value of the player's hand
      */
-    public int stand() {
+    public int getHandValue() {
         ArrayList<Card> aces = new ArrayList<>();
         int total = 0;
 

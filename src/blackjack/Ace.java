@@ -13,15 +13,10 @@ public class Ace extends Card {
                 "/blackjack/withshadow/" + suite + "/Ace.png"
             )
         ), 100);
-        this.backIcon = ImageResizer.getScaledImage(
-            new ImageIcon(getClass().getResource(
-                "/blackjack/withshadow/" + suite + "/Back.png"
-            )
-        ), 100);
     }
 
     @Override
     public String toString() {
-        return "Ace of " + this.getSuite();
+        return "Ace of " + this.getSuit();
     }
 }

@@ -20,16 +20,10 @@ public class FaceCard extends Card {
                 "/blackjack/withshadow/" + suite + "/" + face + ".png"
             )
         ), 100);
-        this.backIcon = ImageResizer.getScaledImage(
-            new ImageIcon(getClass().getResource(
-                "/blackjack/withshadow/" + suite + "/Back.png"
-            )
-        ), 100);
     }
 
     @Override
     public String toString() {
-        return this.face + " of " + this.getSuite();
+        return this.face + " of " + this.getSuit();
     }
 }
-
