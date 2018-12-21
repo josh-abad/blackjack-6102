@@ -12,10 +12,13 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
+import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.Timer;
+import javax.swing.JPanel;
+import javax.swing.LayoutStyle;
+import javax.swing.WindowConstants;
 
 public class BlackjackGUI extends javax.swing.JFrame {
 
@@ -27,6 +30,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
     private final JLabel[] DEALER_HAND;
     private final JButton[] PLAY_OPTIONS;
     private final JButton[] BET_OPTIONS;
+    private final JButton[] HAND_OPTIONS;
 
     /**
      * Creates new form BlackjackGUI
@@ -67,10 +71,15 @@ public class BlackjackGUI extends javax.swing.JFrame {
         BET_OPTIONS[3] = btn50Chips;
         BET_OPTIONS[4] = btn100Chips;
 
+        HAND_OPTIONS = new JButton[3];
+        HAND_OPTIONS[0] = btnDeal;
+        HAND_OPTIONS[1] = btnNextHand;
+        HAND_OPTIONS[2] = btnQuitGame;
+
         updateCardImages(PLAYER, PLAYER_HAND);
         updateCardImages(DEALER, DEALER_HAND);
 
-        getContentPane().setBackground(new Color(45, 45, 48));
+        getContentPane().setBackground(new Color(13, 13, 13));
     }
 
     /**
@@ -82,93 +91,93 @@ public class BlackjackGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
-        btn5Chips = new javax.swing.JButton();
-        btn10Chips = new javax.swing.JButton();
-        btn25Chips = new javax.swing.JButton();
-        btn50Chips = new javax.swing.JButton();
-        lbBet = new javax.swing.JLabel();
-        btn100Chips = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        lbBetValue = new javax.swing.JLabel();
-        lbCurrentBet = new javax.swing.JLabel();
-        pnlTable = new javax.swing.JPanel();
-        lbLogo = new javax.swing.JLabel();
-        pnlDealerHand = new javax.swing.JPanel();
-        lbDealerCard1 = new javax.swing.JLabel();
-        lbDealerCard2 = new javax.swing.JLabel();
-        lbDealerCard3 = new javax.swing.JLabel();
-        lbDealerCard4 = new javax.swing.JLabel();
-        lbDealerCard5 = new javax.swing.JLabel();
-        lbDealerCard6 = new javax.swing.JLabel();
-        lbDealerHand = new javax.swing.JLabel();
-        lbChipsValue = new javax.swing.JLabel();
-        pnlPlayerHand = new javax.swing.JPanel();
-        lbPlayerCard1 = new javax.swing.JLabel();
-        lbPlayerCard2 = new javax.swing.JLabel();
-        lbPlayerCard3 = new javax.swing.JLabel();
-        lbPlayerCard4 = new javax.swing.JLabel();
-        lbPlayerCard5 = new javax.swing.JLabel();
-        lbPlayerCard6 = new javax.swing.JLabel();
-        lbPlayerHand = new javax.swing.JLabel();
-        pnlMessage = new javax.swing.JPanel();
-        lbMessage = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        btnHit = new javax.swing.JButton();
-        btnStand = new javax.swing.JButton();
-        btnSurrender = new javax.swing.JButton();
-        btnDoubleDown = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        btnQuitGame = new javax.swing.JButton();
-        btnNextHand = new javax.swing.JButton();
-        btnDeal = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
+        pnlBetOptions = new JPanel();
+        btn5Chips = new JButton();
+        btn10Chips = new JButton();
+        btn25Chips = new JButton();
+        btn50Chips = new JButton();
+        lbBet = new JLabel();
+        btn100Chips = new JButton();
+        pnlCurrentBet = new JPanel();
+        lbBetValue = new JLabel();
+        lbCurrentBet = new JLabel();
+        pnlTable = new JPanel();
+        lbLogo = new JLabel();
+        pnlDealerHand = new JPanel();
+        lbDealerCard1 = new JLabel();
+        lbDealerCard2 = new JLabel();
+        lbDealerCard3 = new JLabel();
+        lbDealerCard4 = new JLabel();
+        lbDealerCard5 = new JLabel();
+        lbDealerCard6 = new JLabel();
+        lbDealerHand = new JLabel();
+        lbChipsValue = new JLabel();
+        pnlPlayerHand = new JPanel();
+        lbPlayerCard1 = new JLabel();
+        lbPlayerCard2 = new JLabel();
+        lbPlayerCard3 = new JLabel();
+        lbPlayerCard4 = new JLabel();
+        lbPlayerCard5 = new JLabel();
+        lbPlayerCard6 = new JLabel();
+        lbPlayerHand = new JLabel();
+        pnlMessage = new JPanel();
+        lbMessage = new JLabel();
+        pnlPlayOptions = new JPanel();
+        btnHit = new JButton();
+        btnStand = new JButton();
+        btnSurrender = new JButton();
+        btnDoubleDown = new JButton();
+        lbPlay = new JLabel();
+        pnlHandOptions = new JPanel();
+        btnQuitGame = new JButton();
+        btnNextHand = new JButton();
+        btnDeal = new JButton();
+        lbHand = new JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Blackjack");
         setExtendedState(Frame.MAXIMIZED_BOTH);
         setIconImage(new ImageIcon(getClass().getResource(
             "/blackjack/images/logo2.png"
         )).getImage());
 
-        jPanel2.setBackground(new java.awt.Color(37, 37, 38));
+        pnlBetOptions.setBackground(new Color(19, 19, 19));
 
-        btn5Chips.setBackground(new java.awt.Color(0, 0, 0));
-        btn5Chips.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btn5Chips.setForeground(new java.awt.Color(255, 255, 255));
+        btn5Chips.setBackground(new Color(26, 26, 26));
+        btn5Chips.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
+        btn5Chips.setForeground(new Color(255, 255, 255));
         btn5Chips.setIcon(ImageResizer.getScaledImage(
             new ImageIcon(getClass().getResource(
-                "/blackjack/images/chip.png"
+                "/blackjack/images/chipRed.png"
             )),
             btn5Chips.getFont().getSize()
         ));
         btn5Chips.setText("5");
         btn5Chips.setFocusPainted(false);
-        btn5Chips.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btn5Chips.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 btn5ChipsActionPerformed(evt);
             }
         });
 
-        btn10Chips.setBackground(new java.awt.Color(0, 0, 0));
-        btn10Chips.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btn10Chips.setForeground(new java.awt.Color(255, 255, 255));
+        btn10Chips.setBackground(new Color(26, 26, 26));
+        btn10Chips.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
+        btn10Chips.setForeground(new Color(255, 255, 255));
         btn10Chips.setIcon(ImageResizer.getScaledImage(
             new ImageIcon(getClass().getResource(
                 "/blackjack/images/chipWhite.png")),
         btn10Chips.getFont().getSize()));
 btn10Chips.setText("10");
 btn10Chips.setFocusPainted(false);
-btn10Chips.addActionListener(new java.awt.event.ActionListener() {
-    public void actionPerformed(java.awt.event.ActionEvent evt) {
+btn10Chips.addActionListener(new ActionListener() {
+    public void actionPerformed(ActionEvent evt) {
         btn10ChipsActionPerformed(evt);
     }
     });
 
-    btn25Chips.setBackground(new java.awt.Color(0, 0, 0));
-    btn25Chips.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-    btn25Chips.setForeground(new java.awt.Color(255, 255, 255));
+    btn25Chips.setBackground(new Color(26, 26, 26));
+    btn25Chips.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
+    btn25Chips.setForeground(new Color(255, 255, 255));
     btn25Chips.setIcon(ImageResizer.getScaledImage(
         new ImageIcon(getClass().getResource(
             "/blackjack/images/chipGreen.png")),
@@ -176,117 +185,113 @@ btn10Chips.addActionListener(new java.awt.event.ActionListener() {
     );
     btn25Chips.setText("25");
     btn25Chips.setFocusPainted(false);
-    btn25Chips.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
+    btn25Chips.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
             btn25ChipsActionPerformed(evt);
         }
     });
 
-    btn50Chips.setBackground(new java.awt.Color(0, 0, 0));
-    btn50Chips.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-    btn50Chips.setForeground(new java.awt.Color(255, 255, 255));
+    btn50Chips.setBackground(new Color(26, 26, 26));
+    btn50Chips.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
+    btn50Chips.setForeground(new Color(255, 255, 255));
     btn50Chips.setIcon(ImageResizer.getScaledImage(
         new ImageIcon(getClass().getResource(
             "/blackjack/images/chipBlue.png")),
     btn50Chips.getFont().getSize()));
     btn50Chips.setText("50");
     btn50Chips.setFocusPainted(false);
-    btn50Chips.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
+    btn50Chips.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
             btn50ChipsActionPerformed(evt);
         }
     });
 
-    lbBet.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-    lbBet.setForeground(new java.awt.Color(255, 255, 255));
+    lbBet.setFont(new Font("Segoe UI", 1, 12)); // NOI18N
+    lbBet.setForeground(new Color(255, 255, 255));
     lbBet.setText("Bet");
 
-    btn100Chips.setBackground(new java.awt.Color(0, 0, 0));
-    btn100Chips.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-    btn100Chips.setForeground(new java.awt.Color(255, 255, 255));
+    btn100Chips.setBackground(new Color(26, 26, 26));
+    btn100Chips.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
+    btn100Chips.setForeground(new Color(255, 255, 255));
     btn100Chips.setIcon(ImageResizer.getScaledImage(
         new ImageIcon(getClass().getResource(
             "/blackjack/images/chipBlack.png")),
     btn100Chips.getFont().getSize()));
     btn100Chips.setText("100");
     btn100Chips.setFocusPainted(false);
-    btn100Chips.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
+    btn100Chips.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
             btn100ChipsActionPerformed(evt);
         }
     });
 
-    javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-    jPanel2.setLayout(jPanel2Layout);
-    jPanel2Layout.setHorizontalGroup(
-        jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(jPanel2Layout.createSequentialGroup()
+        GroupLayout pnlBetOptionsLayout = new GroupLayout(pnlBetOptions);
+    pnlBetOptions.setLayout(pnlBetOptionsLayout);
+    pnlBetOptionsLayout.setHorizontalGroup(pnlBetOptionsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        .addGroup(pnlBetOptionsLayout.createSequentialGroup()
             .addContainerGap()
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBetOptionsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                 .addComponent(lbBet)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addComponent(btn5Chips, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlBetOptionsLayout.createSequentialGroup()
+                    .addComponent(btn5Chips, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(btn10Chips)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(btn25Chips)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(btn50Chips)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(btn100Chips, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(btn100Chips, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
             .addContainerGap())
     );
-    jPanel2Layout.setVerticalGroup(
-        jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(jPanel2Layout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+    pnlBetOptionsLayout.setVerticalGroup(pnlBetOptionsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        .addGroup(pnlBetOptionsLayout.createSequentialGroup()
+            .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(lbBet)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(pnlBetOptionsLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                 .addComponent(btn5Chips)
                 .addComponent(btn10Chips)
                 .addComponent(btn25Chips)
                 .addComponent(btn50Chips)
                 .addComponent(btn100Chips))
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
-    jPanel1.setBackground(new java.awt.Color(37, 37, 38));
+    pnlCurrentBet.setBackground(new Color(19, 19, 19));
 
-    lbBetValue.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-    lbBetValue.setForeground(new java.awt.Color(255, 255, 255));
+    lbBetValue.setFont(new Font("Segoe UI", 0, 18)); // NOI18N
+    lbBetValue.setForeground(new Color(255, 255, 255));
     lbBetValue.setText(Format.currency(PLAYER.getBet())
     );
 
-    lbCurrentBet.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-    lbCurrentBet.setForeground(new java.awt.Color(255, 255, 255));
+    lbCurrentBet.setFont(new Font("Segoe UI", 0, 18)); // NOI18N
+    lbCurrentBet.setForeground(new Color(255, 255, 255));
     lbCurrentBet.setText("Bet:");
 
-    javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-    jPanel1.setLayout(jPanel1Layout);
-    jPanel1Layout.setHorizontalGroup(
-        jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(jPanel1Layout.createSequentialGroup()
+        GroupLayout pnlCurrentBetLayout = new GroupLayout(pnlCurrentBet);
+    pnlCurrentBet.setLayout(pnlCurrentBetLayout);
+    pnlCurrentBetLayout.setHorizontalGroup(pnlCurrentBetLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        .addGroup(pnlCurrentBetLayout.createSequentialGroup()
             .addGap(20, 20, 20)
             .addComponent(lbCurrentBet)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(lbBetValue)
             .addContainerGap(20, Short.MAX_VALUE))
     );
-    jPanel1Layout.setVerticalGroup(
-        jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    pnlCurrentBetLayout.setVerticalGroup(pnlCurrentBetLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        .addGroup(GroupLayout.Alignment.TRAILING, pnlCurrentBetLayout.createSequentialGroup()
+            .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnlCurrentBetLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                 .addComponent(lbBetValue)
                 .addComponent(lbCurrentBet))
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
-    pnlTable.setBackground(new java.awt.Color(0, 102, 51));
+    pnlTable.setBackground(new Color(0, 102, 51));
 
-    lbLogo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-    lbLogo.setForeground(new java.awt.Color(255, 255, 255));
+    lbLogo.setFont(new Font("Segoe UI", 1, 24)); // NOI18N
+    lbLogo.setForeground(new Color(255, 255, 255));
     lbLogo.setIcon(ImageResizer.getScaledImage(
         new ImageIcon(getClass().getResource(
             "/blackjack/images/logo1.png"
@@ -295,50 +300,48 @@ btn10Chips.addActionListener(new java.awt.event.ActionListener() {
     lbLogo.setText("BLACKJACK");
     lbLogo.setText("");
 
-    pnlDealerHand.setBackground(new java.awt.Color(0, 102, 51));
+    pnlDealerHand.setBackground(new Color(0, 102, 51));
 
-    lbDealerCard1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+    lbDealerCard1.setFont(new Font("Segoe UI", 1, 12)); // NOI18N
     lbDealerCard1.setText("Empty");
 
-    lbDealerCard2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+    lbDealerCard2.setFont(new Font("Segoe UI", 1, 12)); // NOI18N
     lbDealerCard2.setText("Empty");
 
-    lbDealerCard3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+    lbDealerCard3.setFont(new Font("Segoe UI", 1, 12)); // NOI18N
     lbDealerCard3.setText("Empty");
 
-    lbDealerCard4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+    lbDealerCard4.setFont(new Font("Segoe UI", 1, 12)); // NOI18N
     lbDealerCard4.setText("Empty");
 
-    lbDealerCard5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+    lbDealerCard5.setFont(new Font("Segoe UI", 1, 12)); // NOI18N
     lbDealerCard5.setText("Empty");
 
-    lbDealerCard6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+    lbDealerCard6.setFont(new Font("Segoe UI", 1, 12)); // NOI18N
     lbDealerCard6.setText("Empty");
 
-    javax.swing.GroupLayout pnlDealerHandLayout = new javax.swing.GroupLayout(pnlDealerHand);
+        GroupLayout pnlDealerHandLayout = new GroupLayout(pnlDealerHand);
     pnlDealerHand.setLayout(pnlDealerHandLayout);
-    pnlDealerHandLayout.setHorizontalGroup(
-        pnlDealerHandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    pnlDealerHandLayout.setHorizontalGroup(pnlDealerHandLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
         .addGroup(pnlDealerHandLayout.createSequentialGroup()
             .addGap(20, 20, 20)
             .addComponent(lbDealerCard1)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lbDealerCard2)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lbDealerCard3)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lbDealerCard4)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lbDealerCard5)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lbDealerCard6)
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
-    pnlDealerHandLayout.setVerticalGroup(
-        pnlDealerHandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    pnlDealerHandLayout.setVerticalGroup(pnlDealerHandLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
         .addGroup(pnlDealerHandLayout.createSequentialGroup()
             .addGap(20, 20, 20)
-            .addGroup(pnlDealerHandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addGroup(pnlDealerHandLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                 .addComponent(lbDealerCard1)
                 .addComponent(lbDealerCard2)
                 .addComponent(lbDealerCard3)
@@ -348,14 +351,14 @@ btn10Chips.addActionListener(new java.awt.event.ActionListener() {
             .addGap(20, 20, 20))
     );
 
-    lbDealerHand.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-    lbDealerHand.setForeground(new java.awt.Color(255, 255, 255));
+    lbDealerHand.setFont(new Font("Segoe UI", 0, 16)); // NOI18N
+    lbDealerHand.setForeground(new Color(255, 255, 255));
     lbDealerHand.setText("Dealer");
     lbDealerHand.setToolTipText("");
     lbDealerHand.setText("");
 
-    lbChipsValue.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-    lbChipsValue.setForeground(new java.awt.Color(255, 255, 255));
+    lbChipsValue.setFont(new Font("Segoe UI", 0, 36)); // NOI18N
+    lbChipsValue.setForeground(new Color(255, 255, 255));
     lbChipsValue.setIcon(ImageResizer.getScaledImage(
         new ImageIcon(
             getClass().getResource(
@@ -368,50 +371,48 @@ btn10Chips.addActionListener(new java.awt.event.ActionListener() {
     lbChipsValue.setText(Format.currency(PLAYER.getChips())
     );
 
-    pnlPlayerHand.setBackground(new java.awt.Color(0, 102, 51));
+    pnlPlayerHand.setBackground(new Color(0, 102, 51));
 
-    lbPlayerCard1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+    lbPlayerCard1.setFont(new Font("Segoe UI", 1, 12)); // NOI18N
     lbPlayerCard1.setText("Empty");
 
-    lbPlayerCard2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+    lbPlayerCard2.setFont(new Font("Segoe UI", 1, 12)); // NOI18N
     lbPlayerCard2.setText("Empty");
 
-    lbPlayerCard3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+    lbPlayerCard3.setFont(new Font("Segoe UI", 1, 12)); // NOI18N
     lbPlayerCard3.setText("Empty");
 
-    lbPlayerCard4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+    lbPlayerCard4.setFont(new Font("Segoe UI", 1, 12)); // NOI18N
     lbPlayerCard4.setText("Empty");
 
-    lbPlayerCard5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+    lbPlayerCard5.setFont(new Font("Segoe UI", 1, 12)); // NOI18N
     lbPlayerCard5.setText("Empty");
 
-    lbPlayerCard6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+    lbPlayerCard6.setFont(new Font("Segoe UI", 1, 12)); // NOI18N
     lbPlayerCard6.setText("Empty");
 
-    javax.swing.GroupLayout pnlPlayerHandLayout = new javax.swing.GroupLayout(pnlPlayerHand);
+        GroupLayout pnlPlayerHandLayout = new GroupLayout(pnlPlayerHand);
     pnlPlayerHand.setLayout(pnlPlayerHandLayout);
-    pnlPlayerHandLayout.setHorizontalGroup(
-        pnlPlayerHandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    pnlPlayerHandLayout.setHorizontalGroup(pnlPlayerHandLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
         .addGroup(pnlPlayerHandLayout.createSequentialGroup()
             .addGap(20, 20, 20)
             .addComponent(lbPlayerCard1)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lbPlayerCard2)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lbPlayerCard3)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lbPlayerCard4)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lbPlayerCard5)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lbPlayerCard6)
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
-    pnlPlayerHandLayout.setVerticalGroup(
-        pnlPlayerHandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    pnlPlayerHandLayout.setVerticalGroup(pnlPlayerHandLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
         .addGroup(pnlPlayerHandLayout.createSequentialGroup()
             .addGap(20, 20, 20)
-            .addGroup(pnlPlayerHandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addGroup(pnlPlayerHandLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                 .addComponent(lbPlayerCard1)
                 .addComponent(lbPlayerCard2)
                 .addComponent(lbPlayerCard3)
@@ -421,277 +422,269 @@ btn10Chips.addActionListener(new java.awt.event.ActionListener() {
             .addGap(20, 20, 20))
     );
 
-    lbPlayerHand.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-    lbPlayerHand.setForeground(new java.awt.Color(255, 255, 255));
+    lbPlayerHand.setFont(new Font("Segoe UI", 0, 16)); // NOI18N
+    lbPlayerHand.setForeground(new Color(255, 255, 255));
     lbPlayerHand.setText("Player (0)");
     lbPlayerHand.setText("");
 
-    pnlMessage.setBackground(new java.awt.Color(153, 153, 153));
-    pnlMessage.setOpaque(false);
+    pnlMessage.setBackground(pnlTable.getBackground().darker());
 
-    javax.swing.GroupLayout pnlMessageLayout = new javax.swing.GroupLayout(pnlMessage);
+    lbMessage.setFont(new Font("Segoe UI", 0, 16)); // NOI18N
+    lbMessage.setForeground(new Color(255, 255, 255));
+    lbMessage.setText("Welcome to Blackjack! Place your bet.");
+
+        GroupLayout pnlMessageLayout = new GroupLayout(pnlMessage);
     pnlMessage.setLayout(pnlMessageLayout);
-    pnlMessageLayout.setHorizontalGroup(
-        pnlMessageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    pnlMessageLayout.setHorizontalGroup(pnlMessageLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
         .addGroup(pnlMessageLayout.createSequentialGroup()
-            .addGap(29, 29, 29)
+            .addContainerGap(16, Short.MAX_VALUE)
             .addComponent(lbMessage)
-            .addContainerGap(30, Short.MAX_VALUE))
+            .addContainerGap(16, Short.MAX_VALUE))
     );
-    pnlMessageLayout.setVerticalGroup(
-        pnlMessageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    pnlMessageLayout.setVerticalGroup(pnlMessageLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
         .addGroup(pnlMessageLayout.createSequentialGroup()
             .addContainerGap()
             .addComponent(lbMessage)
-            .addContainerGap(10, Short.MAX_VALUE))
+            .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
-    javax.swing.GroupLayout pnlTableLayout = new javax.swing.GroupLayout(pnlTable);
+        GroupLayout pnlTableLayout = new GroupLayout(pnlTable);
     pnlTable.setLayout(pnlTableLayout);
-    pnlTableLayout.setHorizontalGroup(
-        pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    pnlTableLayout.setHorizontalGroup(pnlTableLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
         .addGroup(pnlTableLayout.createSequentialGroup()
             .addContainerGap()
-            .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(pnlDealerHand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnlTableLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addComponent(pnlDealerHand, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlTableLayout.createSequentialGroup()
                     .addComponent(lbLogo)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlMessage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlMessage, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lbChipsValue))
-                .addComponent(pnlPlayerHand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlPlayerHand, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbDealerHand)
                 .addComponent(lbPlayerHand))
             .addContainerGap())
     );
-    pnlTableLayout.setVerticalGroup(
-        pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    pnlTableLayout.setVerticalGroup(pnlTableLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
         .addGroup(pnlTableLayout.createSequentialGroup()
-            .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlTableLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                 .addGroup(pnlTableLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lbLogo)
-                        .addComponent(lbChipsValue)))
-                .addComponent(pnlMessage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(lbLogo))
+                .addComponent(pnlMessage, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbChipsValue))
+            .addGap(18, 18, 18)
             .addComponent(lbDealerHand)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(pnlDealerHand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(pnlDealerHand, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lbPlayerHand)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(pnlPlayerHand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(pnlPlayerHand, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
             .addContainerGap())
     );
 
-    jPanel4.setBackground(new java.awt.Color(37, 37, 38));
+    pnlPlayOptions.setBackground(new Color(19, 19, 19));
 
-    btnHit.setBackground(new java.awt.Color(0, 0, 0));
-    btnHit.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-    btnHit.setForeground(new java.awt.Color(255, 255, 255));
+    btnHit.setBackground(new Color(26, 26, 26));
+    btnHit.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
+    btnHit.setForeground(new Color(255, 255, 255));
     btnHit.setText("Hit");
     btnHit.setFocusPainted(false);
     btnHit.setEnabled(false);
-    btnHit.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
+    btnHit.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
             btnHitActionPerformed(evt);
         }
     });
 
-    btnStand.setBackground(new java.awt.Color(0, 0, 0));
-    btnStand.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-    btnStand.setForeground(new java.awt.Color(255, 255, 255));
+    btnStand.setBackground(new Color(26, 26, 26));
+    btnStand.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
+    btnStand.setForeground(new Color(255, 255, 255));
     btnStand.setText("Stand");
     btnStand.setFocusPainted(false);
     btnStand.setEnabled(false);
-    btnStand.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
+    btnStand.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
             btnStandActionPerformed(evt);
         }
     });
 
-    btnSurrender.setBackground(new java.awt.Color(0, 0, 0));
-    btnSurrender.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-    btnSurrender.setForeground(new java.awt.Color(255, 255, 255));
+    btnSurrender.setBackground(new Color(26, 26, 26));
+    btnSurrender.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
+    btnSurrender.setForeground(new Color(255, 255, 255));
     btnSurrender.setText("Surrender");
     btnSurrender.setFocusPainted(false);
     btnSurrender.setEnabled(false);
-    btnSurrender.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
+    btnSurrender.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
             btnSurrenderActionPerformed(evt);
         }
     });
 
-    btnDoubleDown.setBackground(new java.awt.Color(0, 0, 0));
-    btnDoubleDown.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-    btnDoubleDown.setForeground(new java.awt.Color(255, 255, 255));
+    btnDoubleDown.setBackground(new Color(26, 26, 26));
+    btnDoubleDown.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
+    btnDoubleDown.setForeground(new Color(255, 255, 255));
     btnDoubleDown.setText("Double Down");
     btnDoubleDown.setFocusPainted(false);
     btnDoubleDown.setEnabled(false);
-    btnDoubleDown.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
+    btnDoubleDown.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
             btnDoubleDownActionPerformed(evt);
         }
     });
 
-    jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-    jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-    jLabel3.setText("Play");
+    lbPlay.setFont(new Font("Segoe UI", 1, 12)); // NOI18N
+    lbPlay.setForeground(new Color(255, 255, 255));
+    lbPlay.setText("Play");
 
-    javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-    jPanel4.setLayout(jPanel4Layout);
-    jPanel4Layout.setHorizontalGroup(
-        jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(jPanel4Layout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel4Layout.createSequentialGroup()
+        GroupLayout pnlPlayOptionsLayout = new GroupLayout(pnlPlayOptions);
+    pnlPlayOptions.setLayout(pnlPlayOptionsLayout);
+    pnlPlayOptionsLayout.setHorizontalGroup(pnlPlayOptionsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        .addGroup(pnlPlayOptionsLayout.createSequentialGroup()
+            .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnlPlayOptionsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(pnlPlayOptionsLayout.createSequentialGroup()
                     .addComponent(btnHit)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(btnStand)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(btnDoubleDown)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(btnSurrender))
-                .addComponent(jLabel3))
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(lbPlay))
+            .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
-    jPanel4Layout.setVerticalGroup(
-        jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+    pnlPlayOptionsLayout.setVerticalGroup(pnlPlayOptionsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        .addGroup(GroupLayout.Alignment.TRAILING, pnlPlayOptionsLayout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(jLabel3)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(btnHit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnStand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(lbPlay)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(pnlPlayOptionsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addComponent(btnHit, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnStand, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlPlayOptionsLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDoubleDown)
                     .addComponent(btnSurrender)))
             .addContainerGap())
     );
 
-    jPanel5.setBackground(new java.awt.Color(37, 37, 38));
+    pnlHandOptions.setBackground(new Color(19, 19, 19));
 
-    btnQuitGame.setBackground(new java.awt.Color(0, 0, 0));
-    btnQuitGame.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-    btnQuitGame.setForeground(new java.awt.Color(255, 255, 255));
+    btnQuitGame.setBackground(new Color(26, 26, 26));
+    btnQuitGame.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
+    btnQuitGame.setForeground(new Color(255, 255, 255));
     btnQuitGame.setText("Quit Game");
     btnQuitGame.setFocusPainted(false);
-    btnQuitGame.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
+    btnQuitGame.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
             btnQuitGameActionPerformed(evt);
         }
     });
 
-    btnNextHand.setBackground(new java.awt.Color(0, 0, 0));
-    btnNextHand.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-    btnNextHand.setForeground(new java.awt.Color(255, 255, 255));
+    btnNextHand.setBackground(new Color(26, 26, 26));
+    btnNextHand.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
+    btnNextHand.setForeground(new Color(255, 255, 255));
     btnNextHand.setText("Next Hand");
     btnNextHand.setFocusPainted(false);
     btnNextHand.setEnabled(false);
-    btnNextHand.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
+    btnNextHand.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
             btnNextHandActionPerformed(evt);
         }
     });
 
-    btnDeal.setBackground(new java.awt.Color(0, 0, 0));
-    btnDeal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-    btnDeal.setForeground(new java.awt.Color(255, 255, 255));
+    btnDeal.setBackground(new Color(26, 26, 26));
+    btnDeal.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
+    btnDeal.setForeground(new Color(255, 255, 255));
     btnDeal.setText("Deal");
     btnDeal.setFocusPainted(false);
     btnDeal.setEnabled(false);
-    btnDeal.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
+    btnDeal.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
             btnDealActionPerformed(evt);
         }
     });
 
-    jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-    jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-    jLabel4.setText("Hand");
+    lbHand.setFont(new Font("Segoe UI", 1, 12)); // NOI18N
+    lbHand.setForeground(new Color(255, 255, 255));
+    lbHand.setText("Hand");
 
-    javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-    jPanel5.setLayout(jPanel5Layout);
-    jPanel5Layout.setHorizontalGroup(
-        jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(jPanel5Layout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel5Layout.createSequentialGroup()
-                    .addComponent(btnDeal, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        GroupLayout pnlHandOptionsLayout = new GroupLayout(pnlHandOptions);
+    pnlHandOptions.setLayout(pnlHandOptionsLayout);
+    pnlHandOptionsLayout.setHorizontalGroup(pnlHandOptionsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        .addGroup(pnlHandOptionsLayout.createSequentialGroup()
+            .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnlHandOptionsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(pnlHandOptionsLayout.createSequentialGroup()
+                    .addComponent(btnDeal, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(btnNextHand)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(btnQuitGame))
-                .addComponent(jLabel4))
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(lbHand))
+            .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
-    jPanel5Layout.setVerticalGroup(
-        jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel4)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+    pnlHandOptionsLayout.setVerticalGroup(pnlHandOptionsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        .addGroup(GroupLayout.Alignment.TRAILING, pnlHandOptionsLayout.createSequentialGroup()
+            .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lbHand)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(pnlHandOptionsLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                 .addComponent(btnDeal)
                 .addComponent(btnNextHand)
                 .addComponent(btnQuitGame))
             .addContainerGap())
     );
 
-    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        GroupLayout layout = new GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
-    layout.setHorizontalGroup(
-        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        .addComponent(pnlTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlCurrentBet, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(pnlBetOptions, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(pnlPlayOptions, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(pnlHandOptions, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addComponent(pnlTable, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
-    layout.setVerticalGroup(
-        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-            .addComponent(pnlTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addComponent(pnlTable, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                .addComponent(pnlBetOptions, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlHandOptions, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlPlayOptions, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlCurrentBet, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addContainerGap())
     );
 
     pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn5ChipsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ChipsActionPerformed
+    private void btn5ChipsActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btn5ChipsActionPerformed
         bet(Integer.parseInt(btn5Chips.getText()));
     }//GEN-LAST:event_btn5ChipsActionPerformed
 
-    private void btn10ChipsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn10ChipsActionPerformed
+    private void btn10ChipsActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btn10ChipsActionPerformed
         bet(Integer.parseInt(btn10Chips.getText()));
     }//GEN-LAST:event_btn10ChipsActionPerformed
 
-    private void btn25ChipsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn25ChipsActionPerformed
+    private void btn25ChipsActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btn25ChipsActionPerformed
         bet(Integer.parseInt(btn25Chips.getText()));
     }//GEN-LAST:event_btn25ChipsActionPerformed
 
-    private void btn50ChipsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn50ChipsActionPerformed
+    private void btn50ChipsActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btn50ChipsActionPerformed
         bet(Integer.parseInt(btn50Chips.getText()));
     }//GEN-LAST:event_btn50ChipsActionPerformed
 
-    private void btn100ChipsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn100ChipsActionPerformed
+    private void btn100ChipsActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btn100ChipsActionPerformed
         bet(Integer.parseInt(btn100Chips.getText()));
     }//GEN-LAST:event_btn100ChipsActionPerformed
 
@@ -707,9 +700,12 @@ btn10Chips.addActionListener(new java.awt.event.ActionListener() {
         if (!pnlMessage.isOpaque()) {
             pnlMessage.setOpaque(true);
         }
-        pnlMessage.setBackground(color);
-        lbMessage.setText(message);
-        lbMessage.setFont(new Font("Segoe UI", 0, 16));
+        if (!color.equals(pnlMessage.getBackground())) {
+            pnlMessage.setBackground(color);
+        }
+        if (!message.equals(lbMessage.getText())) {
+            lbMessage.setText(message);
+        }
         lbMessage.setForeground(color.equals(Color.green) 
             ? Color.black : Color.white);
     }
@@ -773,11 +769,11 @@ btn10Chips.addActionListener(new java.awt.event.ActionListener() {
         }
     }
 
-    private void btnHitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHitActionPerformed
+    private void btnHitActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnHitActionPerformed
         Card card = DECK.getCard();
         PLAYER.hit(card);
 
-        displayMessage("You drew " + card);
+        displayMessage("You draw " + card + ".");
         updateHandValue(PLAYER, lbPlayerHand);
         
         int i = 0;
@@ -802,8 +798,9 @@ btn10Chips.addActionListener(new java.awt.event.ActionListener() {
         updateCardImages(DEALER, DEALER_HAND);
     }//GEN-LAST:event_btnHitActionPerformed
 
-    private void btnSurrenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSurrenderActionPerformed
-        displayMessage("You surrendered and got half of your bet");
+    private void btnSurrenderActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnSurrenderActionPerformed
+        displayMessage("You surrendered and got back " 
+            + Format.currency(PLAYER.getBet() / 2) + " Chips.");
         PLAYER.addChips(PLAYER.getBet() / 2);
         PLAYER.setBet(0);
         updatePlayerStats();
@@ -811,19 +808,11 @@ btn10Chips.addActionListener(new java.awt.event.ActionListener() {
         btnNextHand.setEnabled(true);
     }//GEN-LAST:event_btnSurrenderActionPerformed
 
-    private void btnDealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDealActionPerformed
-        lbDealerHand.setText("Dealer");
+    private void btnDealActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnDealActionPerformed
+        lbDealerHand.setText(DEALER.toString());
 
         this.DECK.shuffle();
 
-        /*
-        pnlPlayerHand.setBorder(
-            javax.swing.BorderFactory.createLineBorder(
-                new java.awt.Color(255, 255, 255), 5
-            )
-        );
-        */
-
         pnlPlayerHand.setBorder(
             javax.swing.BorderFactory.createLineBorder(
                 pnlTable.getBackground().brighter(), 5
@@ -835,19 +824,11 @@ btn10Chips.addActionListener(new java.awt.event.ActionListener() {
                 pnlTable.getBackground().brighter(), 5
             )
         );
-
-        /*
-        pnlDealerHand.setBorder(
-            javax.swing.BorderFactory.createLineBorder(
-                new java.awt.Color(255, 255, 255), 5
-            )
-        );
-        */
 
         setOptions(BET_OPTIONS, false);
 
         setOptions(PLAY_OPTIONS, true);
-        if (PLAYER.getBet() * 2 > PLAYER.getChips()) {
+        if (PLAYER.getBet() * 2 >= PLAYER.getChips()) {
             btnDoubleDown.setEnabled(false);
         }
         
@@ -865,6 +846,9 @@ btn10Chips.addActionListener(new java.awt.event.ActionListener() {
             }
         }
 
+        displayMessage("Your first two cards are " + PLAYER.getHand().get(0) 
+            + " and " + PLAYER.getHand().get(1) + ".");
+
         btnDeal.setEnabled(false);
 
         updateHandValue(PLAYER, lbPlayerHand);
@@ -873,11 +857,11 @@ btn10Chips.addActionListener(new java.awt.event.ActionListener() {
         updateCardImages(DEALER, DEALER_HAND);
     }//GEN-LAST:event_btnDealActionPerformed
 
-    private void btnQuitGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitGameActionPerformed
+    private void btnQuitGameActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnQuitGameActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnQuitGameActionPerformed
 
-    private void btnStandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStandActionPerformed
+    private void btnStandActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnStandActionPerformed
         setOptions(PLAY_OPTIONS, false);
         pnlMessage.setVisible(true);
         lbDealerCard1.setText(DEALER.getHand().get(0).toString());
@@ -905,7 +889,7 @@ btn10Chips.addActionListener(new java.awt.event.ActionListener() {
             if (PLAYER.hasBlackjack() ^ DEALER.hasBlackjack()) {
                 winner = PLAYER.hasBlackjack() ? PLAYER : DEALER;
             } else if (playerFinalHand == dealerFinalHand) {
-                displayMessage("Draw");
+                displayMessage("You push for a tie.");
                 PLAYER.addChips(PLAYER.getBet());
                 PLAYER.setBet(0);
             } else {
@@ -916,21 +900,27 @@ btn10Chips.addActionListener(new java.awt.event.ActionListener() {
         } else if (playerFinalHand > 21 ^ dealerFinalHand > 21){
             winner = playerFinalHand <= 21 ? PLAYER : DEALER;
         } else {
-            displayMessage("You both lost", Color.red);
+            displayMessage("You both went over.", Color.red);
         }
 
         if (winner != null) {
             if (winner instanceof Dealer) {
                 displayMessage((DEALER.hasBlackjack()) ? 
-                    "The Dealer got blackjack" : "The Dealer won this round", 
+                    "The Dealer got Blackjack and you lose " 
+                    + Format.currency(PLAYER.getBet()) + " Chips." 
+                    : "You lose " + Format.currency(PLAYER.getBet()) +  " Chips.", 
                     Color.red);
             } else {
                 if (PLAYER.hasBlackjack()) {
-                    displayMessage("You got blackjack", Color.green);
-                    PLAYER.addChips(PLAYER.getBet() + (PLAYER.getBet() * 1.5));
+                    double payout = PLAYER.getBet() + (PLAYER.getBet() * 1.5);
+                    displayMessage("You got Blackjack and won " 
+                        + Format.currency(PLAYER.getBet() * 1.5) + " Chips!", Color.green);
+                    PLAYER.addChips(payout);
                 } else {
-                    displayMessage("You won this round", Color.green);
-                    PLAYER.addChips(PLAYER.getBet() * 2);
+                    double payout = PLAYER.getBet() * 2;
+                    displayMessage("You won " 
+                        + Format.currency(PLAYER.getBet()) + " Chips!", Color.green);
+                    PLAYER.addChips(payout);
                 }
             }
             PLAYER.setBet(0);
@@ -938,7 +928,7 @@ btn10Chips.addActionListener(new java.awt.event.ActionListener() {
 
         // End the game if the PLAYER is out of chips
         if (PLAYER.getChips() < MINIMUM_BET) {
-            displayMessage("You lost the game", Color.red);
+            displayMessage("You're out of chips.", Color.red);
         } else {
             btnNextHand.setEnabled(true);
         }
@@ -946,7 +936,7 @@ btn10Chips.addActionListener(new java.awt.event.ActionListener() {
         updatePlayerStats();
     }//GEN-LAST:event_btnStandActionPerformed
 
-    private void btnNextHandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextHandActionPerformed
+    private void btnNextHandActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnNextHandActionPerformed
         newGame();
     }//GEN-LAST:event_btnNextHandActionPerformed
 
@@ -959,18 +949,19 @@ btn10Chips.addActionListener(new java.awt.event.ActionListener() {
             cardLabel.setText("Empty");
         }
 
+        displayMessage("Place a bet.");
+
         lbPlayerHand.setText("");
         lbDealerHand.setText("");
         pnlPlayerHand.setBorder(BorderFactory.createEmptyBorder());
         pnlDealerHand.setBorder(BorderFactory.createEmptyBorder());
 
-        clearMessage();
         btnNextHand.setEnabled(false);
         PLAYER.resetHand(this.DECK);
         DEALER.resetHand(this.DECK);
 
         setOptions(PLAY_OPTIONS, false);
-        if (PLAYER.getBet() * 2 > PLAYER.getChips()) {
+        if (PLAYER.getBet() * 2 >= PLAYER.getChips()) {
             btnDoubleDown.setEnabled(false);
         }
 
@@ -980,12 +971,14 @@ btn10Chips.addActionListener(new java.awt.event.ActionListener() {
         updateCardImages(DEALER, DEALER_HAND);
     }
 
-    private void btnDoubleDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoubleDownActionPerformed
+    private void btnDoubleDownActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnDoubleDownActionPerformed
         PLAYER.doubleBet();
         Card card = DECK.getCard();
         PLAYER.hit(card);
 
-        displayMessage("You drew " + card);
+        displayMessage("You double your bet to " 
+            + Format.currency(PLAYER.getBet()) + " Chips and draw " 
+            + card + ".");
         updateHandValue(PLAYER, lbPlayerHand);
         
         int i = 0;
@@ -1017,7 +1010,10 @@ btn10Chips.addActionListener(new java.awt.event.ActionListener() {
         }
 
         if (PLAYER.getBet() >= MINIMUM_BET) {
+            clearMessage();
             btnDeal.setEnabled(true);
+        } else {
+            displayMessage("You need to bet a minimum of 25 Chips to play.");
         }
 
         updatePlayerStats();
@@ -1054,72 +1050,66 @@ btn10Chips.addActionListener(new java.awt.event.ActionListener() {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Metal".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BlackjackGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BlackjackGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BlackjackGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(BlackjackGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
+        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new BlackjackGUI().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new BlackjackGUI().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn100Chips;
-    private javax.swing.JButton btn10Chips;
-    private javax.swing.JButton btn25Chips;
-    private javax.swing.JButton btn50Chips;
-    private javax.swing.JButton btn5Chips;
-    private javax.swing.JButton btnDeal;
-    private javax.swing.JButton btnDoubleDown;
-    private javax.swing.JButton btnHit;
-    private javax.swing.JButton btnNextHand;
-    private javax.swing.JButton btnQuitGame;
-    private javax.swing.JButton btnStand;
-    private javax.swing.JButton btnSurrender;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JLabel lbBet;
-    private javax.swing.JLabel lbBetValue;
-    private javax.swing.JLabel lbChipsValue;
-    private javax.swing.JLabel lbCurrentBet;
-    private javax.swing.JLabel lbDealerCard1;
-    private javax.swing.JLabel lbDealerCard2;
-    private javax.swing.JLabel lbDealerCard3;
-    private javax.swing.JLabel lbDealerCard4;
-    private javax.swing.JLabel lbDealerCard5;
-    private javax.swing.JLabel lbDealerCard6;
-    private javax.swing.JLabel lbDealerHand;
-    private javax.swing.JLabel lbLogo;
-    private javax.swing.JLabel lbMessage;
-    private javax.swing.JLabel lbPlayerCard1;
-    private javax.swing.JLabel lbPlayerCard2;
-    private javax.swing.JLabel lbPlayerCard3;
-    private javax.swing.JLabel lbPlayerCard4;
-    private javax.swing.JLabel lbPlayerCard5;
-    private javax.swing.JLabel lbPlayerCard6;
-    private javax.swing.JLabel lbPlayerHand;
-    private javax.swing.JPanel pnlDealerHand;
-    private javax.swing.JPanel pnlMessage;
-    private javax.swing.JPanel pnlPlayerHand;
-    private javax.swing.JPanel pnlTable;
+    private JButton btn100Chips;
+    private JButton btn10Chips;
+    private JButton btn25Chips;
+    private JButton btn50Chips;
+    private JButton btn5Chips;
+    private JButton btnDeal;
+    private JButton btnDoubleDown;
+    private JButton btnHit;
+    private JButton btnNextHand;
+    private JButton btnQuitGame;
+    private JButton btnStand;
+    private JButton btnSurrender;
+    private JLabel lbBet;
+    private JLabel lbBetValue;
+    private JLabel lbChipsValue;
+    private JLabel lbCurrentBet;
+    private JLabel lbDealerCard1;
+    private JLabel lbDealerCard2;
+    private JLabel lbDealerCard3;
+    private JLabel lbDealerCard4;
+    private JLabel lbDealerCard5;
+    private JLabel lbDealerCard6;
+    private JLabel lbDealerHand;
+    private JLabel lbHand;
+    private JLabel lbLogo;
+    private JLabel lbMessage;
+    private JLabel lbPlay;
+    private JLabel lbPlayerCard1;
+    private JLabel lbPlayerCard2;
+    private JLabel lbPlayerCard3;
+    private JLabel lbPlayerCard4;
+    private JLabel lbPlayerCard5;
+    private JLabel lbPlayerCard6;
+    private JLabel lbPlayerHand;
+    private JPanel pnlBetOptions;
+    private JPanel pnlCurrentBet;
+    private JPanel pnlDealerHand;
+    private JPanel pnlHandOptions;
+    private JPanel pnlMessage;
+    private JPanel pnlPlayOptions;
+    private JPanel pnlPlayerHand;
+    private JPanel pnlTable;
     // End of variables declaration//GEN-END:variables
 }
