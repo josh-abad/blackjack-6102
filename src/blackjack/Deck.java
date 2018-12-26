@@ -24,7 +24,7 @@ public class Deck {
         }
     }
 
-    public Card getCard() {
+    public Card drawCard() {
         int index = (int) (Math.random() * this.deck.size());
         Card pickedCard = this.deck.get(index);
         this.deck.remove(index);

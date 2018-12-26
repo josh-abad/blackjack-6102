@@ -7,7 +7,7 @@ public class UserPlayer extends Player {
 
     public UserPlayer() {
         super();
-        this.chips = 1000;
+        this.chips = 1000000;
         this.bet = 0;
     }    
 
