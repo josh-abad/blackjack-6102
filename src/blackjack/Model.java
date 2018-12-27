@@ -11,7 +11,7 @@ public class Model {
     public final int[] BET_VALUES = {5, 10, 25, 50, 100};
 
     public Model() {
-        player = new UserPlayer();
+        player = new UserPlayer(1000);
         dealer = new Dealer();
         deck = new Deck();
         MINIMUM_BET = 25;
@@ -33,10 +33,18 @@ public class Model {
         return player.getBet();
     }
 
+    /**
+     * Check if the player has not yet placed a bet
+     * @return true if bet is 0
+     */
     public boolean betIsEmpty() {
         return player.getBet() == 0;
     }
 
+    /**
+     * Increase the player's existing bet
+     * @param amount to increase bet by
+     */
     public void addBet(double amount) {
         player.addBet(amount);
     }
@@ -49,6 +57,10 @@ public class Model {
         return dealer;
     }
 
+    /**
+     * Pays the player a certain amount of chips depending on the Payout type
+     * @param type a Payout enum with values REGULAR, BLACKJACK, and HALF
+     */
     public void givePayout(Payout type) {
         switch (type) {
             case BLACKJACK:
@@ -72,6 +84,10 @@ public class Model {
         return dealer.getHandValue();
     }
 
+    /**
+     * Get the first card in the Dealer's hand
+     * @return the first card
+     */
     public Card getHoleCard() {
         return dealer.getHand().get(0);
     }
@@ -80,34 +96,63 @@ public class Model {
         return deck;
     }
 
+    /**
+     * Draws a card from the deck
+     * @return a card
+     */
     public Card drawCard() {
         return deck.drawCard();
     }
 
+    /**
+     * Replaces the player's existing bet with a new one
+     * @param amount the new bet
+     */
     public void setBet(double amount) {
         player.setBet(amount);
     }
 
+    /**
+     * Doubles the player's existing bet if there is sufficient chips
+     */
     public void doubleBet() {
         player.doubleBet();
     }
 
+    /**
+     * Sets the player's existing bet to 0
+     */
     public void resetBet() {
         player.setBet(0);
     }
 
+    /**
+     * Player adds a card to their hand
+     * @param card the card to be added
+     */
     public void playerHit(Card card) {
         player.hit(card);
     }
 
+    /**
+     * Dealer adds a card to their hand
+     * @param card the card to be added
+     */
     public void dealerHit(Card card) {
         dealer.hit(card);
     }
 
+    /**
+     * Shuffles the deck
+     */
     public void shuffleDeck() {
         deck.shuffle();
     }
 
+    /**
+     * The Dealer draws a card if they have a Soft 17 
+     * or a hand value less than or equal to 16
+     */
     public void dealerTurn() {
         if (dealer.hasSoft17() || dealer.getHandValue() <= 16) {
             Card card = deck.drawCard();
@@ -115,19 +160,39 @@ public class Model {
         }
     }
 
+    /**
+     * Helper method to check if the player and Dealer are not above 21
+     * @return true if the hand values of both player and Dealer aren't under 21 
+     */
     private boolean bothBelowLimit() {
         return player.isBelowLimit() && dealer.isBelowLimit();
     }
 
+    /**
+     * Helper method to check if the player and Dealer both have Blackjack
+     * @return true if both hands have a Blackjack
+     */
     private boolean isDoubleBlackjack() {
+        if (player.hasBlackjack() ^ dealer.hasBlackjack()) {
+            return false;
+        }
         return player.hasBlackjack() && dealer.hasBlackjack();
     }
 
+    /**
+     * Helper method to check if neither player nor Dealer has Blackjack 
+     * and both have equal hand values
+     * @return true if the player and Dealer have equal hand values 
+     */
     private boolean isEqualHand() {
-        return !isDoubleBlackjack() 
-                && player.getHandValue() == dealer.getHandValue();
+        return (!player.hasBlackjack() && !dealer.hasBlackjack())
+                && (player.getHandValue() == dealer.getHandValue());
     }
 
+    /**
+     * Check if the game is a push for tie
+     * @return true if either there is a double Blackjack or equal hand values
+     */
     public boolean isTie() {
         return (isDoubleBlackjack()) || (isEqualHand());
     }
@@ -171,7 +236,7 @@ public class Model {
     }
 
     public boolean playerCanDoubleDown() {
-        return player.getBet() * 2 <= player.getChips();
+        return player.getBet() <= player.getChips();
     }
 
     public boolean betSufficient() {

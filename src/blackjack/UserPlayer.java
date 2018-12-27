@@ -5,14 +5,14 @@ public class UserPlayer extends Player {
     private double chips;
     private double bet; 
 
-    public UserPlayer() {
+    public UserPlayer(double chips) {
         super();
-        this.chips = 1000000;
+        this.chips = chips;
         this.bet = 0;
     }    
 
     public void doubleBet() {
-        if (this.bet * 2 <= this.chips) {
+        if (this.bet <= this.chips) {
             this.chips -= this.bet;
             this.bet *= 2;
         }

@@ -254,12 +254,12 @@ public class View extends javax.swing.JFrame {
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(betButton4)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(betButton5, GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
+                        .addComponent(betButton5, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         betOptionsPanelLayout.setVerticalGroup(betOptionsPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(betOptionsPanelLayout.createSequentialGroup()
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(betOptionsLabel)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(betOptionsPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
@@ -268,7 +268,7 @@ public class View extends javax.swing.JFrame {
                     .addComponent(betButton3)
                     .addComponent(betButton4)
                     .addComponent(betButton5))
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         currentBetPanel.setBackground(new Color(19, 19, 19));
@@ -567,7 +567,7 @@ public class View extends javax.swing.JFrame {
         playOptionsPanel.setLayout(playOptionsPanelLayout);
         playOptionsPanelLayout.setHorizontalGroup(playOptionsPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(playOptionsPanelLayout.createSequentialGroup()
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(playOptionsPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(playOptionsPanelLayout.createSequentialGroup()
                         .addComponent(hitButton)
@@ -578,7 +578,7 @@ public class View extends javax.swing.JFrame {
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(surrenderButton))
                     .addComponent(playOptionsLabel))
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         playOptionsPanelLayout.setVerticalGroup(playOptionsPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(GroupLayout.Alignment.TRAILING, playOptionsPanelLayout.createSequentialGroup()
@@ -624,7 +624,7 @@ public class View extends javax.swing.JFrame {
         handOptionsPanel.setLayout(handOptionsPanelLayout);
         handOptionsPanelLayout.setHorizontalGroup(handOptionsPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(handOptionsPanelLayout.createSequentialGroup()
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(handOptionsPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(handOptionsPanelLayout.createSequentialGroup()
                         .addComponent(dealButton, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
@@ -633,11 +633,11 @@ public class View extends javax.swing.JFrame {
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(quitGameButton))
                     .addComponent(handOptionsLabel))
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         handOptionsPanelLayout.setVerticalGroup(handOptionsPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(GroupLayout.Alignment.TRAILING, handOptionsPanelLayout.createSequentialGroup()
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(handOptionsLabel)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(handOptionsPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
@@ -651,15 +651,15 @@ public class View extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(54, Short.MAX_VALUE)
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addComponent(currentBetPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(betOptionsPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(playOptionsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(handOptionsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
             .addComponent(tablePanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -802,15 +802,24 @@ public class View extends javax.swing.JFrame {
     }
 
     public void disableAllPlayOptions() {
-        playOptionsPanel.setVisible(false);
+        // playOptionsPanel.setVisible(false);
+        playOptions.values().forEach((playOption) -> {
+            playOption.setEnabled(false);
+        });
     }
 
     public void enableAllBetOptions() {
-        betOptionsPanel.setVisible(true);
+        // betOptionsPanel.setVisible(true);
+        for (JButton betOption : betOptions) {
+            betOption.setEnabled(true);
+        }
     }
 
     public void disableAllBetOptions() {
-        betOptionsPanel.setVisible(false);
+        // betOptionsPanel.setVisible(false);
+        for (JButton betOption : betOptions) {
+            betOption.setEnabled(false);
+        }
     }
 
     public void displayFrame() {
