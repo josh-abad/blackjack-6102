@@ -8,7 +8,6 @@ import javax.swing.JButton;
 public class Controller {
     
     private final Model model;
-    // private final View view;
     private final View view;
 
     public Controller(Model model, View view) {

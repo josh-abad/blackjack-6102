@@ -194,7 +194,10 @@ public class Model {
      * @return true if either there is a double Blackjack or equal hand values
      */
     public boolean isTie() {
-        return (isDoubleBlackjack()) || (isEqualHand());
+        if (bothBelowLimit()) {
+            return (isDoubleBlackjack()) || (isEqualHand());
+        }
+        return false;
     }
 
     public boolean playerWon() {
