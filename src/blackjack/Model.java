@@ -154,7 +154,7 @@ public class Model {
      * or a hand value less than or equal to 16
      */
     public void dealerTurn() {
-        if (dealer.hasSoft17() || dealer.getHandValue() <= 16) {
+        while (dealer.hasSoft17() || dealer.getHandValue() <= 16) {
             Card card = deck.drawCard();
             dealer.hit(card);
         }
