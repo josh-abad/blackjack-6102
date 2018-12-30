@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.LayoutStyle;
 import javax.swing.WindowConstants;
 
-public class View extends javax.swing.JFrame {
+public class AutoView extends javax.swing.JFrame {
 
     private JLabel[] playerHand;
     private JLabel[] dealerHand;
@@ -35,7 +35,7 @@ public class View extends javax.swing.JFrame {
      * Creates new form BlackjackGUI
      */
     @SuppressWarnings("unchecked")
-    public View() {
+    public AutoView() {
         initComponents();
         initView();
         FONT_NAME = "Segoe UI";

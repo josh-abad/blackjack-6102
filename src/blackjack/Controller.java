@@ -199,6 +199,8 @@ public class Controller {
             );
             model.givePayout(Payout.HALF);
             model.resetBet();
+            view.revealHoleCard(model.getHoleCard());
+            view.updateDealerHandValue(model.getDealerHandValue());
             view.updateStats(model.getChips(), model.getBet());
             view.disableAllPlayOptions();
             view.enableHandOption("Next Hand");
