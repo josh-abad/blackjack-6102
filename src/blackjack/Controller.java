@@ -23,6 +23,8 @@ public class Controller {
 
     private void initView() {
         view.initBetOptions(model.BET_VALUES);
+        view.initPlayOptions(model.PLAY_OPTIONS);
+        view.initHandOptions(model.HAND_OPTIONS);
         view.updateCards(model.getPlayerHand(), model.getDealerHand());
 
         view.updateStats(model.getChips(), model.getBet());
@@ -42,13 +44,13 @@ public class Controller {
         view.initNextHandActionListener(new NextHandAction());
         view.initQuitGameActionListener(new QuitGameAction());
 
-        for (JButton betOption : view.getBetOptions()) {
+        view.getBetOptions().forEach((betOption) -> {
             betOption.addActionListener(
                     new BetAction(
                             Integer.parseInt(betOption.getText())
                     )
             );
-        }
+        });
     }
 
     public class BetAction implements ActionListener {
@@ -77,10 +79,12 @@ public class Controller {
             }
 
             view.updateStats(model.getChips(), model.getBet());
+            view.updateBetOptions(model.getChips(), model.BET_VALUES);
         }
     }
 
     public class HitAction implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
             Card card = model.drawCard();
@@ -98,6 +102,7 @@ public class Controller {
     }
 
     public class StandAction implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
             view.disableAllPlayOptions();
@@ -110,43 +115,27 @@ public class Controller {
             view.updatePlayerHandValue(model.getPlayerHandValue());
             view.updateDealerHandValue(model.getDealerHandValue());
 
+            String message;
+            String bet = Format.currency(model.getBet());
             if (model.isTie()) {
                 view.displayMessage("You push for a tie.");
                 model.returnBet();
             } else if (model.playerWon()) {
-                if (model.getPlayer().hasBlackjack()) {
-                    view.displayMessage(
-                            "You got Blackjack and won "
-                            + Format.currency(model.getBet() * 1.5)
-                            + " Chips!", 
-                            Color.GREEN
-                    );
+                if (model.playerHasBlackjack()) {
+                    message = "You got Blackjack! and won " 
+                            + Format.currency(model.getBet() * 1.5) + " Chips!";
                     model.givePayout(Payout.BLACKJACK);
                 } else {
-                    view.displayMessage(
-                            "You won " 
-                            + Format.currency(model.getBet()) 
-                            + " Chips!", 
-                            Color.GREEN
-                    );
+                    message = "You won " + bet + " Chips!";
                     model.givePayout(Payout.REGULAR);
                 }
+                view.displayMessage(message, Color.GREEN);
             } else if (model.dealerWon()) {
-                if (model.getDealer().hasBlackjack()) {
-                    view.displayMessage(
-                            "The Dealer got Blackjack and you lose "
-                            + Format.currency(model.getBet())
-                            + " Chips.",
-                            Color.RED
-                    );
-                } else {
-                    view.displayMessage(
-                            "You lose " 
-                            + Format.currency(model.getBet()) 
-                            + " Chips.", 
-                            Color.RED
-                    );
+                message = "You lose " + bet + " Chips.";
+                if (model.dealerHasBlackjack()) {
+                    message = "The Dealer got Blackjack. " + message;
                 }
+                view.displayMessage(message, Color.RED);
                 model.resetBet();
             } else {
                 view.displayMessage("You both went over.", Color.RED);
@@ -208,6 +197,7 @@ public class Controller {
     }
 
     public class DealAction implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
             view.disableAllBetOptions();
@@ -243,6 +233,7 @@ public class Controller {
     }
 
     public class NextHandAction implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
             view.displayMessage("Place a bet.");
@@ -261,7 +252,7 @@ public class Controller {
             }
 
             view.enableAllBetOptions();
-            view.updateBetOptions(model.getChips());
+            view.updateBetOptions(model.getChips(), model.BET_VALUES);
             view.updateStats(model.getChips(), model.getBet());
         }
     }

@@ -8,6 +8,12 @@ public class Model {
     private Dealer dealer;
     private Deck deck;
     public final int MINIMUM_BET;
+    public final String[] PLAY_OPTIONS = {
+        "Hit", "Stand", "Double Down", "Surrender"
+    };
+    public final String[] HAND_OPTIONS = {
+        "Deal", "Next Hand", "Quit Game" 
+    };
     public final int[] BET_VALUES = {5, 10, 25, 50, 100};
 
     public Model() {
@@ -126,12 +132,20 @@ public class Model {
         player.setBet(0);
     }
 
+    public boolean playerHasBlackjack() {
+        return player.hasBlackjack();
+    }
+
     /**
      * Player adds a card to their hand
      * @param card the card to be added
      */
     public void playerHit(Card card) {
         player.hit(card);
+    }
+
+    public boolean dealerHasBlackjack() {
+        return dealer.hasBlackjack();
     }
 
     /**
