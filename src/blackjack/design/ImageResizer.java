@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.design;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;

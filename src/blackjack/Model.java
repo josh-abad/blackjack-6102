@@ -1,206 +1,141 @@
 package blackjack;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Model {
     
-    private UserPlayer player;
-    private Dealer dealer;
-    private Deck deck;
+    /**
+     * The required amount of chips for the PLAYER to be able to play
+     */
     public final int MINIMUM_BET;
-    public final String[] PLAY_OPTIONS = {
-        "Hit", "Stand", "Double Down", "Surrender"
-    };
-    public final String[] HAND_OPTIONS = {
-        "Deal", "Next Hand", "Quit Game" 
-    };
-    public final int[] BET_VALUES = {5, 10, 25, 50, 100};
+
+    /**
+     * The possible options for the PLAYER when they are playing
+     */
+    public final String[] PLAY_OPTIONS;
+
+    /**
+     * The possible choices for the PLAYER regarding their hand
+     */
+    public final String[] HAND_OPTIONS;
+
+    /**
+     * The possible number of chips a PLAYER may bet at a time
+     */
+    public final int[] BET_VALUES;
 
     public Model() {
-        player = new UserPlayer(1000);
-        dealer = new Dealer();
-        deck = new Deck();
+        PLAYER = new UserPlayer(1000);
+        DEALER = new Dealer();
+        DECK = new Deck();
+
         MINIMUM_BET = 25;
-    }
 
-    public UserPlayer getPlayer() {
-        return player;
-    }
+        PLAY_OPTIONS = new String[] {
+            "Hit",
+            "Stand",
+            "Double Down",
+            "Surrender"
+        };
 
-    public ArrayList<Card> getPlayerHand() {
-        return player.getHand();
-    }
+        HAND_OPTIONS = new String[] {
+            "Deal",
+            "Next Hand",
+            "Quit Game"
+        };
 
-    public int getPlayerHandValue() {
-        return player.getHandValue();
-    }
-
-    public double getBet() {
-        return player.getBet();
-    }
-
-    /**
-     * Check if the player has not yet placed a bet
-     * @return true if bet is 0
-     */
-    public boolean betIsEmpty() {
-        return player.getBet() == 0;
+        BET_VALUES = new int[] {
+            5,
+            10,
+            25,
+            50,
+            100
+        };
     }
 
     /**
-     * Increase the player's existing bet
+     * Increase the PLAYER's existing bet
      * @param amount to increase bet by
      */
-    public void addBet(double amount) {
-        player.addBet(amount);
-    }
-
-    public double getChips() {
-        return player.getChips();
-    }
-
-    public Dealer getDealer() {
-        return dealer;
+    public void bet(double amount) {
+        PLAYER.addBet(amount);
     }
 
     /**
-     * Pays the player a certain amount of chips depending on the Payout type
-     * @param type a Payout enum with values REGULAR, BLACKJACK, and HALF
+     * Checks if the PLAYER's current bet has reached the minimum bet
+     * @return true if PLAYER's bet is greater than or equal to the minimum bet
+     */
+    public boolean betIsSufficient() {
+        return PLAYER.getBet() >= MINIMUM_BET;
+    }
+
+    /**
+     * Check if the PLAYER has enough chips to double their bet
+     * @return true if PLAYER's current bet is less than or equal to their chips
+     */
+    public boolean canDoubleDown() {
+        return PLAYER.getBet() <= PLAYER.getChips();
+    }
+
+    /**
+     * Check if the DEALER has an Ace and another card with a value of 10
+     * @return true if the DEALER has Blackjack
+     */
+    public boolean dealerHasBlackjack() {
+        return DEALER.hasBlackjack();
+    }
+
+    /**
+     * DEALER adds a card to their hand
+     * @param card the card to be added
+     */
+    public void dealerHit(Card card) {
+        DEALER.hit(card);
+    }
+
+    /**
+     * The DEALER draws a card if they have a Soft 17 
+     * or a hand value less than or equal to 16
+     */
+    public void dealerTurn() {
+        while (DEALER.hasSoft17() || DEALER.getHandValue() <= 16) {
+            Card card = DECK.drawCard();
+            DEALER.hit(card);
+        }
+    }
+
+    /**
+     * Doubles the PLAYER's existing bet if there is sufficient chips
+     */
+    public void doubleBet() {
+        PLAYER.doubleBet();
+    }
+
+    /**
+     * Draws a card from the DECK
+     * @return a card
+     */
+    public Card drawCard() {
+        return DECK.drawCard();
+    }
+
+    /**
+     * Pays the PLAYER a certain amount of chips depending on the Payout type
+     * @param type possible values are: REGULAR, BLACKJACK, and HALF
      */
     public void givePayout(Payout type) {
         switch (type) {
             case BLACKJACK:
-                player.addChips(player.getBet() + (player.getBet() * 1.5));
+                PLAYER.addChips(PLAYER.getBet() + (PLAYER.getBet() * 1.5));
                 break;
             case REGULAR:
-                player.addChips(player.getBet() * 2);
+                PLAYER.addChips(PLAYER.getBet() * 2);
                 break;
             case HALF:
-                player.addChips(player.getBet() / 2);
+                PLAYER.addChips(PLAYER.getBet() / 2);
                 break;
         }
         resetBet();
-    }
-
-    public ArrayList<Card> getDealerHand() {
-        return dealer.getHand();
-    }
-
-    public int getDealerHandValue() {
-        return dealer.getHandValue();
-    }
-
-    /**
-     * Get the first card in the Dealer's hand
-     * @return the first card
-     */
-    public Card getHoleCard() {
-        return dealer.getHand().get(0);
-    }
-
-    public Deck getDeck() {
-        return deck;
-    }
-
-    /**
-     * Draws a card from the deck
-     * @return a card
-     */
-    public Card drawCard() {
-        return deck.drawCard();
-    }
-
-    /**
-     * Replaces the player's existing bet with a new one
-     * @param amount the new bet
-     */
-    public void setBet(double amount) {
-        player.setBet(amount);
-    }
-
-    /**
-     * Doubles the player's existing bet if there is sufficient chips
-     */
-    public void doubleBet() {
-        player.doubleBet();
-    }
-
-    /**
-     * Sets the player's existing bet to 0
-     */
-    public void resetBet() {
-        player.setBet(0);
-    }
-
-    public boolean playerHasBlackjack() {
-        return player.hasBlackjack();
-    }
-
-    /**
-     * Player adds a card to their hand
-     * @param card the card to be added
-     */
-    public void playerHit(Card card) {
-        player.hit(card);
-    }
-
-    public boolean dealerHasBlackjack() {
-        return dealer.hasBlackjack();
-    }
-
-    /**
-     * Dealer adds a card to their hand
-     * @param card the card to be added
-     */
-    public void dealerHit(Card card) {
-        dealer.hit(card);
-    }
-
-    /**
-     * Shuffles the deck
-     */
-    public void shuffleDeck() {
-        deck.shuffle();
-    }
-
-    /**
-     * The Dealer draws a card if they have a Soft 17 
-     * or a hand value less than or equal to 16
-     */
-    public void dealerTurn() {
-        while (dealer.hasSoft17() || dealer.getHandValue() <= 16) {
-            Card card = deck.drawCard();
-            dealer.hit(card);
-        }
-    }
-
-    /**
-     * Helper method to check if the player and Dealer are not above 21
-     * @return true if the hand values of both player and Dealer aren't under 21 
-     */
-    private boolean bothBelowLimit() {
-        return player.isBelowLimit() && dealer.isBelowLimit();
-    }
-
-    /**
-     * Helper method to check if the player and Dealer both have Blackjack
-     * @return true if both hands have a Blackjack
-     */
-    private boolean isDoubleBlackjack() {
-        if (player.hasBlackjack() ^ dealer.hasBlackjack()) {
-            return false;
-        }
-        return player.hasBlackjack() && dealer.hasBlackjack();
-    }
-
-    /**
-     * Helper method to check if neither player nor Dealer has Blackjack 
-     * and both have equal hand values
-     * @return true if the player and Dealer have equal hand values 
-     */
-    private boolean isEqualHand() {
-        return (!player.hasBlackjack() && !dealer.hasBlackjack())
-                && (player.getHandValue() == dealer.getHandValue());
     }
 
     /**
@@ -214,53 +149,164 @@ public class Model {
         return false;
     }
 
-    public boolean playerWon() {
-        if (bothBelowLimit()) {
-            return player.getHandValue() > dealer.getHandValue();
-        }
-        return player.isBelowLimit();
+    /**
+     * Removes the chips from the PLAYER's bet
+     */
+    public void loseBet() {
+        PLAYER.setBet(0);
     }
 
-    public boolean dealerWon() {
+    /**
+     * Checks if the DEALER has a greater hand value than the PLAYER
+     * if they are both below limit. If the PLAYER is past limit,
+     * check if the DEALER is below limit
+     * @return true if the DEALER won
+     */
+    public boolean lost() {
         if (bothBelowLimit()) {
-            return dealer.getHandValue() > player.getHandValue();
+            return DEALER.getHandValue() > PLAYER.getHandValue();
         }
-        return dealer.isBelowLimit();
+        return DEALER.isBelowLimit();
     }
 
+    /**
+     * Check if the PLAYER still has enough chips to play
+     * @return true if PLAYER's chips are less than the minimum bet
+     */
+    public boolean outOfChips() {
+        return PLAYER.getChips() < MINIMUM_BET;
+    }
+
+    /**
+     * Check if the PLAYER has an Ace and another card with a value of 10
+     * @return true if the PLAYER has Blackjack
+     */
+    public boolean playerHasBlackjack() {
+        return PLAYER.hasBlackjack();
+    }
+
+    /**
+     * Player adds a card to their hand
+     * @param card the card to be added
+     */
+    public void playerHit(Card card) {
+        PLAYER.hit(card);
+    }
+
+    /**
+     * Sets the PLAYER's existing bet to 0
+     */
+    public void resetBet() {
+        PLAYER.setBet(0);
+    }
+
+    /**
+     * Removes all cards from the PLAYER and DEALER's hands 
+     * and places them back onto the DECK
+     */
+    public void resetHand() {
+        PLAYER.resetHand(DECK);
+        DEALER.resetHand(DECK);
+    }
+
+    /**
+     * Removes the chips from the PLAYER's bet and adds them back to their chips 
+     */
     public void returnBet() {
-        player.addChips(player.getBet());
-        player.setBet(0);
+        PLAYER.addChips(PLAYER.getBet());
+        PLAYER.setBet(0);
     }
 
-    public void playerGetPayout() {
-        double payout = player.getBet();
-        if (player.hasBlackjack()) {
-            payout += player.getBet() * 1.5;
-        } else {
-            payout *= 2;
+    /**
+     * Shuffles the DECK
+     */
+    public void shuffleDeck() {
+        DECK.shuffle();
+    }
+
+    /**
+     * Check if the PLAYER's hand value is greater than 21
+     * @return true if PLAYER's hand value is greater than 21
+     */
+    public boolean wentOver() {
+        return !PLAYER.isBelowLimit();
+    }
+
+    /**
+     * Checks if the PLAYER has a greater hand value than the DEALER
+     * if they are both below limit. If the DEALER is past limit,
+     * check if the PLAYER is below limit
+     * @return true if the PLAYER won
+     */
+    public boolean won() {
+        if (bothBelowLimit()) {
+            return PLAYER.getHandValue() > DEALER.getHandValue();
         }
-        player.addChips(payout);
-        player.setBet(0);
+        return PLAYER.isBelowLimit();
     }
 
-    public void playerLoseBet() {
-        player.setBet(0);
+    public double getBet() {
+        return PLAYER.getBet();
     }
 
-    public boolean playerIsOutOfChips() {
-        return player.getChips() < MINIMUM_BET;
+    public double getChips() {
+        return PLAYER.getChips();
     }
 
-    public boolean playerCanDoubleDown() {
-        return player.getBet() <= player.getChips();
+    public List<Card> getDealerHand() {
+        return DEALER.getHand();
     }
 
-    public boolean betSufficient() {
-        return player.getBet() >= MINIMUM_BET;
+    public int getDealerHandValue() {
+        return DEALER.getHandValue();
     }
 
-    public boolean playerWentOver() {
-        return !player.isBelowLimit();
+    /**
+     * Get the first card in the DEALER's hand
+     * @return the first card in the DEALER's hand
+     */
+    public Card getHoleCard() {
+        return DEALER.getHand().get(0);
     }
+
+    public List<Card> getPlayerHand() {
+        return PLAYER.getHand();
+    }
+
+    public int getPlayerHandValue() {
+        return PLAYER.getHandValue();
+    }
+
+    /**
+     * Helper method to check if the PLAYER and DEALER are not above 21
+     * @return true if the hand values of both PLAYER and DEALER aren't under 21 
+     */
+    private boolean bothBelowLimit() {
+        return PLAYER.isBelowLimit() && DEALER.isBelowLimit();
+    }
+
+    /**
+     * Helper method to check if the PLAYER and DEALER both have Blackjack
+     * @return true if both hands have a Blackjack
+     */
+    private boolean isDoubleBlackjack() {
+        if (PLAYER.hasBlackjack() ^ DEALER.hasBlackjack()) {
+            return false;
+        }
+        return PLAYER.hasBlackjack() && DEALER.hasBlackjack();
+    }
+
+    /**
+     * Helper method to check if neither PLAYER nor DEALER has Blackjack 
+     * and both have equal hand values
+     * @return true if the PLAYER and DEALER have equal hand values 
+     */
+    private boolean isEqualHand() {
+        return (!PLAYER.hasBlackjack() && !DEALER.hasBlackjack())
+                && (PLAYER.getHandValue() == DEALER.getHandValue());
+    }
+
+    private final UserPlayer PLAYER;
+    private final Dealer DEALER;
+    private final Deck DECK;
 }

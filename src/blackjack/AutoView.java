@@ -6,6 +6,8 @@
 
 package blackjack;
 
+import blackjack.design.Format;
+import blackjack.design.ImageResizer;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Frame;

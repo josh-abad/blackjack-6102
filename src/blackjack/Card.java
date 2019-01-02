@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.design.ImageResizer;
 import javax.swing.ImageIcon;
 
 public class Card {

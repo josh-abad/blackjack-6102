@@ -5,11 +5,10 @@
         <group>
             <file>file:/C:/Users/yeyoa/Documents/NetBeansProjects/Blackjack/src/blackjack/Model.java</file>
             <file>file:/C:/Users/yeyoa/Documents/NetBeansProjects/Blackjack/src/blackjack/Controller.java</file>
-            <file>file:/C:/Users/yeyoa/Documents/NetBeansProjects/Blackjack/src/blackjack/DefaultFont.java</file>
+            <file>file:/C:/Users/yeyoa/Documents/NetBeansProjects/Blackjack/src/blackjack/design/Palette.java</file>
             <file>file:/C:/Users/yeyoa/Documents/NetBeansProjects/Blackjack/src/blackjack/Blackjack.java</file>
-            <file>file:/C:/Users/yeyoa/Documents/NetBeansProjects/Blackjack/src/blackjack/Palette.java</file>
             <file>file:/C:/Users/yeyoa/Documents/NetBeansProjects/Blackjack/src/blackjack/View.java</file>
-            <file>file:/C:/Users/yeyoa/Documents/NetBeansProjects/Blackjack/src/blackjack/Payout.java</file>
+            <file>file:/C:/Users/yeyoa/Documents/NetBeansProjects/Blackjack/src/blackjack/UserPlayer.java</file>
         </group>
     </open-files>
 </project-private>

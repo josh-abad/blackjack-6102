@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.design.Format;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -63,13 +64,9 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (model.betIsEmpty()) {
-                model.setBet(value);
-            } else {
-                model.addBet(value);
-            }
+            model.bet(value);
 
-            if (model.betSufficient()) {
+            if (model.betIsSufficient()) {
                 view.clearMessage();
                 view.enableHandOption("Deal");
             } else {
@@ -93,7 +90,7 @@ public class Controller {
             view.updatePlayerHandValue(model.getPlayerHandValue());
             view.updateCards(model.getPlayerHand(), model.getDealerHand());
             view.hideHoleCard(model.getHoleCard());
-            if (model.playerWentOver()) {
+            if (model.wentOver()) {
                 view.disablePlayOption("Hit");
                 view.disablePlayOption("Double Down");
                 view.disablePlayOption("Surrender");
@@ -120,7 +117,7 @@ public class Controller {
             if (model.isTie()) {
                 view.displayMessage("You push for a tie.");
                 model.returnBet();
-            } else if (model.playerWon()) {
+            } else if (model.won()) {
                 if (model.playerHasBlackjack()) {
                     message = "You got Blackjack! and won " 
                             + Format.currency(model.getBet() * 1.5) + " Chips!";
@@ -130,7 +127,7 @@ public class Controller {
                     model.givePayout(Payout.REGULAR);
                 }
                 view.displayMessage(message, Color.GREEN);
-            } else if (model.dealerWon()) {
+            } else if (model.lost()) {
                 message = "You lose " + bet + " Chips.";
                 if (model.dealerHasBlackjack()) {
                     message = "The Dealer got Blackjack. " + message;
@@ -141,7 +138,7 @@ public class Controller {
                 view.displayMessage("You both went over.", Color.RED);
             }
 
-            if (model.playerIsOutOfChips()) {
+            if (model.outOfChips()) {
                 view.displayMessage("You're out of chips.", Color.red);
             } else {
                 view.enableHandOption("Next Hand");
@@ -207,7 +204,7 @@ public class Controller {
 
             model.shuffleDeck();
 
-            if (!model.playerCanDoubleDown()) {
+            if (!model.canDoubleDown()) {
                 view.disablePlayOption("Double Down");
             }
         
@@ -243,11 +240,10 @@ public class Controller {
             view.clearTableBorder();
 
             view.disableHandOption("Next Hand");
-            model.getPlayer().resetHand(model.getDeck());
-            model.getDealer().resetHand(model.getDeck());
+            model.resetHand();
 
             view.disableAllPlayOptions();
-            if (!model.playerCanDoubleDown()) {
+            if (!model.canDoubleDown()) {
                 view.disablePlayOption("Double Down");
             }
 
