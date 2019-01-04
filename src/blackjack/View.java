@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.net.URL;
@@ -71,12 +72,16 @@ public class View {
         frame.setSize(800, 725);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
+        String path = "/blackjack/images/logo2.png";
+        ImageIcon icon = new ImageIcon(getClass().getResource(path));
+        frame.setIconImage(icon.getImage());
+
         font = new DefaultFont("Segoe UI");
 
         topPanel = new JPanel();
 
         URL location = getClass().getResource("/blackjack/images/logo1.png");
-        ImageIcon icon = new ImageIcon(location);
+        icon = new ImageIcon(location);
         titleLabel = new JLabel(ImageResizer.getScaledImage(icon, 150));
 
         messagePanel = new JPanel();
@@ -308,12 +313,12 @@ public class View {
         dealerPanel.setBorder(new CompoundBorder(margin, border));
     }
 
-    public void hideHoleCard(Card card) {
-        dealerHand[0].setIcon(card.getBackIcon());
+    public void hideHoleCard(ImageIcon icon) {
+        dealerHand[0].setIcon(icon);
     }
 
-    public void revealHoleCard(Card card) {
-        dealerHand[0].setIcon(card.getFrontIcon());
+    public void revealHoleCard(ImageIcon icon) {
+        dealerHand[0].setIcon(icon);
     }
 
     public void enablePlayOption(String option) {
@@ -373,9 +378,9 @@ public class View {
         }
     }
 
-    public void updateCards(List<Card> playerHand, List<Card> dealerHand) {
-        updateImages(playerHand, this.playerHand);
-        updateImages(dealerHand, this.dealerHand);
+    public void updateCards(ImageIcon[] playerCards, ImageIcon[] dealerCards) {
+        updateImages(playerCards, this.playerHand);
+        updateImages(dealerCards, this.dealerHand);
     }
 
     public void updatePlayerHandValue(int playerHandValue) {
@@ -468,11 +473,9 @@ public class View {
         }
     }
 
-    private void updateImages(List<Card> hand, JLabel[] labels) {
-        int i = 0;
-        for (Card card : hand) {
-            labels[i].setIcon(card.getFrontIcon());
-            i++;
+    private void updateImages(ImageIcon[] images, JLabel[] labels) {
+        for (int i = 0; i < images.length; i++) {
+            labels[i].setIcon(images[i]);
         }
     }
 }

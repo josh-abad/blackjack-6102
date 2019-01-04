@@ -1,6 +1,6 @@
 package blackjack;
 
-import java.util.List;
+import javax.swing.ImageIcon;
 
 public class Model {
     
@@ -245,6 +245,10 @@ public class Model {
         return PLAYER.isBelowLimit();
     }
 
+    public ImageIcon getBackHoleCard() {
+        return DEALER.getHand().get(0).getBackIcon();
+    }
+
     public double getBet() {
         return PLAYER.getBet();
     }
@@ -253,28 +257,42 @@ public class Model {
         return PLAYER.getChips();
     }
 
-    public List<Card> getDealerHand() {
-        return DEALER.getHand();
+    public ImageIcon[] getDealerCardImages() {
+        int len = DEALER.getHand().size();
+        ImageIcon[] cardImages = new ImageIcon[len];
+        for (int i = 0; i < len; i++) {
+            cardImages[i] = DEALER.getHand().get(i).getFrontIcon();
+        }
+        return cardImages;
     }
 
     public int getDealerHandValue() {
         return DEALER.getHandValue();
     }
 
-    /**
-     * Get the first card in the DEALER's hand
-     * @return the first card in the DEALER's hand
-     */
-    public Card getHoleCard() {
-        return DEALER.getHand().get(0);
+    public ImageIcon getFrontHoleCard() {
+        return DEALER.getHand().get(0).getFrontIcon();
     }
 
-    public List<Card> getPlayerHand() {
-        return PLAYER.getHand();
+    public ImageIcon[] getPlayerCardImages() {
+        int len = PLAYER.getHand().size();
+        ImageIcon[] cardImages = new ImageIcon[len];
+        for (int i = 0; i < len; i++) {
+            cardImages[i] = PLAYER.getHand().get(i).getFrontIcon();
+        }
+        return cardImages;
+    }
+
+    public Card getPlayerFirstCard() {
+        return PLAYER.getHand().get(0);
     }
 
     public int getPlayerHandValue() {
         return PLAYER.getHandValue();
+    }
+
+    public Card getPlayerSecondCard() {
+        return PLAYER.getHand().get(1);
     }
 
     /**

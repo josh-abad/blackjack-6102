@@ -25,7 +25,10 @@ public class Controller {
         view.initBetOptions(model.BET_VALUES);
         view.initPlayOptions(model.PLAY_OPTIONS);
         view.initHandOptions(model.HAND_OPTIONS);
-        view.updateCards(model.getPlayerHand(), model.getDealerHand());
+        view.updateCards(
+                model.getPlayerCardImages(), 
+                model.getDealerCardImages()
+        );
 
         view.updateStats(model.getChips(), model.getBet());
 
@@ -70,7 +73,8 @@ public class Controller {
                 view.enableHandOption("Deal");
             } else {
                 view.displayMessage(
-                        "You need to bet a minimum of 25 Chips to play."
+                        "You need to bet a minimum of " 
+                        + model.MINIMUM_BET + " Chips to play."
                 );
             }
 
@@ -87,8 +91,11 @@ public class Controller {
             model.playerHit(card);
             view.displayMessage("You draw " + card + ".");
             view.updatePlayerHandValue(model.getPlayerHandValue());
-            view.updateCards(model.getPlayerHand(), model.getDealerHand());
-            view.hideHoleCard(model.getHoleCard());
+            view.updateCards(
+                    model.getPlayerCardImages(), 
+                    model.getDealerCardImages()
+            );
+            view.hideHoleCard(model.getBackHoleCard());
             if (model.wentOver()) {
                 view.disablePlayOption("Hit");
                 view.disablePlayOption("Double Down");
@@ -102,21 +109,21 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             view.disableAllPlayOptions();
-            view.revealHoleCard(model.getHoleCard());
+            view.revealHoleCard(model.getFrontHoleCard());
 
             model.dealerTurn();
 
-            view.updateCards(model.getPlayerHand(), model.getDealerHand());
+            view.updateCards(
+                    model.getPlayerCardImages(), 
+                    model.getDealerCardImages()
+            );
 
             view.updatePlayerHandValue(model.getPlayerHandValue());
             view.updateDealerHandValue(model.getDealerHandValue());
 
             String message;
             String bet = Format.currency(model.getBet());
-            if (model.isTie()) {
-                view.displayMessage("You push for a tie.");
-                model.returnBet();
-            } else if (model.won()) {
+            if (model.won()) {
                 if (model.playerHasBlackjack()) {
                     message = "You got Blackjack! and won " 
                             + Format.currency(model.getBet() * 1.5) + " Chips!";
@@ -133,12 +140,15 @@ public class Controller {
                 }
                 view.displayMessage(message, Color.RED);
                 model.resetBet();
+            } else if (model.isTie()) {
+                view.displayMessage("You push for a tie.");
+                model.returnBet();
             } else {
                 view.displayMessage("You both went over.", Color.RED);
             }
 
             if (model.outOfChips()) {
-                view.displayMessage("You're out of chips.", Color.red);
+                view.displayMessage("You're out of chips.", Color.RED);
             } else {
                 view.enableHandOption("Next Hand");
             }
@@ -163,8 +173,11 @@ public class Controller {
             );
             view.updatePlayerHandValue(model.getPlayerHandValue());
         
-            view.updateCards(model.getPlayerHand(), model.getDealerHand());
-            view.hideHoleCard(model.getHoleCard());
+            view.updateCards(
+                    model.getPlayerCardImages(), 
+                    model.getDealerCardImages()
+            );
+            view.hideHoleCard(model.getBackHoleCard());
         
             view.updateStats(model.getChips(), model.getBet());
             view.disablePlayOption("Hit");
@@ -183,7 +196,7 @@ public class Controller {
             );
             model.givePayout(Payout.HALF);
             model.resetBet();
-            view.revealHoleCard(model.getHoleCard());
+            view.revealHoleCard(model.getFrontHoleCard());
             view.updateDealerHandValue(model.getDealerHandValue());
             view.updateStats(model.getChips(), model.getBet());
             view.disableAllPlayOptions();
@@ -214,14 +227,17 @@ public class Controller {
             }
 
             view.displayMessage(
-                    "Your first two cards are " + model.getPlayerHand().get(0) 
-                    + " and " + model.getPlayerHand().get(1) + "."
+                    "Your first two cards are " + model.getPlayerFirstCard()
+                    + " and " + model.getPlayerSecondCard() + "."
             );
 
             view.updatePlayerHandValue(model.getPlayerHandValue());
 
-            view.updateCards(model.getPlayerHand(), model.getDealerHand());
-            view.hideHoleCard(model.getHoleCard());
+            view.updateCards(
+                    model.getPlayerCardImages(), 
+                    model.getDealerCardImages()
+            );
+            view.hideHoleCard(model.getBackHoleCard());
         }
     }
 
