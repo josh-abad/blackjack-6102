@@ -12,14 +12,14 @@ public class UserPlayer extends Player {
     }    
 
     public void doubleBet() {
-        if (this.bet <= this.chips) {
-            this.chips -= this.bet;
-            this.bet *= 2;
+        if (bet <= chips) {
+            chips -= bet;
+            bet *= 2;
         }
     }
 
     public double getBet() {
-        return this.bet;
+        return bet;
     }
 
     /**
@@ -27,30 +27,30 @@ public class UserPlayer extends Player {
      * @param amount the amount of chips to be removed from the player
      */
     public void setBet(double amount) {
-        if (amount <= this.chips) {
-            this.chips -= amount;
+        if (amount <= chips) {
+            chips -= amount;
         } else {
-            amount = this.chips;
-            this.chips = 0;
+            amount = chips;
+            chips = 0;
         }
-        this.bet = amount;
+        bet = amount;
     }
 
     public void addBet(double amount) {
-        if (amount <= this.chips) {
-            this.chips -= amount;
+        if (amount <= chips) {
+            chips -= amount;
         } else {
-            amount = this.chips;
-            this.chips = 0;
+            amount = chips;
+            chips = 0;
         }
-        this.bet += amount;
+        bet += amount;
     }
 
     public void addChips(double amount) {
-        this.chips += amount;
+        chips += amount;
     }
 
     public double getChips() {
-        return this.chips;
+        return chips;
     }
 }

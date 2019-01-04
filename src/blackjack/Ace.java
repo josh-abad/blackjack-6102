@@ -8,6 +8,6 @@ public class Ace extends Card {
 
     @Override
     public String toString() {
-        return "Ace of " + this.getSuit();
+        return "Ace of " + getSuit();
     }
 }

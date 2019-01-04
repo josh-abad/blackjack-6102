@@ -1,13 +1,16 @@
 package blackjack;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Deck {
     
-    private final ArrayList<Card> deck;
+    private final List<Card> deck;
     
     public Deck() {
         deck = new ArrayList<>(); 
+
         final String VALID_SUITS[] = {
             "Diamonds", "Clubs", "Spades", "Hearts"
         };
@@ -25,24 +28,17 @@ public class Deck {
     }
 
     public Card drawCard() {
-        int index = (int) (Math.random() * this.deck.size());
-        Card pickedCard = this.deck.get(index);
-        this.deck.remove(index);
+        int index = (int) (Math.random() * deck.size());
+        Card pickedCard = deck.get(index);
+        deck.remove(index);
         return pickedCard;
     }
 
-    public void add(ArrayList<Card> hand) {
-        hand.forEach((card) -> {
-            this.deck.add(card);
-        });
+    public void add(List<Card> hand) {
+        hand.forEach(deck::add);
     }
 
     public void shuffle() {
-        this.deck.stream().map((card) -> card).forEachOrdered((firstCard) -> {
-            int index = (int) (Math.random() * this.deck.size());
-            Card secondCard = this.deck.get(index);
-            this.deck.set(index, firstCard);
-            this.deck.set(this.deck.indexOf(firstCard), secondCard);
-        });
+        Collections.shuffle(deck);
     }
 }

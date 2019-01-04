@@ -1,10 +1,11 @@
 package blackjack;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Player {
 
-    final private ArrayList<Card> hand;
+    final private List<Card> hand;
 
     public Player() {
         this.hand = new ArrayList<>();
@@ -15,11 +16,11 @@ public class Player {
      * @param card Card object that will be added
      */
     public void hit(Card card) {
-        this.hand.add(card);
+        hand.add(card);
     }
 
-    public ArrayList<Card> getHand() {
-        return this.hand;
+    public List<Card> getHand() {
+        return hand;
     }
 
     /**
@@ -27,8 +28,8 @@ public class Player {
      * @param deck the deck where the cards will be replaced in
      */
     public void resetHand(Deck deck) {
-        deck.add(this.hand);
-        this.hand.clear();
+        deck.add((ArrayList) hand);
+        hand.clear();
     }
 
     @Override
@@ -36,12 +37,8 @@ public class Player {
         return "Player";
     }
 
-    public void speak(String message) {
-        System.out.print("Player: " + message);
-    }
-
     public boolean isBelowLimit() {
-        return this.getHandValue() <= 21;
+        return getHandValue() <= 21;
     }
 
     /**
@@ -49,11 +46,11 @@ public class Player {
      * @return the total value of the player's hand
      */
     public int getHandValue() {
-        ArrayList<Card> aces = new ArrayList<>();
+        List<Card> aces = new ArrayList<>();
         int total = 0;
 
         // If there are any aces in the hand, count them later
-        for (Card card : this.hand) {
+        for (Card card : hand) {
             if (card instanceof Ace) {
                 aces.add(card);
             } else {
@@ -63,7 +60,7 @@ public class Player {
 
         // Adds 1 to the total if the hand will exceed 21, 11 otherwise
         for (Card ace : aces) {
-            total += total + 11 > 21 ? 1 : 11;
+            total += (total + 11 > 21) ? 1 : 11;
         }
 
         return total;
@@ -71,12 +68,11 @@ public class Player {
 
     /**
      * Check if the player's hand is a blackjack
-     *
      * @return  true if player has an ace and another ten-valued-card
      */
     public boolean hasBlackjack() {
-        if (this.hand.size() == 2) {
-            for (Card card : this.hand) {
+        if (hand.size() == 2) {
+            for (Card card : hand) {
                 if (card.getValue() == 10) {
                     return hasAce();
                 }
@@ -86,6 +82,6 @@ public class Player {
     }
 
     public boolean hasAce() {
-        return this.hand.stream().anyMatch((card) -> (card instanceof Ace));
+        return hand.stream().anyMatch((card) -> (card instanceof Ace));
     }
 }

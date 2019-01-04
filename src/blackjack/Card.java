@@ -1,11 +1,12 @@
 package blackjack;
 
 import blackjack.design.ImageResizer;
+import java.net.URL;
 import javax.swing.ImageIcon;
 
 public class Card {
 
-    private int value;
+    private final int value;
     private final String suit;
     private final ImageIcon frontIcon;
     private final ImageIcon backIcon;
@@ -15,42 +16,41 @@ public class Card {
             this.value = value;
         } else if (value > 10 && value <= 13) {
             this.value = 10;
+        } else {
+            this.value = 0;
         }
         this.suit = suit;
 
         // Images from https://github.com/htdebeer/SVG-cards
-        this.frontIcon = ImageResizer.getScaledImage(
-            new ImageIcon(getClass().getResource(
-                "/blackjack/images/cards/" + suit + "/" + value + ".png"
-            )), 
-            100
-        );
-        this.backIcon = ImageResizer.getScaledImage(
-            new ImageIcon(getClass().getResource(
-                "/blackjack/images/cards/" + suit + "/Back.png"
-            )), 
-            100
-        );
+        String path = "/blackjack/images/cards" + suit + "/" + value + ".png";
+        URL location = getClass().getResource(path);
+        ImageIcon icon = new ImageIcon(location);
+        this.frontIcon = ImageResizer.getScaledImage(icon, 100);
+
+        path = "/blackjack/images/cards" + suit + "/Back.png";
+        location = getClass().getResource(path);
+        icon = new ImageIcon(location);
+        this.backIcon = ImageResizer.getScaledImage(icon, 100);
     }
 
     @Override
     public String toString() {
-        return this.value + " of " + this.suit;
+        return value + " of " + suit;
     }
 
     public String getSuit() {
-        return this.suit;
+        return suit;
     }
 
     public int getValue() {
-        return this.value;
+        return value;
     }
 
     public ImageIcon getFrontIcon() {
-        return this.frontIcon;
+        return frontIcon;
     }
 
     public ImageIcon getBackIcon() {
-        return this.backIcon;
+        return backIcon;
     }
 }

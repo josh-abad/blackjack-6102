@@ -4,7 +4,6 @@ import blackjack.design.Format;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
 
 public class Controller {
     
@@ -58,8 +57,8 @@ public class Controller {
 
         private final int value;
 
-        public BetAction(int betValue) {
-            this.value = betValue;
+        public BetAction(int value) {
+            this.value = value;
         }
 
         @Override
@@ -178,10 +177,9 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            String chips = Format.currency(model.getBet() / 2);
             view.displayMessage(
-                    "You surrendered and got back " 
-                    + Format.currency(model.getBet() / 2) 
-                    + " Chips."
+                    "You surrendered and got back " + chips + " Chips."
             );
             model.givePayout(Payout.HALF);
             model.resetBet();
@@ -216,10 +214,8 @@ public class Controller {
             }
 
             view.displayMessage(
-                    "Your first two cards are " 
-                    + model.getPlayerHand().get(0) 
-                    + " and " 
-                    + model.getPlayerHand().get(1) + "."
+                    "Your first two cards are " + model.getPlayerHand().get(0) 
+                    + " and " + model.getPlayerHand().get(1) + "."
             );
 
             view.updatePlayerHandValue(model.getPlayerHandValue());
