@@ -6,11 +6,6 @@ import javax.swing.ImageIcon;
 
 public class Card {
 
-    private final int value;
-    private final String suit;
-    private final ImageIcon frontIcon;
-    private final ImageIcon backIcon;
-
     public Card(int value, String suit) {
         if (value >= 1 && value <= 10) {
             this.value = value;
@@ -23,9 +18,7 @@ public class Card {
 
         // Images from https://github.com/htdebeer/SVG-cards
         String path = "/blackjack/images/cards/" + suit + "/" + value + ".png";
-        System.out.println(path);
         URL location = getClass().getResource(path);
-        System.out.println(location);
         ImageIcon icon = new ImageIcon(location);
         this.frontIcon = ImageResizer.getScaledImage(icon, 100);
 
@@ -35,17 +28,12 @@ public class Card {
         this.backIcon = ImageResizer.getScaledImage(icon, 100);
     }
 
-    @Override
-    public String toString() {
-        return value + " of " + suit;
+    public int getValue() {
+        return value;
     }
 
     public String getSuit() {
         return suit;
-    }
-
-    public int getValue() {
-        return value;
     }
 
     public ImageIcon getFrontIcon() {
@@ -55,4 +43,14 @@ public class Card {
     public ImageIcon getBackIcon() {
         return backIcon;
     }
+
+    @Override
+    public String toString() {
+        return value + " of " + suit;
+    }
+
+    private final int value;
+    private final String suit;
+    private final ImageIcon frontIcon;
+    private final ImageIcon backIcon;
 }

@@ -9,13 +9,11 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -30,41 +28,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 public class View {
-    
-    private final JFrame frame;
-
-    // Top panel and its components
-    private final JPanel topPanel;
-    private final JLabel titleLabel;
-    private final JPanel messagePanel;
-    private final JLabel messageLabel;
-    private final JLabel chipsLabel;
-
-    // Table panel and its components
-    private final JPanel tablePanel;
-    private final JLabel dealerHandValueLabel;
-    private final JPanel dealerPanel;
-    private final JLabel[] dealerHand;
-    private final JLabel playerHandValueLabel;
-    private final JPanel playerPanel;
-    private final JLabel[] playerHand;
-
-    // Options panel and its components
-    private final JPanel optionsPanel;
-    private final JPanel currentBetPanel;
-    private final JLabel currentBetLabel;
-    private final JLabel currentBetValueLabel;
-    private final JPanel betOptionsPanel;
-    private final JLabel betOptionsLabel;
-    private final Map<String, JButton> betOptions;
-    private final JPanel playOptionsPanel;
-    private final JLabel playOptionsLabel;
-    private final Map<String, JButton> playOptions;
-    private final JPanel handOptionsPanel;
-    private final JLabel handOptionsLabel;
-    private final Map<String, JButton> handOptions;
-
-    private final DefaultFont font;
 
     public View() {
         frame = new JFrame("Blackjack");
@@ -240,25 +203,6 @@ public class View {
         handOptionsPanel.setLayout(new GridBagLayout());
     }
 
-    public void initPlayOptions(String[] options) {
-        initOptionLabel(playOptionsPanel, playOptionsLabel, options.length);
-        initOptions(options, this.playOptions, playOptionsPanel, false);
-    }
-
-    public void initHandOptions(String[] options) {
-        initOptionLabel(handOptionsPanel, handOptionsLabel, options.length);
-        initOptions(options, this.handOptions, handOptionsPanel, false);
-    }
-
-    public void initBetOptions(int[] options) {
-        initOptionLabel(betOptionsPanel, betOptionsLabel, options.length);
-        String[] stringOptions = new String[options.length];
-        for (int i = 0; i < stringOptions.length; i++) {
-            stringOptions[i] = String.valueOf(options[i]);
-        }
-        initOptions(stringOptions, betOptions, betOptionsPanel, true);
-    }
-
     public void clearCards() {
         resetImages(playerHand);
         resetImages(dealerHand);
@@ -321,28 +265,32 @@ public class View {
         dealerHand[0].setIcon(icon);
     }
 
-    public void enablePlayOption(String option) {
-        playOptions.get(option).setEnabled(true);
-    }
-
-    public void disablePlayOption(String option) {
-        playOptions.get(option).setEnabled(false);
-    }
-
-    public void enableHandOption(String option) {
-        handOptions.get(option).setEnabled(true);
-    }
-
-    public void disableHandOption(String option) {
-        if (handOptions.containsKey(option)) {
-            handOptions.get(option).setEnabled(false);
-        }
+    public void enableAllBetOptions() {
+        betOptionsPanel.setVisible(true);
+        betOptions.values().forEach((betOption) -> {
+            betOption.setEnabled(true);
+        });
     }
 
     public void enableAllPlayOptions() {
         playOptionsPanel.setVisible(true);
         playOptions.values().forEach((playOption) -> {
             playOption.setEnabled(true);
+        });
+    }
+
+    public void enableHandOption(String option) {
+        handOptions.get(option).setEnabled(true);
+    }
+
+    public void enablePlayOption(String option) {
+        playOptions.get(option).setEnabled(true);
+    }
+
+    public void disableAllBetOptions() {
+        betOptionsPanel.setVisible(false);
+        betOptions.values().forEach((betOption) -> {
+            betOption.setEnabled(false);
         });
     }
 
@@ -353,18 +301,14 @@ public class View {
         });
     }
 
-    public void enableAllBetOptions() {
-        betOptionsPanel.setVisible(true);
-        betOptions.values().forEach((betOption) -> {
-            betOption.setEnabled(true);
-        });
+    public void disableHandOption(String option) {
+        if (handOptions.containsKey(option)) {
+            handOptions.get(option).setEnabled(false);
+        }
     }
 
-    public void disableAllBetOptions() {
-        betOptionsPanel.setVisible(false);
-        betOptions.values().forEach((betOption) -> {
-            betOption.setEnabled(false);
-        });
+    public void disablePlayOption(String option) {
+        playOptions.get(option).setEnabled(false);
     }
 
     public void updateBetOptions(double chips, int[] betValues) {
@@ -378,19 +322,22 @@ public class View {
         }
     }
 
-    public void updateCards(ImageIcon[] playerCards, ImageIcon[] dealerCards) {
-        updateImages(playerCards, this.playerHand);
-        updateImages(dealerCards, this.dealerHand);
-    }
-
-    public void updatePlayerHandValue(int playerHandValue) {
-        playerHandValueLabel.setText("Player (" + playerHandValue + ")");
-        dealerHandValueLabel.setText("Dealer");
+    public void updateDealerCards(ImageIcon[] cardImages) {
+        updateImages(cardImages, dealerHand);
     }
 
     public void updateDealerHandValue(int dealerHandValue) {
         dealerHandValueLabel.setText("Dealer (" + dealerHandValue + ")");
         dealerHandValueLabel.setAlignmentX(SwingConstants.LEADING);
+    }
+
+    public void updatePlayerCards(ImageIcon[] cardImages) {
+        updateImages(cardImages, playerHand);
+    }
+
+    public void updatePlayerHandValue(int playerHandValue) {
+        playerHandValueLabel.setText("Player (" + playerHandValue + ")");
+        dealerHandValueLabel.setText("Dealer");
     }
 
     public void updateStats(double chips, double bet) {
@@ -400,6 +347,25 @@ public class View {
 
     public Collection<JButton> getBetOptions() {
         return betOptions.values();
+    }
+
+    public void initBetOptions(int[] options) {
+        initOptionLabel(betOptionsPanel, betOptionsLabel, options.length);
+        String[] stringOptions = new String[options.length];
+        for (int i = 0; i < stringOptions.length; i++) {
+            stringOptions[i] = String.valueOf(options[i]);
+        }
+        initOptions(stringOptions, betOptions, betOptionsPanel, true);
+    }
+
+    public void initPlayOptions(String[] options) {
+        initOptionLabel(playOptionsPanel, playOptionsLabel, options.length);
+        initOptions(options, this.playOptions, playOptionsPanel, false);
+    }
+
+    public void initHandOptions(String[] options) {
+        initOptionLabel(handOptionsPanel, handOptionsLabel, options.length);
+        initOptions(options, this.handOptions, handOptionsPanel, false);
     }
 
     public void initHitActionListener(ActionListener l) {
@@ -478,4 +444,32 @@ public class View {
             labels[i].setIcon(images[i]);
         }
     }
+    
+    private final JFrame frame;
+    private final JPanel topPanel;
+    private final JLabel titleLabel;
+    private final JPanel messagePanel;
+    private final JLabel messageLabel;
+    private final JLabel chipsLabel;
+    private final JPanel tablePanel;
+    private final JLabel dealerHandValueLabel;
+    private final JPanel dealerPanel;
+    private final JLabel[] dealerHand;
+    private final JLabel playerHandValueLabel;
+    private final JPanel playerPanel;
+    private final JLabel[] playerHand;
+    private final JPanel optionsPanel;
+    private final JPanel currentBetPanel;
+    private final JLabel currentBetLabel;
+    private final JLabel currentBetValueLabel;
+    private final JPanel betOptionsPanel;
+    private final JLabel betOptionsLabel;
+    private final Map<String, JButton> betOptions;
+    private final JPanel playOptionsPanel;
+    private final JLabel playOptionsLabel;
+    private final Map<String, JButton> playOptions;
+    private final JPanel handOptionsPanel;
+    private final JLabel handOptionsLabel;
+    private final Map<String, JButton> handOptions;
+    private final DefaultFont font;
 }

@@ -6,8 +6,6 @@ import java.util.List;
 
 public class Deck {
     
-    private final List<Card> deck;
-    
     public Deck() {
         deck = new ArrayList<>(); 
 
@@ -27,6 +25,10 @@ public class Deck {
         }
     }
 
+    public void add(List<Card> hand) {
+        hand.forEach(deck::add);
+    }
+
     public Card drawCard() {
         int index = (int) (Math.random() * deck.size());
         Card pickedCard = deck.get(index);
@@ -34,11 +36,9 @@ public class Deck {
         return pickedCard;
     }
 
-    public void add(List<Card> hand) {
-        hand.forEach(deck::add);
-    }
-
     public void shuffle() {
         Collections.shuffle(deck);
     }
+    
+    private final List<Card> deck;
 }

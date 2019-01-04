@@ -2,24 +2,30 @@ package blackjack;
 
 public class UserPlayer extends Player {
 
-    private double chips;
-    private double bet; 
-
     public UserPlayer(double chips) {
         super();
         this.chips = chips;
         this.bet = 0;
     }    
 
-    public void doubleBet() {
-        if (bet <= chips) {
-            chips -= bet;
-            bet *= 2;
+    public void addBet(double amount) {
+        if (amount <= chips) {
+            chips -= amount;
+        } else {
+            amount = chips;
+            chips = 0;
         }
+        bet += amount;
     }
 
-    public double getBet() {
-        return bet;
+    public void addChips(double amount) {
+        chips += amount;
+    }
+
+    public void doubleBet() {
+        if (bet <= chips) {
+            addBet(bet);
+        }
     }
 
     /**
@@ -36,21 +42,14 @@ public class UserPlayer extends Player {
         bet = amount;
     }
 
-    public void addBet(double amount) {
-        if (amount <= chips) {
-            chips -= amount;
-        } else {
-            amount = chips;
-            chips = 0;
-        }
-        bet += amount;
-    }
-
-    public void addChips(double amount) {
-        chips += amount;
-    }
-
     public double getChips() {
         return chips;
     }
+
+    public double getBet() {
+        return bet;
+    }
+
+    private double chips;
+    private double bet; 
 }

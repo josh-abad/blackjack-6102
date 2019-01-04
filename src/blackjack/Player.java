@@ -5,8 +5,6 @@ import java.util.List;
 
 public class Player {
 
-    final private List<Card> hand;
-
     public Player() {
         this.hand = new ArrayList<>();
     }
@@ -19,10 +17,6 @@ public class Player {
         hand.add(card);
     }
 
-    public List<Card> getHand() {
-        return hand;
-    }
-
     /**
      * Removes all cards from the player's hand and returns them to a deck
      * @param deck the deck where the cards will be replaced in
@@ -30,11 +24,6 @@ public class Player {
     public void resetHand(Deck deck) {
         deck.add((ArrayList) hand);
         hand.clear();
-    }
-
-    @Override
-    public String toString() {
-        return "Player";
     }
 
     public boolean isBelowLimit() {
@@ -59,7 +48,7 @@ public class Player {
         }
 
         // Adds 1 to the total if the hand will exceed 21, 11 otherwise
-        for (Card ace : aces) {
+        for (int i = 0, len = aces.size(); i < len; i++) {
             total += (total + 11 > 21) ? 1 : 11;
         }
 
@@ -71,12 +60,8 @@ public class Player {
      * @return  true if player has an ace and another ten-valued-card
      */
     public boolean hasBlackjack() {
-        if (hand.size() == 2) {
-            for (Card card : hand) {
-                if (card.getValue() == 10) {
-                    return hasAce();
-                }
-            }
+        if (hand.size() == 2 && hasAce()) {
+            return hand.get(0).getValue() == 10 || hand.get(1).getValue() == 10;
         }
         return false;
     }
@@ -84,4 +69,15 @@ public class Player {
     public boolean hasAce() {
         return hand.stream().anyMatch((card) -> (card instanceof Ace));
     }
+
+    public List<Card> getHand() {
+        return hand;
+    }
+
+    @Override
+    public String toString() {
+        return "Player";
+    }
+
+    private final List<Card> hand;
 }

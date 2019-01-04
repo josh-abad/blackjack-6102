@@ -11,4 +11,8 @@ public class Palette {
     public static final Color TABLE_DARKEST = TABLE_DARKER.darker();
     public static final Color TABLE_LIGHT = TABLE.brighter();
     public static final Color TEXT = Color.WHITE;
+
+    private Palette() {
+        // Do not instantiate
+    }
 }

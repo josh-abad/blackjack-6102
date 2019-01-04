@@ -5,12 +5,6 @@ import java.util.Map;
 
 public class FaceCard extends Card {
 
-    private final String face;
-
-    public String getFace() {
-        return face;
-    }
-
     public FaceCard(int value, String suite) {
         super(value, suite);
 
@@ -22,8 +16,14 @@ public class FaceCard extends Card {
         this.face = faces.get(value);
     }
 
+    public String getFace() {
+        return face;
+    }
+
     @Override
     public String toString() {
         return face + " of " + getSuit();
     }
+
+    private final String face;
 }

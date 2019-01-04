@@ -4,10 +4,6 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class ImageResizer {
-    
-    private ImageResizer() {
-        // Do not instantiate
-    }
 
     public static ImageIcon getScaledImage(ImageIcon icon, int scale) {
         Image image = icon.getImage();
@@ -16,5 +12,9 @@ public class ImageResizer {
         );
         
         return new ImageIcon(scaledImg);
+    }
+    
+    private ImageResizer() {
+        // Do not instantiate
     }
 }

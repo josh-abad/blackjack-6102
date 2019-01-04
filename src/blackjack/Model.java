@@ -283,16 +283,16 @@ public class Model {
         return cardImages;
     }
 
-    public Card getPlayerFirstCard() {
-        return PLAYER.getHand().get(0);
+    public String getFirstCard() {
+        return PLAYER.getHand().get(0).toString();
     }
 
     public int getPlayerHandValue() {
         return PLAYER.getHandValue();
     }
 
-    public Card getPlayerSecondCard() {
-        return PLAYER.getHand().get(1);
+    public String getSecondCard() {
+        return PLAYER.getHand().get(1).toString();
     }
 
     /**
