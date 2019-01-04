@@ -22,12 +22,14 @@ public class Card {
         this.suit = suit;
 
         // Images from https://github.com/htdebeer/SVG-cards
-        String path = "/blackjack/images/cards" + suit + "/" + value + ".png";
+        String path = "/blackjack/images/cards/" + suit + "/" + value + ".png";
+        System.out.println(path);
         URL location = getClass().getResource(path);
+        System.out.println(location);
         ImageIcon icon = new ImageIcon(location);
         this.frontIcon = ImageResizer.getScaledImage(icon, 100);
 
-        path = "/blackjack/images/cards" + suit + "/Back.png";
+        path = "/blackjack/images/cards/" + suit + "/Back.png";
         location = getClass().getResource(path);
         icon = new ImageIcon(location);
         this.backIcon = ImageResizer.getScaledImage(icon, 100);
