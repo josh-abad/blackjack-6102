@@ -12,6 +12,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +31,8 @@ import javax.swing.border.LineBorder;
 public class View {
 
     public View() {
+        System.setProperty("awt.useSystemAAFontSettings","on");
+        System.setProperty("swing.aatext", "true");
         frame = new JFrame("Blackjack");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 725);
@@ -434,9 +437,9 @@ public class View {
     }
 
     private void resetImages(JLabel[] playerHand) {
-        for (JLabel label : playerHand) {
+        Arrays.asList(playerHand).forEach((label) -> {
             label.setIcon(null);
-        }
+        });
     }
 
     private void updateImages(ImageIcon[] images, JLabel[] labels) {
