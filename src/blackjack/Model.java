@@ -124,17 +124,7 @@ public class Model {
      * @param type possible values are: REGULAR, BLACKJACK, and HALF
      */
     public void givePayout(Payout type) {
-        switch (type) {
-            case BLACKJACK:
-                PLAYER.addChips(PLAYER.getBet() + (PLAYER.getBet() * 1.5));
-                break;
-            case REGULAR:
-                PLAYER.addChips(PLAYER.getBet() * 2);
-                break;
-            case HALF:
-                PLAYER.addChips(PLAYER.getBet() / 2);
-                break;
-        }
+        PLAYER.addChips(type.getPayout(PLAYER.getBet()));
         resetBet();
     }
 
