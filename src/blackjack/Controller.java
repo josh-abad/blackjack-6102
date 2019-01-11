@@ -184,9 +184,8 @@ public class Controller {
             view.displayMessage(Message.nextHand());
             view.clearCards();
 
-            view.clearHandValue();
-            view.clearTableBorder();
-
+            view.updateDealerHandValue(0);
+            view.updatePlayerHandValue(0);
             view.disableHandOption("Next Hand");
             model.resetHand();
 
@@ -234,7 +233,10 @@ public class Controller {
         view.initPlayOptions(model.PLAY_OPTIONS);
         view.initHandOptions(model.HAND_OPTIONS);
 
-        view.updatePlayerCards(model.getPlayerCardImages());
+        view.updateDealerHandValue(0);
+        view.updatePlayerHandValue(0);
+        view.clearCards();
+        view.displayTableBorder();
         view.updateDealerCards(model.getDealerCardImages());
         view.updateStats(model.getChips(), model.getBet());
 

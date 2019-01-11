@@ -207,13 +207,10 @@ public class View {
     }
 
     public void clearCards() {
-        resetImages(playerHand);
-        resetImages(dealerHand);
-    }
-
-    public void clearHandValue() {
-        playerHandValueLabel.setText("");
-        dealerHandValueLabel.setText("");
+        URL location = getClass().getResource("/blackjack/images/blank.png");
+        ImageIcon icon = new ImageIcon(location);
+        resetImages(ImageResizer.getScaledImage(icon, 100), playerHand);
+        resetImages(ImageResizer.getScaledImage(icon, 100), dealerHand);
     }
 
     public void clearMessage() {
@@ -221,11 +218,6 @@ public class View {
         if (messagePanel.isOpaque()) {
             messagePanel.setOpaque(false);
         }
-    }
-
-    public void clearTableBorder() {
-        playerPanel.setBorder(BorderFactory.createEmptyBorder());
-        dealerPanel.setBorder(BorderFactory.createEmptyBorder());
     }
 
     public void displayFrame() {
@@ -436,9 +428,9 @@ public class View {
         }
     }
 
-    private void resetImages(JLabel[] playerHand) {
+    private void resetImages(ImageIcon image, JLabel[] playerHand) {
         Arrays.asList(playerHand).forEach((label) -> {
-            label.setIcon(null);
+            label.setIcon(image);
         });
     }
 
