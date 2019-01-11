@@ -96,7 +96,7 @@ public class View {
         playerHandValueLabel.setFont(font.generateFont(16));
 
         optionsPanel.setBackground(Palette.TABLE_DARK);
-        currentBetPanel.setBackground(Palette.TABLE_DARKER);
+        currentBetPanel.setBackground(Palette.TABLE_DARK);
         betOptionsPanel.setBackground(Palette.TABLE_DARKER);
         playOptionsPanel.setBackground(Palette.TABLE_DARKER);
         handOptionsPanel.setBackground(Palette.TABLE_DARKER);
