@@ -120,7 +120,7 @@ public class Model {
     }
 
     /**
-     * Pays the PLAYER a certain amount of chips depending on the Payout type
+     * Pays the PLAYER a certain amount of chips depending on the PayoutEnum type
      * @param type possible values are: REGULAR, BLACKJACK, and HALF
      */
     public void givePayout(Payout type) {
