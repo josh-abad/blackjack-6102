@@ -18,12 +18,12 @@ public class Card {
 
         // Images from https://github.com/htdebeer/SVG-cards
         String path = "/blackjack/images/cards/" + suit + "/" + value + ".png";
-        URL location = getClass().getResource(path);
+        URL location = Card.class.getResource(path);
         ImageIcon icon = new ImageIcon(location);
         this.frontIcon = ImageResizer.getScaledImage(icon, 100);
 
         path = "/blackjack/images/cards/" + suit + "/Back.png";
-        location = getClass().getResource(path);
+        location = Card.class.getResource(path);
         icon = new ImageIcon(location);
         this.backIcon = ImageResizer.getScaledImage(icon, 100);
     }

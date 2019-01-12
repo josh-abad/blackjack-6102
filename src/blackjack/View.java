@@ -46,7 +46,7 @@ public class View {
 
         topPanel = new JPanel();
 
-        URL location = getClass().getResource("/blackjack/images/logo1.png");
+        URL location = View.class.getResource("/blackjack/images/logo1.png");
         icon = new ImageIcon(location);
         titleLabel = new JLabel(ImageResizer.getScaledImage(icon, 150));
 
@@ -83,7 +83,7 @@ public class View {
 
         chipsLabel.setForeground(Palette.TEXT);
         chipsLabel.setFont(font.generateFont(36));
-        location = getClass().getResource("/blackjack/images/chip.png");
+        location = View.class.getResource("/blackjack/images/chip.png");
         icon = new ImageIcon(location);
         chipsLabel.setIcon(ImageResizer.getScaledImage(icon, 36));
 
@@ -207,7 +207,7 @@ public class View {
     }
 
     public void clearCards() {
-        URL location = getClass().getResource("/blackjack/images/blank.png");
+        URL location = View.class.getResource("/blackjack/images/blank.png");
         ImageIcon icon = new ImageIcon(location);
         resetImages(ImageResizer.getScaledImage(icon, 100), playerHand);
         resetImages(ImageResizer.getScaledImage(icon, 100), dealerHand);
@@ -421,7 +421,7 @@ public class View {
 
             if (hasIcon) {
                 String path = "/blackjack/images/" + o[i] + ".png";
-                URL location = getClass().getResource(path);
+                URL location = View.class.getResource(path);
                 try {
                     ImageIcon icon = new ImageIcon(location);
                     option.setIcon(ImageResizer.getScaledImage(icon, 14));
