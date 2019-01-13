@@ -1,7 +1,6 @@
 package blackjack;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -10,27 +9,14 @@ public class Deck {
     public Deck() {
         deck = new ArrayList<>(); 
 
-        Arrays.asList(Suit.values()).forEach((suit) -> {
-            for (int value = 1; value <= 13; value++) {
-                if (value == 1) {
-                    deck.add(new Ace(suit));
-                } else if (value > 10) {
-                    deck.add(new FaceCard(value, suit));
-                } else {
-                    deck.add(new Card(value, suit));
-                }
-            }
-        });
         for (Suit suit : Suit.values()) {
-            for (int value = 1; value <= 13; value++) {
-                if (value == 1) {
-                    deck.add(new Ace(suit));
-                } else if (value > 10) {
-                    deck.add(new FaceCard(value, suit));
-                } else {
-                    deck.add(new Card(value, suit));
-                }
+            for (int value = 2; value <= 10; value++) {
+                deck.add(new Card(value, suit));
             }
+            for (Face face : Face.values()) {
+                deck.add(new FaceCard(face, suit));
+            }
+            deck.add(new Ace(suit));
         }
     }
 
