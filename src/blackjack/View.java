@@ -38,17 +38,28 @@ public class View {
         frame.setSize(800, 725);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        String path = "/blackjack/images/logo2.png";
-        ImageIcon icon = new ImageIcon(getClass().getResource(path));
-        frame.setIconImage(icon.getImage());
+        String path;
+
+        path = "/blackjack/images/logo2.png";
+        try {
+            ImageIcon icon = new ImageIcon(View.class.getResource(path));
+            frame.setIconImage(icon.getImage());
+        } catch (NullPointerException ex) {
+            System.err.println("Could not find " + path);
+        }
 
         font = new DefaultFont("Segoe UI");
 
         topPanel = new JPanel();
+        titleLabel = new JLabel();
 
-        URL location = View.class.getResource("/blackjack/images/logo1.png");
-        icon = new ImageIcon(location);
-        titleLabel = new JLabel(ImageResizer.getScaledImage(icon, 150));
+        path = "/blackjack/images/logo1.png";
+        try {
+            ImageIcon icon = new ImageIcon(View.class.getResource(path));
+            titleLabel.setIcon(ImageResizer.getScaledImage(icon, 150));
+        } catch (NullPointerException ex) {
+            System.err.println("Could not find " + path);
+        }
 
         messagePanel = new JPanel();
         messageLabel = new JLabel("Welcome to Blackjack! Place a bet.");
@@ -83,9 +94,14 @@ public class View {
 
         chipsLabel.setForeground(Palette.TEXT);
         chipsLabel.setFont(font.generateFont(36));
-        location = View.class.getResource("/blackjack/images/chip.png");
-        icon = new ImageIcon(location);
-        chipsLabel.setIcon(ImageResizer.getScaledImage(icon, 36));
+
+        path = "/blackjack/images/chip.png";
+        try {
+            ImageIcon icon = new ImageIcon(View.class.getResource(path));
+            chipsLabel.setIcon(ImageResizer.getScaledImage(icon, 36));
+        } catch (NullPointerException ex) {
+            System.err.println("Could not find " + path);
+        }
 
         tablePanel.setBackground(Palette.TABLE);
         dealerHandValueLabel.setForeground(Palette.TEXT);
@@ -207,10 +223,16 @@ public class View {
     }
 
     public void clearCards() {
-        URL location = View.class.getResource("/blackjack/images/blank.png");
-        ImageIcon icon = new ImageIcon(location);
-        resetImages(ImageResizer.getScaledImage(icon, 100), playerHand);
-        resetImages(ImageResizer.getScaledImage(icon, 100), dealerHand);
+        String path = "/blackjack/images/blank.png";
+        try {
+            ImageIcon icon = new ImageIcon(View.class.getResource(path));
+            resetImages(ImageResizer.getScaledImage(icon, 100), playerHand);
+            resetImages(ImageResizer.getScaledImage(icon, 100), dealerHand);
+        } catch (NullPointerException ex) {
+            resetImages(null, playerHand);
+            resetImages(null, dealerHand);
+            System.err.println("Could not find " + path);
+        }
     }
 
     public void clearMessage() {
@@ -257,12 +279,30 @@ public class View {
         dealerPanel.setBorder(new CompoundBorder(margin, border));
     }
 
-    public void hideHoleCard(ImageIcon icon) {
-        dealerHand[0].setIcon(icon);
+    public void hideHoleCard(String holeCardName) {
+        String suit = holeCardName.split(" ")[2];
+        String path = "/blackjack/images/cards/" + suit + "/Back.png";
+        URL location = View.class.getResource(path);
+        try {
+            ImageIcon icon = new ImageIcon(location);
+            dealerHand[0].setIcon(ImageResizer.getScaledImage(icon, 100));
+        } catch (NullPointerException ex) {
+            System.err.println("Could not find " + path);
+        }
     }
 
-    public void revealHoleCard(ImageIcon icon) {
-        dealerHand[0].setIcon(icon);
+    public void revealHoleCard(String holeCardName) {
+        String[] comp = holeCardName.split(" ");
+        String value = comp[0];
+        String suit = comp[2];
+        String path = "/blackjack/images/cards/" + suit + "/" + value + ".png";
+        URL location = View.class.getResource(path);
+        try {
+            ImageIcon icon = new ImageIcon(location);
+            dealerHand[0].setIcon(ImageResizer.getScaledImage(icon, 100));
+        } catch (NullPointerException ex) {
+            System.err.println("Could not find " + path);
+        }
     }
 
     public void enableAllBetOptions() {
@@ -322,8 +362,8 @@ public class View {
         }
     }
 
-    public void updateDealerCards(ImageIcon[] cardImages) {
-        updateImages(cardImages, dealerHand);
+    public void updateDealerCards(String[] cardNames) {
+        updateImages(cardNames, dealerHand);
     }
 
     public void updateDealerHandValue(int dealerHandValue) {
@@ -331,8 +371,8 @@ public class View {
         dealerHandValueLabel.setAlignmentX(SwingConstants.LEADING);
     }
 
-    public void updatePlayerCards(ImageIcon[] cardImages) {
-        updateImages(cardImages, playerHand);
+    public void updatePlayerCards(String[] cardNames) {
+        updateImages(cardNames, playerHand);
     }
 
     public void updatePlayerHandValue(int playerHandValue) {
@@ -439,9 +479,20 @@ public class View {
         });
     }
 
-    private void updateImages(ImageIcon[] images, JLabel[] labels) {
-        for (int i = 0; i < images.length; i++) {
-            labels[i].setIcon(images[i]);
+    private void updateImages(String[] cardNames, JLabel[] labels) {
+        for (int i = 0; i < cardNames.length; i++) {
+            String[] comp = cardNames[i].split(" ");
+            String value = comp[0];
+            String suit = comp[2];
+            String path = "/blackjack/images/cards/" + suit + "/" 
+                    + value + ".png";
+            URL location = View.class.getResource(path);
+            try {
+                ImageIcon icon = new ImageIcon(location);
+                labels[i].setIcon(ImageResizer.getScaledImage(icon, 100));
+            } catch (NullPointerException ex) {
+                System.err.println("Could not find " + path);
+            }
         }
     }
     

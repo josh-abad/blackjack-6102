@@ -49,7 +49,8 @@ public class Controller {
             model.playerHit(card);
             view.displayMessage(Message.hit(card));
             view.updatePlayerHandValue(model.getPlayerHandValue());
-            view.updatePlayerCards(model.getPlayerCardImages());
+            // view.updatePlayerCards(model.getPlayerCardImages());
+            view.updatePlayerCards(model.getPlayerCardNames());
             if (model.wentOver()) {
                 view.disablePlayOption("Hit");
                 view.disablePlayOption("Double Down");
@@ -63,12 +64,15 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             view.disableAllPlayOptions();
-            view.revealHoleCard(model.getFrontHoleCard());
+            // view.revealHoleCard(model.getFrontHoleCard());
+            view.revealHoleCard(model.getHoleCardName());
 
             model.dealerTurn();
 
-            view.updatePlayerCards(model.getPlayerCardImages());
-            view.updateDealerCards(model.getDealerCardImages());
+            // view.updatePlayerCards(model.getPlayerCardImages());
+            // view.updateDealerCards(model.getDealerCardImages());
+            view.updatePlayerCards(model.getPlayerCardNames());
+            view.updateDealerCards(model.getDealerCardNames());
 
             view.updatePlayerHandValue(model.getPlayerHandValue());
             view.updateDealerHandValue(model.getDealerHandValue());
@@ -119,7 +123,8 @@ public class Controller {
             view.displayMessage(Message.doubleDown(model.getBet(), card));
             view.updatePlayerHandValue(model.getPlayerHandValue());
         
-            view.updatePlayerCards(model.getPlayerCardImages());
+            // view.updatePlayerCards(model.getPlayerCardImages());
+            view.updatePlayerCards(model.getPlayerCardNames());
         
             view.updateStats(model.getChips(), model.getBet());
             view.disablePlayOption("Hit");
@@ -135,7 +140,8 @@ public class Controller {
             view.displayMessage(Message.surrender(model.getBet()));
             model.givePayout(Payout.HALF);
             model.resetBet();
-            view.revealHoleCard(model.getFrontHoleCard());
+            // view.revealHoleCard(model.getFrontHoleCard());
+            view.revealHoleCard(model.getHoleCardName());
             view.updateDealerHandValue(model.getDealerHandValue());
             view.updateStats(model.getChips(), model.getBet());
             view.disableAllPlayOptions();
@@ -171,9 +177,12 @@ public class Controller {
 
             view.updatePlayerHandValue(model.getPlayerHandValue());
 
-            view.updatePlayerCards(model.getPlayerCardImages());
-            view.updateDealerCards(model.getDealerCardImages());
-            view.hideHoleCard(model.getBackHoleCard());
+            // view.updatePlayerCards(model.getPlayerCardImages());
+            // view.updateDealerCards(model.getDealerCardImages());
+            view.updatePlayerCards(model.getPlayerCardNames());
+            view.updateDealerCards(model.getDealerCardNames());
+            // view.hideHoleCard(model.getBackHoleCard());
+            view.hideHoleCard(model.getHoleCardName());
         }
     }
 
@@ -237,7 +246,8 @@ public class Controller {
         view.updatePlayerHandValue(0);
         view.clearCards();
         view.displayTableBorder();
-        view.updateDealerCards(model.getDealerCardImages());
+        // view.updateDealerCards(model.getDealerCardImages());
+        view.updateDealerCards(model.getDealerCardNames());
         view.updateStats(model.getChips(), model.getBet());
 
         view.disableAllPlayOptions();

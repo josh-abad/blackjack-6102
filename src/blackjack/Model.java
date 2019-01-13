@@ -235,10 +235,6 @@ public class Model {
         return PLAYER.isBelowLimit();
     }
 
-    public ImageIcon getBackHoleCard() {
-        return DEALER.getHand().get(0).getBackIcon();
-    }
-
     public double getBet() {
         return PLAYER.getBet();
     }
@@ -247,30 +243,30 @@ public class Model {
         return PLAYER.getChips();
     }
 
-    public ImageIcon[] getDealerCardImages() {
-        int len = DEALER.getHand().size();
-        ImageIcon[] cardImages = new ImageIcon[len];
-        for (int i = 0; i < len; i++) {
-            cardImages[i] = DEALER.getHand().get(i).getFrontIcon();
+    public String[] getDealerCardNames() {
+        int handSize = DEALER.getHand().size();
+        String[] cardNames = new String[handSize];
+        for (int i = 0; i < handSize; i++) {
+            cardNames[i] = DEALER.getHand().get(i).toString();
         }
-        return cardImages;
+        return cardNames;
     }
 
     public int getDealerHandValue() {
         return DEALER.getHandValue();
     }
 
-    public ImageIcon getFrontHoleCard() {
-        return DEALER.getHand().get(0).getFrontIcon();
+    public String getHoleCardName() {
+        return DEALER.getHand().get(0).toString();
     }
 
-    public ImageIcon[] getPlayerCardImages() {
-        int len = PLAYER.getHand().size();
-        ImageIcon[] cardImages = new ImageIcon[len];
-        for (int i = 0; i < len; i++) {
-            cardImages[i] = PLAYER.getHand().get(i).getFrontIcon();
+    public String[] getPlayerCardNames() {
+        int handSize = PLAYER.getHand().size();
+        String[] cardNames = new String[handSize];
+        for (int i = 0; i < handSize; i++) {
+            cardNames[i] = PLAYER.getHand().get(i).toString();
         }
-        return cardImages;
+        return cardNames;
     }
 
     public String getFirstCard() {
