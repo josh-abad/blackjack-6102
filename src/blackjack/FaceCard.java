@@ -5,8 +5,8 @@ import java.util.Map;
 
 public class FaceCard extends Card {
 
-    public FaceCard(int value, String suite) {
-        super(value, suite);
+    public FaceCard(int value, Suit suit) {
+        super(value, suit);
 
         Map<Integer, String> faces = new HashMap<>();
         faces.put(11, "Jack");

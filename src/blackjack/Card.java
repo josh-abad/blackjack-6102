@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 
 public class Card {
 
-    public Card(int value, String suit) {
+    public Card(int value, Suit suit) {
         if (value >= 1 && value <= 10) {
             this.value = value;
         } else if (value > 10 && value <= 13) {
@@ -32,7 +32,7 @@ public class Card {
         return value;
     }
 
-    public String getSuit() {
+    public Suit getSuit() {
         return suit;
     }
 
@@ -50,7 +50,7 @@ public class Card {
     }
 
     private final int value;
-    private final String suit;
+    private final Suit suit;
     private final ImageIcon frontIcon;
     private final ImageIcon backIcon;
 }

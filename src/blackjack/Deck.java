@@ -9,10 +9,7 @@ public class Deck {
     public Deck() {
         deck = new ArrayList<>(); 
 
-        final String VALID_SUITS[] = {
-            "Diamonds", "Clubs", "Spades", "Hearts"
-        };
-        for (String suit : VALID_SUITS) {
+        for (Suit suit : Suit.values()) {
             for (int i = 1; i <= 13; i++) {
                 if (i == 1) {
                     deck.add(new Ace(suit));

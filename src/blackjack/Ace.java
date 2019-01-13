@@ -2,8 +2,8 @@ package blackjack;
 
 public class Ace extends Card {
 
-    public Ace(String suite) {
-        super(1, suite);
+    public Ace(Suit suit) {
+        super(1, suit);
     }
 
     @Override
