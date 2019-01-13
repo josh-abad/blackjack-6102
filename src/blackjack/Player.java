@@ -22,7 +22,7 @@ public class Player {
      * @param deck the deck where the cards will be replaced in
      */
     public void resetHand(Deck deck) {
-        deck.add((ArrayList) hand);
+        deck.add((List<Card>) hand);
         hand.clear();
     }
 
@@ -72,11 +72,6 @@ public class Player {
 
     public List<Card> getHand() {
         return hand;
-    }
-
-    @Override
-    public String toString() {
-        return "Player";
     }
 
     private final List<Card> hand;
