@@ -244,11 +244,7 @@ public class View {
 
     public void displayFrame() {
         frame.setVisible(true);
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new View();
-            }
-        });
+        SwingUtilities.invokeLater(View::new);
     }
 
     public void displayMessage(String message, Color color) {

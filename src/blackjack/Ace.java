@@ -1,5 +1,9 @@
 package blackjack;
 
+/**
+ * Ace Card
+ * @author yeyoa
+ */
 public class Ace extends Card {
 
     public Ace(Suit suit) {

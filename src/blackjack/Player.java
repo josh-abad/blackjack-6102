@@ -3,36 +3,45 @@ package blackjack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player {
+/**
+ * Abstract Player object
+ * @author Joshua Abad
+ */
+abstract public class Player {
 
     public Player() {
         this.hand = new ArrayList<>();
     }
 
     /**
-     * Add a card to the player's hand
-     * @param card Card object that will be added
+     * Add a {@link Card} to this {@code Player}'s hand.
+     * @param card {@link Card} that will be added
      */
     public void hit(Card card) {
         hand.add(card);
     }
 
     /**
-     * Removes all cards from the player's hand and returns them to a deck
-     * @param deck the deck where the cards will be replaced in
+     * Removes every {@link Card} from this {@code Player}'s hand and adds them to a {@link Deck}.
+     * @param deck the {@link Deck} where every {@link Card} will be added to
      */
     public void resetHand(Deck deck) {
         deck.add((List<Card>) hand);
         hand.clear();
     }
 
+    /**
+     * Checks if this {@code Player}'s hand has not gone past the limit.
+     * @return true if this {@code Player}'s hand is not greater than 21
+     */
     public boolean isBelowLimit() {
         return getHandValue() <= 21;
     }
 
     /**
-     * Counts the value of the player's hand
-     * @return the total value of the player's hand
+     * Counts the value of this {@code Player}'s hand.
+     * <P>An {@link Ace} is counted as 11 unless the hand will exceed 21.
+     * @return the total value of this {@code Player}'s hand
      */
     public int getHandValue() {
         List<Card> aces = new ArrayList<>();
@@ -43,7 +52,7 @@ public class Player {
             if (card instanceof Ace) {
                 aces.add(card);
             } else {
-                total += card.getValue();
+                total += card.getRank();
             }
         }
 
@@ -56,20 +65,28 @@ public class Player {
     }
 
     /**
-     * Check if the player's hand is a blackjack
-     * @return  true if player has an ace and another ten-valued-card
+     * Checks if this {@code Player}'s hand is a Blackjack.
+     * @return true if this {@code Player} has an {@link Ace} and a ten value {@link Card}
      */
     public boolean hasBlackjack() {
         if (hand.size() == 2 && hasAce()) {
-            return hand.get(0).getValue() == 10 || hand.get(1).getValue() == 10;
+            return hand.get(0).getRank() == 10 || hand.get(1).getRank() == 10;
         }
         return false;
     }
 
+    /**
+     * Checks if this {@code Player} has an {@link Ace} in their hand.
+     * @return true if an {@link Ace} is found
+     */
     public boolean hasAce() {
         return hand.stream().anyMatch((card) -> (card instanceof Ace));
     }
 
+    /**
+     * Returns this {@code Player}'s hand.
+     * @return this {@code Player}'s hand
+     */
     public List<Card> getHand() {
         return hand;
     }

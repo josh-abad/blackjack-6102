@@ -6,12 +6,14 @@ import java.util.List;
 
 public class Deck {
     
+    /**
+     * Creates a new {@code Deck} with the standard 52 cards.
+     */
     public Deck() {
         deck = new ArrayList<>(); 
-
         for (Suit suit : Suit.values()) {
-            for (int value = 2; value <= 10; value++) {
-                deck.add(new Card(value, suit));
+            for (int rank = 2; rank <= 10; rank++) {
+                deck.add(new PipCard(rank, suit));
             }
             for (Face face : Face.values()) {
                 deck.add(new FaceCard(face, suit));
@@ -20,10 +22,18 @@ public class Deck {
         }
     }
 
+    /**
+     * Adds a hand to this {@code Deck}
+     * @param hand hand that will be added
+     */
     public void add(List<Card> hand) {
         hand.forEach(deck::add);
     }
 
+    /**
+     * Draws a {@link Card} from this {@code Deck}
+     * @return a {@link Card}
+     */
     public Card drawCard() {
         int index = (int) (Math.random() * deck.size());
         Card pickedCard = deck.get(index);
@@ -31,6 +41,9 @@ public class Deck {
         return pickedCard;
     }
 
+    /**
+     * Shuffles this {@code Deck}
+     */
     public void shuffle() {
         Collections.shuffle(deck);
     }

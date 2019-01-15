@@ -7,7 +7,7 @@ public enum Suit {
     SPADES("Spades"),
     HEARTS("Hearts");
 
-    private String suit;
+    private final String suit;
 
     Suit(String suit) {
         this.suit = suit;
