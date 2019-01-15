@@ -1,25 +1,40 @@
 package blackjack;
 
-public class Card {
+/**
+ * Abstract card object 
+ * @author Joshua Abad
+ */
+abstract public class Card {
 
-    public Card(int value, Suit suit) {
-        this.value = (value >= 1 && value <= 10) ? value : 0;
+    public Card(int rank, Suit suit) {
+        if (rank < 1 || rank > 10) { 
+            throw new IllegalArgumentException("Rank invalid");
+        }
+        this.rank = rank;
         this.suit = suit;
     }
 
-    public int getValue() {
-        return value;
+    /**
+     * Return the rank of this {@code Card}.
+     * @return this {@code Card}'s rank
+     */
+    public int getRank() {
+        return rank;
     }
 
+    /**
+     * Returns the {@link Suit} of this {@code Card}.
+     * @return this {@code Card}'s {@link Suit}
+     */
     public Suit getSuit() {
         return suit;
     }
 
     @Override
     public String toString() {
-        return value + " of " + suit;
+        return rank + " of " + suit;
     }
 
-    private final int value;
+    private final int rank;
     private final Suit suit;
 }
