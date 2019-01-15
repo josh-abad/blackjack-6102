@@ -31,11 +31,11 @@ public class Controller {
                 view.clearMessage();
                 view.enableHandOption("Deal");
             } else {
-                view.displayMessage(Message.minimumBet(model.MINIMUM_BET));
+                view.displayMessage(Message.minimumBet(Model.MINIMUM_BET));
             }
 
             view.updateStats(model.getChips(), model.getBet());
-            view.updateBetOptions(model.getChips(), model.BET_VALUES);
+            view.updateBetOptions(model.getChips(), Model.betValues());
         }
 
         private final int value;
@@ -195,7 +195,7 @@ public class Controller {
             }
 
             view.enableAllBetOptions();
-            view.updateBetOptions(model.getChips(), model.BET_VALUES);
+            view.updateBetOptions(model.getChips(), Model.betValues());
             view.updateStats(model.getChips(), model.getBet());
         }
     }
@@ -229,15 +229,14 @@ public class Controller {
     }
 
     private void initView() {
-        view.initBetOptions(model.BET_VALUES);
-        view.initPlayOptions(model.PLAY_OPTIONS);
-        view.initHandOptions(model.HAND_OPTIONS);
+        view.initBetOptions(Model.betValues());
+        view.initPlayOptions(Model.playOptions());
+        view.initHandOptions(Model.handOptions());
 
         view.updateDealerHandValue(0);
         view.updatePlayerHandValue(0);
         view.clearCards();
         view.displayTableBorder();
-        // view.updateDealerCards(model.getDealerCardImages());
         view.updateDealerCards(model.getDealerCardNames());
         view.updateStats(model.getChips(), model.getBet());
 

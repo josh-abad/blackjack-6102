@@ -5,50 +5,36 @@ public class Model {
     /**
      * The required amount of chips for the {@code Player} to be able to play.
      */
-    public final int MINIMUM_BET;
-
-    /**
-     * The possible options for the {@code Player} when they are playing.
-     */
-    public final String[] PLAY_OPTIONS;
-
-    /**
-     * The possible choices for the {@code Player} regarding their hand.
-     */
-    public final String[] HAND_OPTIONS;
-
-    /**
-     * The possible number of chips a {@code Player} may bet at a time.
-     */
-    public final int[] BET_VALUES;
+    public static final int MINIMUM_BET = 25;
 
     public Model() {
         player = new BlackjackPlayer();
         dealer = new Dealer();
         deck = new Deck();
+    }
 
-        MINIMUM_BET = 0;
+    /**
+     * The possible options for the {@code Player} when they are playing.
+     * @return a {@code String} array containing the play options
+     */
+    public static final String[] playOptions() {
+        return PLAY_OPTIONS.clone();
+    }
 
-        PLAY_OPTIONS = new String[] {
-            "Hit",
-            "Stand",
-            "Double Down",
-            "Surrender"
-        };
+    /**
+     * The possible choices for the {@code Player} regarding their hand.
+     * @return a {@code String} array containing the hand options
+     */
+    public static final String[] handOptions() {
+        return HAND_OPTIONS.clone();
+    }
 
-        HAND_OPTIONS = new String[] {
-            "Deal",
-            "Next Hand",
-            "Quit Game"
-        };
-
-        BET_VALUES = new int[] {
-            5,
-            10,
-            25,
-            50,
-            100
-        };
+    /**
+     * The possible number of chips a {@code Player} may bet at a time.
+     * @return an {@code int} array containing the bet values 
+     */
+    public static final int[] betValues() {
+        return BET_VALUES.clone();
     }
 
     /**
@@ -327,4 +313,11 @@ public class Model {
     private final BlackjackPlayer player;
     private final Dealer dealer;
     private final Deck deck;
+    private static final String[] PLAY_OPTIONS = {
+        "Hit", "Stand", "Double Down", "Surrender"
+    };
+    private static final String[] HAND_OPTIONS = {
+        "Deal", "Next Hand", "Quit Game"
+    };
+    private static final int[] BET_VALUES = {5, 10, 25, 50, 100};
 }
