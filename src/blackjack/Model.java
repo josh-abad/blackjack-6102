@@ -79,8 +79,8 @@ public class Model {
     }
 
     /**
-     * The {@code Dealer} draws a {@code Card} if they have a soft 17 
-     * or a hand value less than or equal to 16.
+     * The {@code Dealer} hits as long as their hand is a soft 17 or less than 
+     * a hard 17.
      */
     public void dealerTurn() {
         while (dealer.hasSoft17() || dealer.getHandValue() <= 16) {
@@ -90,14 +90,14 @@ public class Model {
     }
 
     /**
-     * Doubles the {@code Player}'s existing bet if there is sufficient chips.
+     * This method doubles the existing bet if there is sufficient chips.
      */
     public void doubleBet() {
         player.doubleBet();
     }
 
     /**
-     * Draws a {@code Card} from the {@code Deck}.
+     * This method draws a {@code Card} from the {@code Deck}.
      * @return a {@code Card}
      */
     public Card drawCard() {
@@ -105,8 +105,10 @@ public class Model {
     }
 
     /**
-     * Pays the {@code Player} the chips specified by the {@code Payout}. 
-     * @param type possible values are: {@code REGULAR}, {@code BLACKJACK}, and {@code HALF}
+     * This method gives the {@code Player} the chips specified by the 
+     * {@code Payout}.  
+     * @param type possible values are: {@code REGULAR}, {@code BLACKJACK}, and 
+     * {@code HALF}
      */
     public void givePayout(Payout type) {
         player.addChips(type.getPayout(player.getBet()));
@@ -114,60 +116,55 @@ public class Model {
     }
 
     /**
-     * Check if the game is a push for tie.
-     * @return true if either there is a double Blackjack or equal hand values
+     * This method determines if there is a push for a tie. A push is when the 
+     * {@code BlackjackPlayer} and the {@code Dealer} have the same hand value.
+     * Neither players win in a push. 
+     * @return true if the {@code BlackjackPlayer} and the {@code Dealer} have
+     * the same hand value
      */
     public boolean isTie() {
-        if (bothBelowLimit()) {
-            return isEqualHand();
+        if (bothBelowLimit(player, dealer)) {
+            return isEqualHand(player, dealer);
         }
         return false;
     }
 
     /**
-     * Removes the chips from the {@code Player}'s bet.
+     * This method removes the chips from the {@code Player}'s bet.
      */
-    public void loseBet() {
+    public void clearBet() {
         player.setBet(0);
     }
 
     /**
-     * Checks if the {@code Dealer} has a greater hand value than 
-     * the {@code Player} if they are both below limit. If the {@code Player} 
-     * is past limit, check if the {@code Dealer} is below limit.
-     * @return true if the {@code Dealer} won
+     * This method determines if the {@code dealer} has won over the 
+     * {@code player}.
+     * @return true if the {@code dealer} won
      */
-    public boolean lost() {
-        if (dealerHasBlackjack()) {
-            return !playerHasBlackjack();
-        }
-
-        if (bothBelowLimit()) {
-            return dealer.getHandValue() > player.getHandValue();
-        }
-
-        return dealer.isBelowLimit();
+    public boolean playerLost() {
+        return won(dealer, player);
     }
 
     /**
-     * Check if the {@code Player} still has enough chips to play.
-     * @return true if {@code Player}'s chips are less than the minimum bet
+     * This method determines if the {@code player} has enough chips to 
+     * continue playing.
+     * @return true if the chips are less than the {@code MINIMUM_BET}
      */
     public boolean outOfChips() {
         return player.getChips() < MINIMUM_BET;
     }
 
     /**
-     * Check if the {@code Player} has an {@code Ace} and another 
-     * {@code Card} with a value of 10.
-     * @return true if the {@code Player} has Blackjack
+     * This method determines if the {@code player} has an {@code Ace} and 
+     * another {@code Card} with a value of 10.
+     * @return true if the {@code player} has Blackjack
      */
     public boolean playerHasBlackjack() {
         return player.hasBlackjack();
     }
 
     /**
-     * {@code Player} adds a {@code Card} to their hand.
+     * The {@code player} adds a {@code Card} to their hand.
      * @param card the {@code Card} to be added
      */
     public void playerHit(Card card) {
@@ -175,15 +172,15 @@ public class Model {
     }
 
     /**
-     * Sets the {@code Player}'s existing bet to 0.
+     * This method sets the existing bet to 0.
      */
     public void resetBet() {
         player.setBet(0);
     }
 
     /**
-     * Removes all {@code Card} from the {@code Player} and {@code Dealer}'s 
-     * hands and places them back onto the {@code Deck}.
+     * This method removes every {@code Card} from each hand and places them 
+     * back in the {@code deck}.
      */
     public void resetHand() {
         player.resetHand(deck);
@@ -191,8 +188,8 @@ public class Model {
     }
 
     /**
-     * Removes the chips from the {@code Player}'s bet and adds them back 
-     * to their chips.
+     * This method removes the chips from the {@code player}'s bet and adds 
+     * them back to their chips.
      */
     public void returnBet() {
         player.addChips(player.getBet());
@@ -200,14 +197,15 @@ public class Model {
     }
 
     /**
-     * Shuffles the {@code Deck}.
+     * This method shuffles the {@code deck}.
      */
     public void shuffleDeck() {
         deck.shuffle();
     }
 
     /**
-     * Check if the {@code Player}'s hand value is greater than 21.
+     * This method determines if the {@code player}'s hand value is greater 
+     * than 21.
      * @return true if {@code Player}'s hand value is greater than 21
      */
     public boolean wentOver() {
@@ -215,19 +213,12 @@ public class Model {
     }
 
     /**
-     * Checks if the {@code Player} has a greater hand value than the 
-     * {@code Dealer} if they are both below limit. If the {@code Dealer} 
-     * is past limit, check if the {@code Player} is below limit.
-     * @return true if the {@code Player} won
+     * This method determines if the {@code player} has won over the 
+     * {@code dealer}.
+     * @return true if the {@code player} won
      */
-    public boolean won() {
-        if (player.hasBlackjack()) {
-            return !dealer.hasBlackjack();
-        }
-        if (bothBelowLimit()) {
-            return player.getHandValue() > dealer.getHandValue();
-        }
-        return player.isBelowLimit();
+    public boolean playerWon() {
+        return won(player, dealer);
     }
 
     public double getBet() {
@@ -281,33 +272,34 @@ public class Model {
      * are not above 21.
      * @return true if the hand values of both {@code Player} and {@code Dealer} aren't under 21 
      */
-    private boolean bothBelowLimit() {
-        return player.isBelowLimit() && dealer.isBelowLimit();
+    private boolean bothBelowLimit(Player player, Player opponent) {
+        return player.isBelowLimit() && opponent.isBelowLimit();
     }
 
-    /**
-     * Helper method to check if the {@code Player} and {@code Dealer} both 
-     * have Blackjack.
-     * @return true if both hands have a Blackjack
-     */
-    private boolean isDoubleBlackjack() {
-        return player.hasBlackjack() && dealer.hasBlackjack();
+    private boolean isDoubleBlackjack(Player player, Player opponent) {
+        return player.hasBlackjack() && opponent.hasBlackjack();
     }
 
-    /**
-     * Helper method to check if neither {@code Player} nor {@code Dealer} has 
-     * Blackjack and both have equal hand values.
-     * @return true if the {@code Player} and {@code Dealer} have equal hand values 
-     */
-    private boolean isEqualHand() {
-        if (player.getHandValue() == 21 && dealer.getHandValue() == 21) {
-            return isDoubleBlackjack() || noOneHasBlackjack();
+    private boolean isEqualHand(Player player, Player opponent) {
+        if (player.getHandValue() == 21 && opponent.getHandValue() == 21) {
+            return isDoubleBlackjack(player, opponent) 
+                    || noOneHasBlackjack(player, opponent);
         }
-        return player.getHandValue() == dealer.getHandValue();
+        return player.getHandValue() == opponent.getHandValue();
     }
 
-    private boolean noOneHasBlackjack() {
-        return !playerHasBlackjack() && !dealerHasBlackjack();
+    private boolean noOneHasBlackjack(Player player, Player opponent) {
+        return !player.hasBlackjack() && !opponent.hasBlackjack();
+    }
+
+    public boolean won(Player player, Player opponent) {
+        if (player.hasBlackjack()) {
+            return !opponent.hasBlackjack();
+        }
+        if (bothBelowLimit(player, opponent)) {
+            return player.getHandValue() > opponent.getHandValue();
+        }
+        return player.isBelowLimit();
     }
 
     private final BlackjackPlayer player;

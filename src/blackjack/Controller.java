@@ -77,7 +77,7 @@ public class Controller {
             if (model.isTie()) {
                 view.displayMessage(Message.tie());
                 model.returnBet();
-            } else if (model.won()) {
+            } else if (model.playerWon()) {
                 if (model.playerHasBlackjack()) {
                     message = Message.playerBlackjack(model.getBet());
                     model.givePayout(Payout.BLACKJACK);
@@ -86,7 +86,7 @@ public class Controller {
                     model.givePayout(Payout.REGULAR);
                 }
                 view.displayMessage(message, Color.GREEN);
-            } else if (model.lost()) {
+            } else if (model.playerLost()) {
                 if (model.dealerHasBlackjack()) {
                     message = Message.dealerBlackjack(model.getBet());
                 } else {
@@ -204,7 +204,7 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO: display a pop-up indicating whether player won or lost
+            // TODO: display a pop-up indicating whether player playerWon or playerLost
             System.exit(0);
         }
     }
