@@ -193,6 +193,11 @@ public class Controller {
             if (!model.canDoubleDown()) {
                 view.disablePlayOption("Double Down");
             }
+            if (model.betIsSufficient()) {
+                view.enableHandOption("Deal");
+            } else {
+                view.disableHandOption("Deal");
+            }
 
             view.enableAllBetOptions();
             view.updateBetOptions(model.getChips(), Model.betValues());
