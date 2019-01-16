@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Abstract Player object
+ * An abstract player.
  * @author Joshua Abad
  */
 abstract public class Player {
@@ -14,17 +14,23 @@ abstract public class Player {
     }
 
     /**
-     * Add a {@link Card} to this {@code Player}'s hand.
-     * @param card {@link Card} that will be added
+     * Adds a card to this player's hand.
+     * 
+     * <p>A hit is when a player takes another card and adds it to their hand.
+     * 
+     * @param card the card
      */
     public void hit(Card card) {
         hand.add(card);
     }
 
     /**
-     * Removes every {@link Card} from this {@code Player}'s hand and adds 
-     * them to a {@link Deck}.
-     * @param deck the {@link Deck} where every {@link Card} will be added to
+     * Resets this player's hand.
+     * 
+     * <p>This method removes every card from this player's hand and returns 
+     * them to a deck.
+     * 
+     * @param deck the deck where the hand will be returned to
      */
     public void resetHand(Deck deck) {
         deck.add((List<Card>) hand);
@@ -32,17 +38,25 @@ abstract public class Player {
     }
 
     /**
-     * Checks if this {@code Player}'s hand has not gone past the limit.
-     * @return true if this {@code Player}'s hand is not greater than 21
+     * Checks if this player's hand has not bust.
+     * 
+     * <p>In blackjack, a bust means that the value of the hand went over 21. A
+     * player loses when they bust.
+     * 
+     * @return true if this player's hand has not bust
      */
     public boolean isBelowLimit() {
         return getHandValue() <= 21;
     }
 
     /**
-     * Counts the value of this {@code Player}'s hand. An {@link Ace} is 
-     * counted as 11 unless the hand will exceed 21.
-     * @return the total value of this {@code Player}'s hand
+     * Counts the maximum value of this player's hand.
+     * 
+     * <p>Initially, any existing ace is counted as 1 regardless if an 11 will
+     * bust the hand. After counting each card, 10 will be added to the total
+     * provided that an ace was found and that it won't bust the hand.
+     * 
+     * @return the total value of this player's hand
      */
     public int getHandValue() {
         int total = 0;
@@ -58,8 +72,13 @@ abstract public class Player {
     }
 
     /**
-     * Checks if this {@code Player}'s hand is a Blackjack.
-     * @return true if this {@code Player} has an {@link Ace} and a ten value {@link Card}
+     * Determines if this player has blackjack.
+     * 
+     * <p>A blackjack is defined as two cards totaling 21. These two cards are 
+     * a ten-value card, such as a 10, king, queen or jack, and an ace. This is
+     * also known as a <b>natural 21</b>.
+     * 
+     * @return true if this player has blackjack
      */
     public boolean hasBlackjack() {
         if (hand.size() == 2 && hasAce()) {
@@ -69,17 +88,19 @@ abstract public class Player {
     }
 
     /**
-     * Checks if this {@code Player} has an {@link Ace} in their hand.
-     * @return true if an {@link Ace} is found
+     * Determines if this player has an ace in their hand.
+     * @return true if an ace is found
      */
     public boolean hasAce() {
         return hand.stream().anyMatch((card) -> (card instanceof Ace));
     }
 
     /**
-     * Determines if this {@code Player} has a soft hand. Any hand that has an 
-     * {@code Ace} that is counted as 11 is a soft hand.
-     * @return true if the hand is soft
+     * Determines if this player has a soft hand. 
+     * 
+     * <p>Any hand that has an ace that is counted as 11 is a soft hand.
+     * 
+     * @return true if this player has a soft hand
      */
     public boolean hasSoftHand() {
         if (hasAce()) {
@@ -93,8 +114,8 @@ abstract public class Player {
     }
 
     /**
-     * Returns this {@code Player}'s hand.
-     * @return this {@code Player}'s hand
+     * Returns this player's hand.
+     * @return this player's hand
      */
     public List<Card> getHand() {
         return hand;

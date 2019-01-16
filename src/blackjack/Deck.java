@@ -4,15 +4,27 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * A deck of cards.
+ * @author Joshua Abad
+ */
 public class Deck {
     
     /**
-     * Creates a new {@code Deck} with the standard 52 cards.
+     * Creates a new {@code Deck} with the standard 52 playing cards.
+     * 
+     * <p>It includes thirteen ranks in each of the four suits: clubs, diamonds,
+     * hearts and spades. Each suit includes an ace, a king, queen and jack, and
+     * ranks two through ten.
      */
     public Deck() {
         this(1);
     }
 
+    /**
+     * Creates a new {@code Deck} with the specified amount of standard decks.
+     * @param amount the amount of standard decks
+     */
     public Deck(int amount) {
         deck = new ArrayList<>(); 
         for (int i = 0; i < amount; i++) {
@@ -29,7 +41,7 @@ public class Deck {
     }
 
     /**
-     * Adds a hand to this {@code Deck}
+     * Adds a hand to this deck.
      * @param hand hand that will be added
      */
     public void add(List<Card> hand) {
@@ -37,8 +49,8 @@ public class Deck {
     }
 
     /**
-     * Draws a {@link Card} from this {@code Deck}
-     * @return a {@link Card}
+     * Returns a card drawn from this deck.
+     * @return a card
      */
     public Card drawCard() {
         int index = (int) (Math.random() * deck.size());
@@ -48,7 +60,7 @@ public class Deck {
     }
 
     /**
-     * Shuffles this {@code Deck}
+     * Shuffles this deck.
      */
     public void shuffle() {
         Collections.shuffle(deck);

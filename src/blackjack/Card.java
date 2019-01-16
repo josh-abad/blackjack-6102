@@ -1,7 +1,7 @@
 package blackjack;
 
 /**
- * Abstract card object 
+ * An abstract playing card.
  * @author Joshua Abad
  */
 abstract public class Card {
@@ -15,16 +15,16 @@ abstract public class Card {
     }
 
     /**
-     * Return the rank of this {@code Card}.
-     * @return this {@code Card}'s rank
+     * Returns the rank of this card.
+     * @return the rank of this card
      */
     public int getRank() {
         return rank;
     }
 
     /**
-     * Returns the {@link Suit} of this {@code Card}.
-     * @return this {@code Card}'s {@link Suit}
+     * Returns the suit of this card.
+     * @return the suit of this card
      */
     public Suit getSuit() {
         return suit;

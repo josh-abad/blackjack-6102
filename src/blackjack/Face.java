@@ -1,12 +1,16 @@
 package blackjack;
 
+/**
+ * A face displayed on a face card.
+ * @author yeyoa
+ */
 public enum Face {
     
     KING("King"),
     JACK("Jack"),
     QUEEN("Queen");
 
-    private String face;
+    private final String face;
 
     Face(String face) {
         this.face = face;

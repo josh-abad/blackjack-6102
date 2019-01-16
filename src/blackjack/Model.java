@@ -3,7 +3,7 @@ package blackjack;
 public class Model {
     
     /**
-     * The required amount of chips for the {@code Player} to be able to play.
+     * The required amount of chips for the player to be able to play.
      */
     public static final int MINIMUM_BET = 25;
 
@@ -14,31 +14,31 @@ public class Model {
     }
 
     /**
-     * The possible options for the {@code Player} when they are playing.
-     * @return a {@code String} array containing the play options
+     * Returns the possible options for the player when they are playing.
+     * @return the play options
      */
     public static final String[] playOptions() {
         return PLAY_OPTIONS.clone();
     }
 
     /**
-     * The possible choices for the {@code Player} regarding their hand.
-     * @return a {@code String} array containing the hand options
+     * Returns the possible choices for the player regarding their hand.
+     * @return the hand options
      */
     public static final String[] handOptions() {
         return HAND_OPTIONS.clone();
     }
 
     /**
-     * The possible number of chips a {@code Player} may bet at a time.
-     * @return an {@code int} array containing the bet values 
+     * Returns the possible number of chips a {@code Player} may bet at a time.
+     * @return the bet values 
      */
     public static final int[] betValues() {
         return BET_VALUES.clone();
     }
 
     /**
-     * Increases the {@code Player}'s existing bet.
+     * Increases the player's existing bet.
      * @param amount to increase bet by
      */
     public void bet(double amount) {
@@ -46,41 +46,39 @@ public class Model {
     }
 
     /**
-     * Checks if the {@code Player}'s current bet has reached the {@code MINIMUM_BET}.
-     * @return true if {@code Player}'s bet is greater than or equal to the {@code MINIMUM_BET}
+     * Checks if the player's current bet has reached the minimum bet.
+     * @return true if player's bet has reached the minimum bet
      */
     public boolean betIsSufficient() {
         return player.getBet() >= MINIMUM_BET;
     }
 
     /**
-     * Check if the {@code Player} has enough chips to double their bet.
-     * @return true if {@code Player}'s current bet is less than or equal to their chips
+     * Checks if the player has enough chips to double their bet.
+     * @return true if player's current bet is less than or equal to their chips
      */
     public boolean canDoubleDown() {
         return player.getBet() <= player.getChips();
     }
 
     /**
-     * Check if the {@code Dealer} has an {@code Ace} and another {@code Card} 
-     * with a value of 10.
-     * @return true if the {@code Dealer} has Blackjack
+     * Determines if the dealer has blackjack.
+     * @return true if the dealer has blackjack
      */
     public boolean dealerHasBlackjack() {
         return dealer.hasBlackjack();
     }
 
     /**
-     * {@code Dealer} adds a {@code Card} to their hand.
-     * @param card the {@code Card} to be added
+     * Adds a card to the dealer's hand.
+     * @param card the card
      */
     public void dealerHit(Card card) {
         dealer.hit(card);
     }
 
     /**
-     * The {@code Dealer} hits as long as their hand is a soft 17 or less than 
-     * a hard 17.
+     * Performs a dealer's turn in blackjack.
      */
     public void dealerTurn() {
         while (dealer.hasSoft17() || dealer.getHandValue() <= 16) {
@@ -97,34 +95,43 @@ public class Model {
     }
 
     /**
-     * This method draws a {@code Card} from the {@code Deck}.
-     * @return a {@code Card}
+     * This method draws a card from the deck.
+     * @return a card
      */
     public Card drawCard() {
         return deck.drawCard();
     }
 
     /**
-     * This method gives the {@code Player} the chips specified by the 
-     * {@code Payout}.  
-     * @param type possible values are: {@code REGULAR}, {@code BLACKJACK}, and 
-     * {@code HALF}
+     * This method gives the player the chips specified by the payout.  
+     * 
+     * <p>A regular payout pays the player the amount of their bet. A
+     * blackjack payout pays the player 3-to-2, or 1.5 times their bet. A half
+     * payout returns half of the player's bet.
+     * 
+     * @param   type possible values are: {@code REGULAR}, {@code BLACKJACK}, 
+     *          and {@code HALF}
      */
     public void givePayout(Payout type) {
-        player.addChips(type.getPayout(player.getBet()));
+        player.addChips(type.pay(player.getBet()));
         resetBet();
     }
 
+    /**
+     * Determines if the player has a soft hand.
+     * @return true if the player has a soft hand
+     */
     public boolean isSoft() {
         return player.hasSoftHand();
     }
 
     /**
-     * This method determines if there is a push for a tie. A push is when the 
-     * {@code BlackjackPlayer} and the {@code Dealer} have the same hand value.
+     * This method determines if there is a push for a tie. 
+     * 
+     * <p>A push is when the player and the dealer have the same hand value. 
      * Neither players win in a push. 
-     * @return true if the {@code BlackjackPlayer} and the {@code Dealer} have
-     * the same hand value
+     * 
+     * @return true if the player and the dealer have the same hand value
      */
     public boolean isTie() {
         if (bothBelowLimit(player, dealer)) {
@@ -134,42 +141,44 @@ public class Model {
     }
 
     /**
-     * This method removes the chips from the {@code Player}'s bet.
+     * This method removes the chips from the player's bet.
      */
     public void clearBet() {
         player.setBet(0);
     }
 
     /**
-     * This method determines if the {@code dealer} has won over the 
-     * {@code player}.
-     * @return true if the {@code dealer} won
+     * This method determines if the dealer has won over the player.
+     * @return true if the dealer won
      */
     public boolean playerLost() {
         return won(dealer, player);
     }
 
     /**
-     * This method determines if the {@code player} has enough chips to 
-     * continue playing.
-     * @return true if the chips are less than the {@code MINIMUM_BET}
+     * Determines if the player has enough chips to continue playing.
+     * @return true if the chips are less than the minimum bet
      */
     public boolean outOfChips() {
         return player.getChips() < MINIMUM_BET;
     }
 
     /**
-     * This method determines if the {@code player} has an {@code Ace} and 
-     * another {@code Card} with a value of 10.
-     * @return true if the {@code player} has Blackjack
+     * This method determines if the player has blackjack.
+     * 
+     * <p>A blackjack is defined as two cards totaling 21. These two cards are 
+     * a ten-value card, such as a 10, king, queen or jack, and an ace. This is
+     * also known as a <b>natural 21</b>.
+     * 
+     * @return true if the player has blackjack
      */
     public boolean playerHasBlackjack() {
         return player.hasBlackjack();
     }
 
     /**
-     * The {@code player} adds a {@code Card} to their hand.
-     * @param card the {@code Card} to be added
+     * The player adds a card to their hand.
+     * @param card the card to be added
      */
     public void playerHit(Card card) {
         player.hit(card);
@@ -183,8 +192,7 @@ public class Model {
     }
 
     /**
-     * This method removes every {@code Card} from each hand and places them 
-     * back in the {@code deck}.
+     * This method resets the player and dealer's hands.
      */
     public void resetHand() {
         player.resetHand(deck);
@@ -192,8 +200,7 @@ public class Model {
     }
 
     /**
-     * This method removes the chips from the {@code player}'s bet and adds 
-     * them back to their chips.
+     * This method returns the player's bet.
      */
     public void returnBet() {
         player.addChips(player.getBet());
@@ -201,25 +208,23 @@ public class Model {
     }
 
     /**
-     * This method shuffles the {@code deck}.
+     * This method shuffles the deck.
      */
     public void shuffleDeck() {
         deck.shuffle();
     }
 
     /**
-     * This method determines if the {@code player}'s hand value is greater 
-     * than 21.
-     * @return true if {@code Player}'s hand value is greater than 21
+     * This method determines if the player's hand has busted.
+     * @return true if player's hand has busted
      */
     public boolean wentOver() {
         return !player.isBelowLimit();
     }
 
     /**
-     * This method determines if the {@code player} has won over the 
-     * {@code dealer}.
-     * @return true if the {@code player} won
+     * This method determines if the player has won.
+     * @return true if the {@code player} has won
      */
     public boolean playerWon() {
         return won(player, dealer);
@@ -271,11 +276,6 @@ public class Model {
         return player.getHand().get(1).toString();
     }
 
-    /**
-     * Helper method to check if the {@code Player} and {@code Dealer} 
-     * are not above 21.
-     * @return true if the hand values of both {@code Player} and {@code Dealer} aren't under 21 
-     */
     private boolean bothBelowLimit(Player player, Player opponent) {
         return player.isBelowLimit() && opponent.isBelowLimit();
     }

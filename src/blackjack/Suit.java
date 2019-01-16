@@ -1,5 +1,9 @@
 package blackjack;
 
+/**
+ * A suit of a playing card.
+ * @author yeyoa
+ */
 public enum Suit {
     
     DIAMONDS("Diamonds"),

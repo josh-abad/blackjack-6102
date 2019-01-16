@@ -1,15 +1,22 @@
 package blackjack;
 
 /**
- * Face Cards are valued at 10 and are identified by their {@link Face}
+ * A ten-value playing card denoting a person.
  * @author Joshua Abad
  */
 public class FaceCard extends Card {
 
     /**
-     * FaceCard Constructor
-     * @param face this card's {@link Face}
-     * @param suit this card's {@link Suit}
+     * Creates a new {@code FaceCard} with the specified face and suit.
+     * 
+     * <p>In a standard 52-card deck, face cards are cards that depict a person
+     * instead of symbols on the front side of the card. Every face cards has 
+     * a value of 10.
+     * 
+     * @param   face possible face values are: {@code KING}, {@code QUEEN}, 
+     *          {@code JACK}
+     * @param   suit possible suit values are: {@code SPADES}, {@code HEARTS},
+     *          {@code CLUBS} and {@code DIAMONDS}
      */
     public FaceCard(Face face, Suit suit) {
         super(10, suit);
@@ -17,8 +24,8 @@ public class FaceCard extends Card {
     }
 
     /**
-     * Return the {@link Face} of this card
-     * @return this card's {@link Face}
+     * Returns the face of this card.
+     * @return the face of this card
      */
     public Face getFace() {
         return face;

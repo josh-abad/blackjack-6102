@@ -1,5 +1,9 @@
 package blackjack;
 
+/**
+ * A blackjack player with an ability to place bets.
+ * @author Joshua Abad
+ */
 public class BlackjackPlayer extends Player {
 
     /**
@@ -20,7 +24,7 @@ public class BlackjackPlayer extends Player {
     }    
 
     /**
-     * Adds to the existing bet of this {@code BlackjackPlayer}.
+     * Adds to the existing bet of this player.
      * @param amount the desired bet
      */
     public void addBet(double amount) {
@@ -34,15 +38,15 @@ public class BlackjackPlayer extends Player {
     }
 
     /**
-     * Adds onto this {@code BlackjackPlayer}'s amount of chips 
-     * @param amount the amount to be added 
+     * Adds onto this player's amount of chips.
+     * @param amount the desired amount
      */
     public void addChips(double amount) {
         chips += amount;
     }
 
     /**
-     * Doubles this {@code BlackjackPlayer}'s current bet
+     * Doubles this player's current bet.
      */
     public void doubleBet() {
         if (bet <= chips) {
@@ -51,8 +55,8 @@ public class BlackjackPlayer extends Player {
     }
 
     /**
-     * Bets the specified amount of chips
-     * @param amount the amount of chips to be removed from this {@code BlackjackPlayer}
+     * Bets the specified amount of chips.
+     * @param amount the desired amount of chips
      */
     public void setBet(double amount) {
         if (amount <= chips) {
@@ -65,16 +69,16 @@ public class BlackjackPlayer extends Player {
     }
 
     /**
-     * Returns this {@code BlackjackPlayer}'s chips
-     * @return this {@code BlackjackPlayer}'s chips
+     * Returns this player's chips
+     * @return this player's chips
      */
     public double getChips() {
         return chips;
     }
 
     /**
-     * Returns this {@code BlackjackPlayer}'s bet
-     * @return this {@code BlackjackPlayer}'s bet
+     * Returns this player's bet
+     * @return this player's bet
      */
     public double getBet() {
         return bet;
