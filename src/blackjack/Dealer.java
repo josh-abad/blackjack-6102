@@ -1,8 +1,5 @@
 package blackjack;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Dealer extends Player {
 
     /**
@@ -13,13 +10,6 @@ public class Dealer extends Player {
      * counted as 11
      */
     public boolean hasSoft17() {
-        if (getHandValue() == 17 && hasAce()) {
-            int total = 0;
-            for (Card card : getHand()) {
-                total += (card instanceof Ace) ? 0 : card.getRank();
-            }
-            return total + 11 == 17 || total == 0;
-        }
-        return false;
+        return getHandValue() == 17 && hasSoftHand();
     }
 }

@@ -363,7 +363,7 @@ public class View {
     }
 
     public void updateDealerHandValue(int dealerHandValue) {
-        dealerHandValueLabel.setText("Dealer (" + dealerHandValue + ")");
+        dealerHandValueLabel.setText(dealerHandValue + " — Dealer");
         dealerHandValueLabel.setAlignmentX(SwingConstants.LEADING);
     }
 
@@ -371,8 +371,28 @@ public class View {
         updateImages(cardNames, playerHand);
     }
 
-    public void updatePlayerHandValue(int playerHandValue) {
-        playerHandValueLabel.setText("Player (" + playerHandValue + ")");
+    public void updatePlayerHandValue() {
+        playerHandValueLabel.setText("Player");
+        if (playerHandValueLabel.getIcon() != null) {
+            playerHandValueLabel.setIcon(null);
+        }
+        dealerHandValueLabel.setText("Dealer");
+    }
+
+    public void updatePlayerHandValue(int playerHandValue, boolean isSoft) {
+        playerHandValueLabel.setText(playerHandValue + " — Player");
+
+        String path = "/blackjack/images/";
+        path += (isSoft) ? "soft.png" : "hard.png";
+        try {
+            ImageIcon icon = new ImageIcon(View.class.getResource(path));
+            int size = playerHandValueLabel.getFont().getSize();
+            icon = ImageResizer.getScaledImage(icon, size);
+            playerHandValueLabel.setIcon(icon);
+        } catch (NullPointerException ex) {
+            System.err.println("Could not find " + path);
+        }
+
         dealerHandValueLabel.setText("Dealer");
     }
 

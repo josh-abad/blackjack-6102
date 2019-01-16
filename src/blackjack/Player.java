@@ -39,25 +39,26 @@ abstract public class Player {
     }
 
     /**
-     * Counts the value of this {@code Player}'s hand.
-     * <P>An {@link Ace} is counted as 11 unless the hand will exceed 21.
+     * Counts the value of this {@code Player}'s hand. An {@link Ace} is 
+     * counted as 11 unless the hand will exceed 21.
      * @return the total value of this {@code Player}'s hand
      */
     public int getHandValue() {
-        List<Card> aces = new ArrayList<>();
+        int numberOfAces = 0;
         int total = 0;
 
         // If there are any aces in the hand, count them later
         for (Card card : hand) {
             if (card instanceof Ace) {
-                aces.add(card);
+                numberOfAces++;
             } else {
                 total += card.getRank();
             }
         }
 
         // Adds 1 to the total if the hand will exceed 21, 11 otherwise
-        for (int i = 0, len = aces.size(); i < len; i++) {
+        // BUG: a hand filled with Aces will always count the first Ace as 11
+        for (int i = 0; i < numberOfAces; i++) {
             total += (total + 11 > 21) ? 1 : 11;
         }
 
@@ -81,6 +82,22 @@ abstract public class Player {
      */
     public boolean hasAce() {
         return hand.stream().anyMatch((card) -> (card instanceof Ace));
+    }
+
+    /**
+     * Determines if this {@code Player} has a soft hand. Any hand that has an 
+     * {@code Ace} that is counted as 11 is a soft hand.
+     * @return true if the hand is soft
+     */
+    public boolean hasSoftHand() {
+        if (hasAce()) {
+            int total = 0;
+            for (Card card : hand) {
+                total += (card instanceof Ace) ? 0 : card.getRank();
+            }
+            return total + 11 <= getHandValue() || total == 0;
+        }
+        return false;
     }
 
     /**

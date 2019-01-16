@@ -115,6 +115,10 @@ public class Model {
         resetBet();
     }
 
+    public boolean isSoft() {
+        return player.hasSoftHand();
+    }
+
     /**
      * This method determines if there is a push for a tie. A push is when the 
      * {@code BlackjackPlayer} and the {@code Dealer} have the same hand value.

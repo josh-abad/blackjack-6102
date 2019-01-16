@@ -48,7 +48,7 @@ public class Controller {
             Card card = model.drawCard();
             model.playerHit(card);
             view.displayMessage(Message.hit(card));
-            view.updatePlayerHandValue(model.getPlayerHandValue());
+            view.updatePlayerHandValue(model.getPlayerHandValue(), model.isSoft());
             view.updatePlayerCards(model.getPlayerCardNames());
             if (model.wentOver()) {
                 view.disablePlayOption("Hit");
@@ -70,7 +70,7 @@ public class Controller {
             view.updatePlayerCards(model.getPlayerCardNames());
             view.updateDealerCards(model.getDealerCardNames());
 
-            view.updatePlayerHandValue(model.getPlayerHandValue());
+            view.updatePlayerHandValue(model.getPlayerHandValue(), model.isSoft());
             view.updateDealerHandValue(model.getDealerHandValue());
 
             String message;
@@ -117,7 +117,7 @@ public class Controller {
             model.playerHit(card);
 
             view.displayMessage(Message.doubleDown(model.getBet(), card));
-            view.updatePlayerHandValue(model.getPlayerHandValue());
+            view.updatePlayerHandValue(model.getPlayerHandValue(), model.isSoft());
         
             view.updatePlayerCards(model.getPlayerCardNames());
         
@@ -169,7 +169,7 @@ public class Controller {
                     Message.deal(model.getFirstCard(), model.getSecondCard())
             );
 
-            view.updatePlayerHandValue(model.getPlayerHandValue());
+            view.updatePlayerHandValue(model.getPlayerHandValue(), model.isSoft());
 
             view.updatePlayerCards(model.getPlayerCardNames());
             view.updateDealerCards(model.getDealerCardNames());
@@ -185,7 +185,7 @@ public class Controller {
             view.clearCards();
 
             view.updateDealerHandValue(0);
-            view.updatePlayerHandValue(0);
+            view.updatePlayerHandValue();
             view.disableHandOption("Next Hand");
             model.resetHand();
 
@@ -239,7 +239,7 @@ public class Controller {
         view.initHandOptions(Model.handOptions());
 
         view.updateDealerHandValue(0);
-        view.updatePlayerHandValue(0);
+        view.updatePlayerHandValue();
         view.clearCards();
         view.displayTableBorder();
         view.updateDealerCards(model.getDealerCardNames());
