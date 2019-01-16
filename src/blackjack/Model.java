@@ -10,7 +10,7 @@ public class Model {
     public Model() {
         player = new BlackjackPlayer();
         dealer = new Dealer();
-        deck = new Deck();
+        deck = new Deck(6);
     }
 
     /**

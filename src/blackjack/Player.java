@@ -22,7 +22,8 @@ abstract public class Player {
     }
 
     /**
-     * Removes every {@link Card} from this {@code Player}'s hand and adds them to a {@link Deck}.
+     * Removes every {@link Card} from this {@code Player}'s hand and adds 
+     * them to a {@link Deck}.
      * @param deck the {@link Deck} where every {@link Card} will be added to
      */
     public void resetHand(Deck deck) {
@@ -44,22 +45,13 @@ abstract public class Player {
      * @return the total value of this {@code Player}'s hand
      */
     public int getHandValue() {
-        int numberOfAces = 0;
         int total = 0;
-
-        // If there are any aces in the hand, count them later
         for (Card card : hand) {
-            if (card instanceof Ace) {
-                numberOfAces++;
-            } else {
-                total += card.getRank();
-            }
+            total += card.getRank();
         }
 
-        // Adds 1 to the total if the hand will exceed 21, 11 otherwise
-        // BUG: a hand filled with Aces will always count the first Ace as 11
-        for (int i = 0; i < numberOfAces; i++) {
-            total += (total + 11 > 21) ? 1 : 11;
+        if (hasAce() && total < 12) {
+            total += 10;
         }
 
         return total;
@@ -93,9 +85,9 @@ abstract public class Player {
         if (hasAce()) {
             int total = 0;
             for (Card card : hand) {
-                total += (card instanceof Ace) ? 0 : card.getRank();
+                total += card.getRank();
             }
-            return total + 11 <= getHandValue() || total == 0;
+            return total < 12;
         }
         return false;
     }
