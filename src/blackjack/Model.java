@@ -177,7 +177,7 @@ public class Model {
      * @return true if the remaining cards in the shoe is sufficient
      */
     public boolean shoeIsSufficient() {
-        return shoe.size() > ((NUMBER_OF_DECKS * 52) / 0.25);
+        return shoe.size() > ((NUMBER_OF_DECKS * 52) * 0.25);
     }
 
     /**
