@@ -1,4 +1,4 @@
-package blackjack;
+package playingcards;
 
 /**
  * A ten-value playing card denoting a person.

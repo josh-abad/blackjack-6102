@@ -1,5 +1,6 @@
 package blackjack;
 
+import playingcards.Card;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -150,7 +151,6 @@ public class Controller {
             view.disableAllBetOptions();
             view.enableAllPlayOptions();
             view.disableHandOption("Deal");
-            view.displayTableBorder();
 
             model.shuffleDeck();
 
@@ -185,7 +185,7 @@ public class Controller {
             view.clearCards();
 
             view.updateDealerHandValue(0);
-            view.updatePlayerHandValue();
+            view.clearHandValue();
             view.disableHandOption("Next Hand");
             model.resetHand();
 
@@ -239,7 +239,7 @@ public class Controller {
         view.initHandOptions(Model.handOptions());
 
         view.updateDealerHandValue(0);
-        view.updatePlayerHandValue();
+        view.clearHandValue();
         view.clearCards();
         view.displayTableBorder();
         view.updateDealerCards(model.getDealerCardNames());

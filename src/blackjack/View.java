@@ -1,9 +1,9 @@
 package blackjack;
 
-import blackjack.design.Format;
-import blackjack.design.DefaultFont;
-import blackjack.design.Palette;
-import blackjack.design.ImageResizer;
+import design.Format;
+import design.DefaultFont;
+import design.Palette;
+import design.ImageResizer;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -40,7 +40,7 @@ public class View {
 
         String path;
 
-        path = "/blackjack/images/logo2.png";
+        path = "/images/logo2.png";
         try {
             ImageIcon icon = new ImageIcon(View.class.getResource(path));
             frame.setIconImage(icon.getImage());
@@ -53,7 +53,7 @@ public class View {
         topPanel = new JPanel();
         titleLabel = new JLabel();
 
-        path = "/blackjack/images/logo1.png";
+        path = "/images/logo1.png";
         try {
             ImageIcon icon = new ImageIcon(View.class.getResource(path));
             titleLabel.setIcon(ImageResizer.getScaledImage(icon, 150));
@@ -78,7 +78,7 @@ public class View {
         currentBetLabel = new JLabel("Bet:");
         currentBetValueLabel = new JLabel();
         betOptionsPanel = new JPanel();
-        betOptionsLabel = new JLabel("Bet");
+        betOptionsLabel = new JLabel("Chips");
         betOptions = new HashMap<>();
         playOptionsPanel = new JPanel();
         playOptionsLabel = new JLabel("Play");
@@ -95,7 +95,7 @@ public class View {
         chipsLabel.setForeground(Palette.TEXT);
         chipsLabel.setFont(font.generateFont(36));
 
-        path = "/blackjack/images/chip.png";
+        path = "/images/chip.png";
         try {
             ImageIcon icon = new ImageIcon(View.class.getResource(path));
             chipsLabel.setIcon(ImageResizer.getScaledImage(icon, 36));
@@ -222,8 +222,16 @@ public class View {
         handOptionsPanel.setLayout(new GridBagLayout());
     }
 
+    /**
+     * Removes all card images on the screen.
+     * 
+     * <p>This method <b>doesn't</b> actually remove every image on the screen,
+     * but rather it replaces the images with a blank image that has the same 
+     * size as the card images. This is to keep the table border stretched along
+     * the length of the screen even if no cards are displayed.
+     */
     public void clearCards() {
-        String path = "/blackjack/images/blank.png";
+        String path = "/images/blank.png";
         try {
             ImageIcon icon = new ImageIcon(View.class.getResource(path));
             resetImages(ImageResizer.getScaledImage(icon, 100), playerHand);
@@ -235,39 +243,47 @@ public class View {
         }
     }
 
+    /**
+     * Removes any message displayed on the screen.
+     */
     public void clearMessage() {
         messageLabel.setText("");
-        if (messagePanel.isOpaque()) {
-            messagePanel.setOpaque(false);
-        }
+        messagePanel.setOpaque(false);
     }
 
+    /**
+     * Displays the frame.
+     */
     public void displayFrame() {
         frame.setVisible(true);
         SwingUtilities.invokeLater(View::new);
     }
 
-    public void displayMessage(String message, Color color) {
-        if (!messagePanel.isVisible()) {
-            messagePanel.setVisible(true);
-        }
-        if (!messagePanel.isOpaque()) {
-            messagePanel.setOpaque(true);
-        }
-        if (!color.equals(messagePanel.getBackground())) {
-            messagePanel.setBackground(color);
-        }
-        if (!message.equals(messageLabel.getText())) {
-            messageLabel.setText(message);
-        }
-        messageLabel.setForeground(color.equals(Color.GREEN)
+    /**
+     * Displays a message on the screen with the specified background color.
+     * @param message the message
+     * @param bg the desired background color
+     */
+    public void displayMessage(String message, Color bg) {
+        messagePanel.setVisible(true);
+        messagePanel.setOpaque(true);
+        messagePanel.setBackground(bg);
+        messageLabel.setText(message);
+        messageLabel.setForeground(bg.equals(Color.GREEN)
                 ? Palette.BLACK : Palette.TEXT);
     }
 
+    /**
+     * Displays a message on the screen with a dark green background.
+     * @param message the message
+     */
     public void displayMessage(String message) {
         displayMessage(message, Palette.TABLE_DARK);
     }
 
+    /**
+     * Displays a border around the where the player and dealer's cards are.
+     */
     public void displayTableBorder() {
         Border border = new LineBorder(Palette.TABLE_LIGHT, 5);
         Border margin = new EmptyBorder(10, 10, 10, 10);
@@ -275,9 +291,17 @@ public class View {
         dealerPanel.setBorder(new CompoundBorder(margin, border));
     }
 
+    /**
+     * Places the front side of the dealer's hole card down.
+     * 
+     * <p>In blackjack, the dealer will hide one of his two cards after the
+     * initial deal. This hidden card is called the hole card.
+     * 
+     * @param holeCardName the name of the hole card
+     */
     public void hideHoleCard(String holeCardName) {
         String suit = holeCardName.split(" ")[2];
-        String path = "/blackjack/images/cards/" + suit + "/Back.png";
+        String path = "/images/cards/" + suit + "/Back.png";
         URL location = View.class.getResource(path);
         try {
             ImageIcon icon = new ImageIcon(location);
@@ -287,11 +311,19 @@ public class View {
         }
     }
 
+    /**
+     * Flips over the dealer's hole card.
+     * 
+     * <p>The dealer's hole card is usually revealed after the player has
+     * finished their turn.
+     * 
+     * @param holeCardName the name of the hole card
+     */
     public void revealHoleCard(String holeCardName) {
         String[] comp = holeCardName.split(" ");
         String value = comp[0];
         String suit = comp[2];
-        String path = "/blackjack/images/cards/" + suit + "/" + value + ".png";
+        String path = "/images/cards/" + suit + "/" + value + ".png";
         URL location = View.class.getResource(path);
         try {
             ImageIcon icon = new ImageIcon(location);
@@ -301,6 +333,9 @@ public class View {
         }
     }
 
+    /**
+     * Displays all bet options.
+     */
     public void enableAllBetOptions() {
         betOptionsPanel.setVisible(true);
         betOptions.values().forEach((betOption) -> {
@@ -308,6 +343,9 @@ public class View {
         });
     }
 
+    /**
+     * Displays all play options.
+     */
     public void enableAllPlayOptions() {
         playOptionsPanel.setVisible(true);
         playOptions.values().forEach((playOption) -> {
@@ -315,14 +353,29 @@ public class View {
         });
     }
 
+    /**
+     * Enables a hand option.
+     * 
+     * @param   option possible strings are: {@code "Deal"}, {@code "Next Hand"} 
+     *          and {@code "Quit Game"}
+     */
     public void enableHandOption(String option) {
         handOptions.get(option).setEnabled(true);
     }
 
+    /**
+     * Enables a play option.
+     * 
+     * @param   option possible strings are: {@code "Hit"}, {@code "Stand"},
+     *          {@code "Double Down"} and {@code "Surrender"}
+     */
     public void enablePlayOption(String option) {
         playOptions.get(option).setEnabled(true);
     }
 
+    /**
+     * Removes all bet options from display.
+     */
     public void disableAllBetOptions() {
         betOptionsPanel.setVisible(false);
         betOptions.values().forEach((betOption) -> {
@@ -330,6 +383,9 @@ public class View {
         });
     }
 
+    /**
+     * Removes all play options from the display.
+     */
     public void disableAllPlayOptions() {
         playOptionsPanel.setVisible(false);
         playOptions.values().forEach((playOption) -> {
@@ -337,16 +393,35 @@ public class View {
         });
     }
 
+    /**
+     * Disables a hand option.
+     * 
+     * @param   option possible strings are: {@code "Deal"}, {@code "Next Hand"} 
+     *          and {@code "Quit Game"}
+     */
     public void disableHandOption(String option) {
         if (handOptions.containsKey(option)) {
             handOptions.get(option).setEnabled(false);
         }
     }
 
+    /**
+     * Disables a play option.
+     * 
+     * @param   option possible strings are: {@code "Hit"}, {@code "Stand"},
+     *          {@code "Double Down"} and {@code "Surrender"}
+     */
     public void disablePlayOption(String option) {
-        playOptions.get(option).setEnabled(false);
+        if (playOptions.containsKey(option)) {
+            playOptions.get(option).setEnabled(false);
+        }
     }
 
+    /**
+     * Updates the bet options according to the player's remaining chips.
+     * @param chips the player's remaining chips
+     * @param betValues the possible bet options
+     */
     public void updateBetOptions(double chips, int[] betValues) {
         for (int i = 0, len = betValues.length; i < len; i++) {
             String betValue = String.valueOf(betValues[i]);
@@ -358,20 +433,35 @@ public class View {
         }
     }
 
+    /**
+     * Updates the card images on the dealer's side of the screen.
+     * @param cardNames the names of the cards
+     */
     public void updateDealerCards(String[] cardNames) {
         updateImages(cardNames, dealerHand);
     }
 
+    /**
+     * Updates the maximum value of the dealer's hand.
+     * @param dealerHandValue the dealer's hand value
+     */
     public void updateDealerHandValue(int dealerHandValue) {
         dealerHandValueLabel.setText(dealerHandValue + " — Dealer");
         dealerHandValueLabel.setAlignmentX(SwingConstants.LEADING);
     }
 
+    /**
+     * Updates the card images on the player's side of the screen.
+     * @param cardNames the names of the cards
+     */
     public void updatePlayerCards(String[] cardNames) {
         updateImages(cardNames, playerHand);
     }
 
-    public void updatePlayerHandValue() {
+    /**
+     * Clears the player and dealer's hand value.
+     */
+    public void clearHandValue() {
         playerHandValueLabel.setText("Player");
         if (playerHandValueLabel.getIcon() != null) {
             playerHandValueLabel.setIcon(null);
@@ -379,10 +469,17 @@ public class View {
         dealerHandValueLabel.setText("Dealer");
     }
 
+    /**
+     * Updates the maximum value and the type of the player's hand.
+     * 
+     * @param   playerHandValue the player's hand value
+     * @param   isSoft if true, an S indicating a soft hand will be displayed 
+     *          next to the value, else an H for a hard hand
+     */
     public void updatePlayerHandValue(int playerHandValue, boolean isSoft) {
         playerHandValueLabel.setText(playerHandValue + " — Player");
 
-        String path = "/blackjack/images/";
+        String path = "/images/";
         path += (isSoft) ? "soft.png" : "hard.png";
         try {
             ImageIcon icon = new ImageIcon(View.class.getResource(path));
@@ -396,6 +493,11 @@ public class View {
         dealerHandValueLabel.setText("Dealer");
     }
 
+    /**
+     * Updates the amount of chips and the current bet of the player.
+     * @param chips the player's chips
+     * @param bet the player's bet
+     */
     public void updateStats(double chips, double bet) {
         chipsLabel.setText(Format.currency(chips));
         currentBetValueLabel.setText(Format.currency(bet));
@@ -476,7 +578,7 @@ public class View {
             option.setFont(font.generateFont(14));
 
             if (hasIcon) {
-                String path = "/blackjack/images/" + o[i] + ".png";
+                String path = "/images/" + o[i] + ".png";
                 URL location = View.class.getResource(path);
                 try {
                     ImageIcon icon = new ImageIcon(location);
@@ -500,7 +602,7 @@ public class View {
             String[] comp = cardNames[i].split(" ");
             String value = comp[0];
             String suit = comp[2];
-            String path = "/blackjack/images/cards/" + suit + "/" 
+            String path = "/images/cards/" + suit + "/" 
                     + value + ".png";
             URL location = View.class.getResource(path);
             try {

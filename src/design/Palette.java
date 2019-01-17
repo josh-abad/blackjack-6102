@@ -1,7 +1,11 @@
-package blackjack.design;
+package design;
 
 import java.awt.Color;
 
+/**
+ * A color palette for the blackjack GUI.
+ * @author Joshua Abad
+ */
 public class Palette {
     
     public static final Color BLACK = Color.BLACK;

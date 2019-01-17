@@ -1,4 +1,4 @@
-package blackjack;
+package playingcards;
 
 /**
  * A face displayed on a face card.

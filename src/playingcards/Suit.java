@@ -1,4 +1,4 @@
-package blackjack;
+package playingcards;
 
 /**
  * A suit of a playing card.

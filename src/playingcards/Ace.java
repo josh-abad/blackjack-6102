@@ -1,4 +1,4 @@
-package blackjack;
+package playingcards;
 
 /**
  * An ace playing card.

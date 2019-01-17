@@ -1,6 +1,7 @@
 package blackjack;
 
-import blackjack.design.Format;
+import playingcards.Card;
+import design.Format;
 
 public class Message {
 

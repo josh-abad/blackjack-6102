@@ -1,4 +1,4 @@
-package blackjack;
+package playingcards;
 
 /**
  * An abstract playing card.

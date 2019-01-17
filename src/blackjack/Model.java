@@ -1,5 +1,8 @@
 package blackjack;
 
+import playingcards.Deck;
+import playingcards.Card;
+
 public class Model {
     
     /**

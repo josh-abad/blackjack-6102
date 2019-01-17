@@ -1,5 +1,8 @@
 package blackjack;
 
+import playingcards.Deck;
+import playingcards.Card;
+import playingcards.Ace;
 import java.util.ArrayList;
 import java.util.List;
 
