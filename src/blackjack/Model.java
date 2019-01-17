@@ -1,7 +1,10 @@
 package blackjack;
 
-import playingcards.Deck;
+import java.util.ArrayList;
+import java.util.List;
 import playingcards.Card;
+import playingcards.CardContainer;
+import playingcards.Shoe;
 
 public class Model {
     
@@ -13,31 +16,33 @@ public class Model {
     public Model() {
         player = new BlackjackPlayer();
         dealer = new Dealer();
-        deck = new Deck(6);
+        shoe = new Shoe(NUMBER_OF_DECKS);
+        discardDeck = new ArrayList<>();
+        shoe.shuffle();
     }
 
     /**
-     * Returns the possible options for the player when they are playing.
-     * @return the play options
+     * Returns the possible choices for the player when they are playing.
+     * @return the choices
      */
-    public static final String[] playOptions() {
-        return PLAY_OPTIONS.clone();
+    public static final String[] choices() {
+        return CHOICES.clone();
     }
 
     /**
-     * Returns the possible choices for the player regarding their hand.
-     * @return the hand options
+     * Returns the possible options for the player regarding the game.
+     * @return the options
      */
-    public static final String[] handOptions() {
-        return HAND_OPTIONS.clone();
+    public static final String[] options() {
+        return OPTIONS.clone();
     }
 
     /**
-     * Returns the possible number of chips a {@code Player} may bet at a time.
-     * @return the bet values 
+     * Returns the possible types of chips a player may bet.
+     * @return the chips
      */
-    public static final int[] betValues() {
-        return BET_VALUES.clone();
+    public static final int[] chips() {
+        return CHIPS.clone();
     }
 
     /**
@@ -85,7 +90,10 @@ public class Model {
      */
     public void dealerTurn() {
         while (dealer.hasSoft17() || dealer.getHandValue() <= 16) {
-            Card card = deck.drawCard();
+            if (shoe.isEmpty()) {
+                return;
+            }
+            Card card = shoe.drawCard();
             dealer.hit(card);
         }
     }
@@ -98,11 +106,11 @@ public class Model {
     }
 
     /**
-     * This method draws a card from the deck.
+     * This method draws a card from the shoe.
      * @return a card
      */
     public Card drawCard() {
-        return deck.drawCard();
+        return shoe.drawCard();
     }
 
     /**
@@ -151,6 +159,28 @@ public class Model {
     }
 
     /**
+     * Determines if there are any remaining cards in the shoe.
+     * @return true if there are any remaining cards in the shoe
+     */
+    public boolean shoeIsEmpty() {
+        return shoe.isEmpty();
+    }
+
+    /**
+     * Determines if the remaining cards in the deck is sufficient.
+     * 
+     * <p>This remaining cards are considered sufficient if the current size of 
+     * the shoe is more than one-fourth of the original size. This is to ensure
+     * that the shoe will always contain cards without having to reshuffle every
+     * time.
+     * 
+     * @return true if the remaining cards in the shoe is sufficient
+     */
+    public boolean shoeIsSufficient() {
+        return shoe.size() > ((NUMBER_OF_DECKS * 52) / 0.25);
+    }
+
+    /**
      * This method determines if the dealer has won over the player.
      * @return true if the dealer won
      */
@@ -180,7 +210,7 @@ public class Model {
     }
 
     /**
-     * The player adds a card to their hand.
+     * Adds a card to the player's  hand.
      * @param card the card to be added
      */
     public void playerHit(Card card) {
@@ -198,8 +228,8 @@ public class Model {
      * This method resets the player and dealer's hands.
      */
     public void resetHand() {
-        player.resetHand(deck);
-        dealer.resetHand(deck);
+        player.discardHand(discardDeck);
+        dealer.discardHand(discardDeck);
     }
 
     /**
@@ -211,10 +241,10 @@ public class Model {
     }
 
     /**
-     * This method shuffles the deck.
+     * Returns all the discarded cards back to the shoe.
      */
     public void shuffleDeck() {
-        deck.shuffle();
+        shoe.reset(discardDeck);
     }
 
     /**
@@ -227,21 +257,21 @@ public class Model {
 
     /**
      * This method determines if the player has won.
-     * @return true if the {@code player} has won
+     * @return true if the player has won
      */
     public boolean playerWon() {
         return won(player, dealer);
     }
 
-    public double getBet() {
+    public double playerBet() {
         return player.getBet();
     }
 
-    public double getChips() {
+    public double playerChips() {
         return player.getChips();
     }
 
-    public String[] getDealerCardNames() {
+    public String[] dealerCardNames() {
         int handSize = dealer.getHand().size();
         String[] cardNames = new String[handSize];
         for (int i = 0; i < handSize; i++) {
@@ -250,15 +280,15 @@ public class Model {
         return cardNames;
     }
 
-    public int getDealerHandValue() {
+    public int dealerHandValue() {
         return dealer.getHandValue();
     }
 
-    public String getHoleCardName() {
+    public String holeCard() {
         return dealer.getHand().get(0).toString();
     }
 
-    public String[] getPlayerCardNames() {
+    public String[] playerCardNames() {
         int handSize = player.getHand().size();
         String[] cardNames = new String[handSize];
         for (int i = 0; i < handSize; i++) {
@@ -267,16 +297,15 @@ public class Model {
         return cardNames;
     }
 
-    public String getFirstCard() {
-        return player.getHand().get(0).toString();
+    public String[] initialCards() {
+        String[] firstTwoCards = new String[2];
+        firstTwoCards[0] = player.getHand().get(0).toString();
+        firstTwoCards[1] = player.getHand().get(1).toString();
+        return firstTwoCards;
     }
 
-    public int getPlayerHandValue() {
+    public int playerHandValue() {
         return player.getHandValue();
-    }
-
-    public String getSecondCard() {
-        return player.getHand().get(1).toString();
     }
 
     private boolean bothBelowLimit(Player player, Player opponent) {
@@ -299,7 +328,7 @@ public class Model {
         return !player.hasBlackjack() && !opponent.hasBlackjack();
     }
 
-    public boolean won(Player player, Player opponent) {
+    private boolean won(Player player, Player opponent) {
         if (player.hasBlackjack()) {
             return !opponent.hasBlackjack();
         }
@@ -311,12 +340,14 @@ public class Model {
 
     private final BlackjackPlayer player;
     private final Dealer dealer;
-    private final Deck deck;
-    private static final String[] PLAY_OPTIONS = {
+    private final CardContainer shoe;
+    private final List<Card> discardDeck;
+    private static final int NUMBER_OF_DECKS = 4;
+    private static final String[] CHOICES = {
         "Hit", "Stand", "Double Down", "Surrender"
     };
-    private static final String[] HAND_OPTIONS = {
+    private static final String[] OPTIONS = {
         "Deal", "Next Hand", "Quit Game"
     };
-    private static final int[] BET_VALUES = {5, 10, 25, 50, 100};
+    private static final int[] CHIPS = {5, 10, 25, 50, 100};
 }

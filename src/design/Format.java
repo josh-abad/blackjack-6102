@@ -32,6 +32,6 @@ public class Format {
     }
 
     private Format() {
-        // Do not instantiate
+        throw new AssertionError();
     }
 }

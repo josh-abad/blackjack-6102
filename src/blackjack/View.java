@@ -81,10 +81,10 @@ public class View {
         betOptionsLabel = new JLabel("Chips");
         betOptions = new HashMap<>();
         playOptionsPanel = new JPanel();
-        playOptionsLabel = new JLabel("Play");
+        playOptionsLabel = new JLabel("Choices");
         playOptions = new HashMap<>();
         handOptionsPanel = new JPanel();
-        handOptionsLabel = new JLabel("Hand");
+        handOptionsLabel = new JLabel("Options");
         handOptions = new HashMap<>();
 
         topPanel.setBackground(Palette.TABLE);
@@ -336,7 +336,7 @@ public class View {
     /**
      * Displays all bet options.
      */
-    public void enableAllBetOptions() {
+    public void enableAllChips() {
         betOptionsPanel.setVisible(true);
         betOptions.values().forEach((betOption) -> {
             betOption.setEnabled(true);
@@ -346,7 +346,7 @@ public class View {
     /**
      * Displays all play options.
      */
-    public void enableAllPlayOptions() {
+    public void enableAllChoices() {
         playOptionsPanel.setVisible(true);
         playOptions.values().forEach((playOption) -> {
             playOption.setEnabled(true);
@@ -359,7 +359,7 @@ public class View {
      * @param   option possible strings are: {@code "Deal"}, {@code "Next Hand"} 
      *          and {@code "Quit Game"}
      */
-    public void enableHandOption(String option) {
+    public void enableOption(String option) {
         handOptions.get(option).setEnabled(true);
     }
 
@@ -376,7 +376,7 @@ public class View {
     /**
      * Removes all bet options from display.
      */
-    public void disableAllBetOptions() {
+    public void disableAllChips() {
         betOptionsPanel.setVisible(false);
         betOptions.values().forEach((betOption) -> {
             betOption.setEnabled(false);
@@ -386,7 +386,7 @@ public class View {
     /**
      * Removes all play options from the display.
      */
-    public void disableAllPlayOptions() {
+    public void disableAllChoices() {
         playOptionsPanel.setVisible(false);
         playOptions.values().forEach((playOption) -> {
             playOption.setEnabled(false);
@@ -399,7 +399,7 @@ public class View {
      * @param   option possible strings are: {@code "Deal"}, {@code "Next Hand"} 
      *          and {@code "Quit Game"}
      */
-    public void disableHandOption(String option) {
+    public void disableOption(String option) {
         if (handOptions.containsKey(option)) {
             handOptions.get(option).setEnabled(false);
         }
@@ -411,7 +411,7 @@ public class View {
      * @param   option possible strings are: {@code "Hit"}, {@code "Stand"},
      *          {@code "Double Down"} and {@code "Surrender"}
      */
-    public void disablePlayOption(String option) {
+    public void disableChoice(String option) {
         if (playOptions.containsKey(option)) {
             playOptions.get(option).setEnabled(false);
         }
@@ -422,7 +422,7 @@ public class View {
      * @param chips the player's remaining chips
      * @param betValues the possible bet options
      */
-    public void updateBetOptions(double chips, int[] betValues) {
+    public void updateChips(double chips, int[] betValues) {
         for (int i = 0, len = betValues.length; i < len; i++) {
             String betValue = String.valueOf(betValues[i]);
             if (chips < betValues[i]) {
@@ -461,7 +461,7 @@ public class View {
     /**
      * Clears the player and dealer's hand value.
      */
-    public void clearHandValue() {
+    public void resetHandValue() {
         playerHandValueLabel.setText("Player");
         if (playerHandValueLabel.getIcon() != null) {
             playerHandValueLabel.setIcon(null);
@@ -564,30 +564,36 @@ public class View {
         panel.add(label, gbc);
     }
 
-    private void initOptions(String[] o, Map<String, JButton> m, JPanel p, boolean hasIcon) {
+    private void initOptions(String[] options,
+                             Map<String, JButton> map,
+                             JPanel panel,
+                             boolean hasIcon)
+    {
         GridBagConstraints gbc = new GridBagConstraints();
-        for (int i = 0; i < o.length; i++) {
+        for (int i = 0; i < options.length; i++) {
             gbc.gridx = i;
             gbc.gridy = 1;
             gbc.gridwidth = 1;
-            int right = (i == o.length - 1) ? 5 : 0;
+            int right = (i == options.length - 1) ? 5 : 0;
             gbc.insets = new Insets(0, 5, 5, right);
-            JButton option = new JButton(o[i]);
+            JButton option = new JButton(options[i]);
             option.setForeground(Palette.TEXT);
             option.setBackground(Palette.TABLE_DARKEST);
             option.setFont(font.generateFont(14));
 
             if (hasIcon) {
-                String path = "/images/" + o[i] + ".png";
-                URL location = View.class.getResource(path);
+                String path = "/images/" + options[i] + ".png";
                 try {
+                    URL location = View.class.getResource(path);
                     ImageIcon icon = new ImageIcon(location);
                     option.setIcon(ImageResizer.getScaledImage(icon, 14));
-                } catch (NullPointerException ex) { }
+                } catch (NullPointerException ex) {
+                    System.err.println("Could not find " + path);
+                }
             }
 
-            m.put(o[i], option);
-            p.add(option, gbc);
+            map.put(options[i], option);
+            panel.add(option, gbc);
         }
     }
 
@@ -602,10 +608,9 @@ public class View {
             String[] comp = cardNames[i].split(" ");
             String value = comp[0];
             String suit = comp[2];
-            String path = "/images/cards/" + suit + "/" 
-                    + value + ".png";
-            URL location = View.class.getResource(path);
+            String path = "/images/cards/" + suit + "/" + value + ".png";
             try {
+                URL location = View.class.getResource(path);
                 ImageIcon icon = new ImageIcon(location);
                 labels[i].setIcon(ImageResizer.getScaledImage(icon, 100));
             } catch (NullPointerException ex) {

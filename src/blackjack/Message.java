@@ -18,6 +18,10 @@ public class Message {
         return "The Dealer got Blackjack. " + Message.playerLost(bet);
     }
 
+    public static String deckIsEmpty() {
+        return "The deck is empty. The Dealer will reshuffle in the next hand";
+    }
+
     public static String doubleDown(double bet, Card card) {
         String chips = Format.currency(bet);
         return "You double your bet to " + chips + " Chips " 
@@ -63,7 +67,8 @@ public class Message {
         return "You pushed for a tie.";
     }
 
+    // Suppress default constructor for noninstantiability
     private Message() { 
-        // Do not instantiate
+        throw new AssertionError();
     }
 }

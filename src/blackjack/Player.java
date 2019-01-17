@@ -1,6 +1,5 @@
 package blackjack;
 
-import playingcards.Deck;
 import playingcards.Card;
 import playingcards.Ace;
 import java.util.ArrayList;
@@ -28,15 +27,15 @@ abstract public class Player {
     }
 
     /**
-     * Resets this player's hand.
+     * Discards this player's hand to a discard deck.
      * 
-     * <p>This method removes every card from this player's hand and returns 
-     * them to a deck.
+     * <p>This method removes every card from this player's hand and set them
+     * aside.
      * 
-     * @param deck the deck where the hand will be returned to
+     * @param discardDeck the discardDeck where the hand will be returned to
      */
-    public void resetHand(Deck deck) {
-        deck.add((List<Card>) hand);
+    public void discardHand(List<Card> discardDeck) {
+        hand.forEach(discardDeck::add);
         hand.clear();
     }
 

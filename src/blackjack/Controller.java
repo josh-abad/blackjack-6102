@@ -30,13 +30,13 @@ public class Controller {
 
             if (model.betIsSufficient()) {
                 view.clearMessage();
-                view.enableHandOption("Deal");
+                view.enableOption("Deal");
             } else {
                 view.displayMessage(Message.minimumBet(Model.MINIMUM_BET));
             }
 
-            view.updateStats(model.getChips(), model.getBet());
-            view.updateBetOptions(model.getChips(), Model.betValues());
+            view.updateStats(model.playerChips(), model.playerBet());
+            view.updateChips(model.playerChips(), Model.chips());
         }
 
         private final int value;
@@ -49,12 +49,18 @@ public class Controller {
             Card card = model.drawCard();
             model.playerHit(card);
             view.displayMessage(Message.hit(card));
-            view.updatePlayerHandValue(model.getPlayerHandValue(), model.isSoft());
-            view.updatePlayerCards(model.getPlayerCardNames());
+            view.updatePlayerHandValue(model.playerHandValue(),
+                                       model.isSoft());
+            view.updatePlayerCards(model.playerCardNames());
+            view.disableChoice("Surrender");
+            if (model.shoeIsEmpty()) {
+                view.displayMessage(Message.deckIsEmpty());
+                view.disableChoice("Hit");
+                view.disableChoice("Double Down");
+            }
             if (model.wentOver()) {
-                view.disablePlayOption("Hit");
-                view.disablePlayOption("Double Down");
-                view.disablePlayOption("Surrender");
+                view.disableChoice("Hit");
+                view.disableChoice("Double Down");
             }
         }
     }
@@ -63,16 +69,17 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            view.disableAllPlayOptions();
-            view.revealHoleCard(model.getHoleCardName());
+            view.disableAllChoices();
+            view.revealHoleCard(model.holeCard());
 
             model.dealerTurn();
 
-            view.updatePlayerCards(model.getPlayerCardNames());
-            view.updateDealerCards(model.getDealerCardNames());
+            view.updatePlayerCards(model.playerCardNames());
+            view.updateDealerCards(model.dealerCardNames());
 
-            view.updatePlayerHandValue(model.getPlayerHandValue(), model.isSoft());
-            view.updateDealerHandValue(model.getDealerHandValue());
+            view.updatePlayerHandValue(model.playerHandValue(),
+                                       model.isSoft());
+            view.updateDealerHandValue(model.dealerHandValue());
 
             String message;
             if (model.isTie()) {
@@ -80,19 +87,17 @@ public class Controller {
                 model.returnBet();
             } else if (model.playerWon()) {
                 if (model.playerHasBlackjack()) {
-                    message = Message.playerBlackjack(model.getBet());
+                    message = Message.playerBlackjack(model.playerBet());
                     model.givePayout(Payout.BLACKJACK);
                 } else {
-                    message = Message.playerWon(model.getBet());
+                    message = Message.playerWon(model.playerBet());
                     model.givePayout(Payout.REGULAR);
                 }
                 view.displayMessage(message, Color.GREEN);
             } else if (model.playerLost()) {
-                if (model.dealerHasBlackjack()) {
-                    message = Message.dealerBlackjack(model.getBet());
-                } else {
-                    message = Message.playerLost(model.getBet());
-                }
+                message = (model.dealerHasBlackjack()) ?
+                        Message.dealerBlackjack(model.playerBet()) :
+                        Message.playerLost(model.playerBet());
                 view.displayMessage(message, Color.RED);
                 model.resetBet();
             } else {
@@ -102,10 +107,10 @@ public class Controller {
             if (model.outOfChips()) {
                 view.displayMessage(Message.outOfChips(), Color.RED);
             } else {
-                view.enableHandOption("Next Hand");
+                view.enableOption("Next Hand");
             }
         
-            view.updateStats(model.getChips(), model.getBet());
+            view.updateStats(model.playerChips(), model.playerBet());
         }
     }
 
@@ -117,15 +122,16 @@ public class Controller {
             Card card = model.drawCard();
             model.playerHit(card);
 
-            view.displayMessage(Message.doubleDown(model.getBet(), card));
-            view.updatePlayerHandValue(model.getPlayerHandValue(), model.isSoft());
+            view.displayMessage(Message.doubleDown(model.playerBet(), card));
+            view.updatePlayerHandValue(model.playerHandValue(),
+                                       model.isSoft());
         
-            view.updatePlayerCards(model.getPlayerCardNames());
+            view.updatePlayerCards(model.playerCardNames());
         
-            view.updateStats(model.getChips(), model.getBet());
-            view.disablePlayOption("Hit");
-            view.disablePlayOption("Double Down");
-            view.disablePlayOption("Surrender");
+            view.updateStats(model.playerChips(), model.playerBet());
+            view.disableChoice("Hit");
+            view.disableChoice("Double Down");
+            view.disableChoice("Surrender");
         }
     }
 
@@ -133,14 +139,14 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            view.displayMessage(Message.surrender(model.getBet()));
+            view.displayMessage(Message.surrender(model.playerBet()));
             model.givePayout(Payout.HALF);
             model.resetBet();
-            view.revealHoleCard(model.getHoleCardName());
-            view.updateDealerHandValue(model.getDealerHandValue());
-            view.updateStats(model.getChips(), model.getBet());
-            view.disableAllPlayOptions();
-            view.enableHandOption("Next Hand");
+            view.revealHoleCard(model.holeCard());
+            view.updateDealerHandValue(model.dealerHandValue());
+            view.updateStats(model.playerChips(), model.playerBet());
+            view.disableAllChoices();
+            view.enableOption("Next Hand");
         }
     }
 
@@ -148,14 +154,12 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            view.disableAllBetOptions();
-            view.enableAllPlayOptions();
-            view.disableHandOption("Deal");
-
-            model.shuffleDeck();
+            view.disableAllChips();
+            view.enableAllChoices();
+            view.disableOption("Deal");
 
             if (!model.canDoubleDown()) {
-                view.disablePlayOption("Double Down");
+                view.disableChoice("Double Down");
             }
         
             for (int i = 0; i < 2; i++) {
@@ -165,15 +169,15 @@ public class Controller {
                 model.dealerHit(dealerCard);
             }
 
-            view.displayMessage(
-                    Message.deal(model.getFirstCard(), model.getSecondCard())
-            );
+            view.displayMessage(Message.deal(model.initialCards()[0],
+                                             model.initialCards()[1]));
 
-            view.updatePlayerHandValue(model.getPlayerHandValue(), model.isSoft());
+            view.updatePlayerHandValue(model.playerHandValue(),
+                                       model.isSoft());
 
-            view.updatePlayerCards(model.getPlayerCardNames());
-            view.updateDealerCards(model.getDealerCardNames());
-            view.hideHoleCard(model.getHoleCardName());
+            view.updatePlayerCards(model.playerCardNames());
+            view.updateDealerCards(model.dealerCardNames());
+            view.hideHoleCard(model.holeCard());
         }
     }
 
@@ -184,24 +188,26 @@ public class Controller {
             view.displayMessage(Message.nextHand());
             view.clearCards();
 
+            if (!model.shoeIsSufficient()) {
+                model.shuffleDeck();
+                view.displayMessage("Deck is reshuffled.");
+            }
+
             view.updateDealerHandValue(0);
-            view.clearHandValue();
-            view.disableHandOption("Next Hand");
+            view.resetHandValue();
+            view.disableOption("Next Hand");
             model.resetHand();
 
-            view.disableAllPlayOptions();
-            if (!model.canDoubleDown()) {
-                view.disablePlayOption("Double Down");
-            }
+            view.disableAllChoices();
             if (model.betIsSufficient()) {
-                view.enableHandOption("Deal");
+                view.enableOption("Deal");
             } else {
-                view.disableHandOption("Deal");
+                view.disableOption("Deal");
             }
 
-            view.enableAllBetOptions();
-            view.updateBetOptions(model.getChips(), Model.betValues());
-            view.updateStats(model.getChips(), model.getBet());
+            view.enableAllChips();
+            view.updateChips(model.playerChips(), Model.chips());
+            view.updateStats(model.playerChips(), model.playerBet());
         }
     }
 
@@ -209,7 +215,7 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO: display a pop-up indicating whether player playerWon or playerLost
+            // TODO: display a pop-up indicating whether player won or lost
             System.exit(0);
         }
     }
@@ -234,24 +240,22 @@ public class Controller {
     }
 
     private void initView() {
-        view.initBetOptions(Model.betValues());
-        view.initPlayOptions(Model.playOptions());
-        view.initHandOptions(Model.handOptions());
+        view.initBetOptions(Model.chips());
+        view.initPlayOptions(Model.choices());
+        view.initHandOptions(Model.options());
 
-        view.updateDealerHandValue(0);
-        view.clearHandValue();
+        view.resetHandValue();
         view.clearCards();
         view.displayTableBorder();
-        view.updateDealerCards(model.getDealerCardNames());
-        view.updateStats(model.getChips(), model.getBet());
+        view.updateStats(model.playerChips(), model.playerBet());
 
-        view.disableAllPlayOptions();
+        view.disableAllChoices();
         if (model.betIsSufficient()) {
-            view.enableHandOption("Deal");
+            view.enableOption("Deal");
         } else {
-            view.disableHandOption("Deal");
+            view.disableOption("Deal");
         }
-        view.disableHandOption("Next Hand");
+        view.disableOption("Next Hand");
     }
     
     private final Model model;

@@ -24,7 +24,8 @@ public class ImageResizer {
         return new ImageIcon(scaledImg);
     }
     
+    // Suppress default constructor for noninstantiability
     private ImageResizer() {
-        // Do not instantiate
+        throw new AssertionError();
     }
 }

@@ -16,7 +16,8 @@ public class Palette {
     public static final Color TABLE_LIGHT = TABLE.brighter();
     public static final Color TEXT = Color.WHITE;
 
+    // Suppress default constructor for noninstantiability
     private Palette() {
-        // Do not instantiate
+        throw new AssertionError();
     }
 }
