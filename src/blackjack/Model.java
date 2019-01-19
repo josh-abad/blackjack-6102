@@ -188,6 +188,13 @@ public class Model {
         return won(dealer, player);
     }
 
+    public BasicStrategy.Action basicStrategy() {
+        boolean softHand = player.hasSoftHand();
+        int p = player.getHandValue();
+        int d = dealer.getHand().get(1).getRank();
+        return BasicStrategy.generate(softHand, p, d);
+    }
+
     /**
      * Determines if the player has enough chips to continue playing.
      * @return true if the chips are less than the minimum bet
@@ -347,7 +354,7 @@ public class Model {
         "Hit", "Stand", "Double Down", "Surrender"
     };
     private static final String[] OPTIONS = {
-        "Deal", "Next Hand", "Quit Game"
+        "Deal", "Next Hand", "Hint", "Quit Game"
     };
     private static final int[] CHIPS = {5, 10, 25, 50, 100};
 }

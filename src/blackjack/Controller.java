@@ -57,11 +57,13 @@ public class Controller {
                 view.displayMessage(Message.deckIsEmpty());
                 view.disableChoice("Hit");
                 view.disableChoice("Double Down");
+                view.disableOption("Hint");
             }
             if (model.wentOver()) {
                 view.disableChoice("Hit");
                 view.disableChoice("Double Down");
-            }
+                view.disableOption("Hint");
+            } 
         }
     }
 
@@ -70,6 +72,7 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             view.disableAllChoices();
+            view.disableOption("Hint");
             view.revealHoleCard(model.holeCard());
 
             model.dealerTurn();
@@ -132,6 +135,7 @@ public class Controller {
             view.disableChoice("Hit");
             view.disableChoice("Double Down");
             view.disableChoice("Surrender");
+            view.disableOption("Hint");
         }
     }
 
@@ -147,6 +151,7 @@ public class Controller {
             view.updateStats(model.playerChips(), model.playerBet());
             view.disableAllChoices();
             view.enableOption("Next Hand");
+            view.disableOption("Hint");
         }
     }
 
@@ -156,6 +161,7 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             view.disableAllChips();
             view.enableAllChoices();
+            view.enableOption("Hint");
             view.disableOption("Deal");
 
             if (!model.canDoubleDown()) {
@@ -181,6 +187,39 @@ public class Controller {
         }
     }
 
+    public class HintAction implements ActionListener {
+        
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            BasicStrategy.Action action = model.basicStrategy();
+            String hint = null;
+            switch (action) {
+                case DH:
+                    if (!view.isChoiceEnabled("Double Down")) {
+                        hint = BasicStrategy.Action.H.toString();
+                    }   break;
+                case DS:
+                    if (!view.isChoiceEnabled("Double Down")) {
+                        hint = BasicStrategy.Action.S.toString();
+                    }   break;
+                case RH:
+                    if (!view.isChoiceEnabled("Surrender")) {
+                        hint = BasicStrategy.Action.H.toString();
+                    }   break;
+                case RS:
+                    if (!view.isChoiceEnabled("Surrender")) {
+                        hint = BasicStrategy.Action.S.toString();
+                    }   break;  
+                default:
+                    break;
+            }
+            if (hint == null) {
+                hint = action.toString();
+            }
+            view.displayMessage("Hint: " + hint);
+        }
+    }
+
     public class NextHandAction implements ActionListener {
 
         @Override
@@ -196,6 +235,7 @@ public class Controller {
             view.updateDealerHandValue(0);
             view.resetHandValue();
             view.disableOption("Next Hand");
+            view.disableOption("Hint");
             model.resetHand();
 
             view.disableAllChoices();
@@ -227,6 +267,7 @@ public class Controller {
         view.initSurrenderActionListener(new SurrenderAction());
 
         view.initDealActionListener(new DealAction());
+        view.initHintActionListener(new HintAction());
         view.initNextHandActionListener(new NextHandAction());
         view.initQuitGameActionListener(new QuitGameAction());
 
@@ -256,6 +297,7 @@ public class Controller {
             view.disableOption("Deal");
         }
         view.disableOption("Next Hand");
+        view.disableOption("Hint");
     }
     
     private final Model model;

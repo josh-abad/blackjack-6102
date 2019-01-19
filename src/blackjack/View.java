@@ -311,6 +311,10 @@ public class View {
         }
     }
 
+    public boolean isChoiceEnabled(String choice) {
+        return playOptions.get(choice).isEnabled();
+    }
+
     /**
      * Flips over the dealer's hole card.
      * 
@@ -544,6 +548,10 @@ public class View {
 
     public void initDealActionListener(ActionListener l) {
         handOptions.get("Deal").addActionListener(l);
+    }
+
+    public void initHintActionListener(ActionListener l) {
+        handOptions.get("Hint").addActionListener(l);
     }
 
     public void initNextHandActionListener(ActionListener l) {
