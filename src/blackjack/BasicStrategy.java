@@ -51,6 +51,7 @@ public class BasicStrategy {
 
         private static Action soft(int p, int d) {
             switch (p) {
+                case 12: return hard(p, d);
                 case 13: case 14: return (d == 5 || d == 6) ? DH : H;
                 case 15: case 16: return (d >= 4 && d <= 6) ? DH : H;
                 case 17: return (d >= 3 && d <= 6) ? DH : H;
