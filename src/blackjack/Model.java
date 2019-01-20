@@ -95,7 +95,20 @@ public class Model {
             }
             Card card = shoe.drawCard();
             dealer.hit(card);
+            updateRunningCount(card.getRank());
         }
+    }
+
+    /**
+     * Returns the number of decks in the shoe.
+     * @return the number of decks
+     */
+    public int deckCount() {
+        if (shoe.getClass() == Shoe.class) {
+            Shoe s = (Shoe) shoe;
+            return s.deckCount();
+        }
+        return 1;
     }
 
     /**
@@ -188,11 +201,58 @@ public class Model {
         return won(dealer, player);
     }
 
+    /**
+     * Returns an action based on the basic strategy for blackjack.
+     * @return an action
+     */
     public BasicStrategy.Action basicStrategy() {
         boolean softHand = player.hasSoftHand();
         int p = player.getHandValue();
         int d = dealer.getHand().get(1).getRank();
         return BasicStrategy.generate(softHand, p, d);
+    }
+
+    /**
+     * Add a card to the running count.
+     * @param rank the card's value
+     */
+    public void updateRunningCount(int rank) {
+        if (rank >= 2 && rank <= 6) {
+            runningCount++;
+        } else if (rank == 1 || rank == 10) {
+            runningCount--;
+        }
+    }
+
+    /**
+     * Return the running count.
+     * @return the running count
+     */
+    public int getRunningCount() {
+        return runningCount;
+    }
+
+    /**
+     * Resets the running count to 0.
+     */
+    public void resetRunningCount() {
+        runningCount = 0;
+    }
+
+    /**
+     * Returns the true count of cards played in the shoe.
+     * 
+     * <p>The true count is calculated by dividing the running count by the
+     * number of decks remaining.
+     * 
+     * @return the true count 
+     */
+    public int getTrueCount() {
+        if (shoe.getClass() == Shoe.class) {
+            Shoe s = (Shoe) this.shoe;
+            return runningCount / s.deckCount();
+        }
+        return runningCount;
     }
 
     /**
@@ -291,8 +351,8 @@ public class Model {
         return dealer.getHandValue();
     }
 
-    public String holeCard() {
-        return dealer.getHand().get(0).toString();
+    public Card holeCard() {
+        return dealer.getHand().get(0);
     }
 
     public String[] playerCardNames() {
@@ -349,6 +409,7 @@ public class Model {
     private final Dealer dealer;
     private final CardContainer shoe;
     private final List<Card> discardDeck;
+    private int runningCount;
     private static final int NUMBER_OF_DECKS = 4;
     private static final String[] CHOICES = {
         "Hit", "Stand", "Double Down", "Surrender"

@@ -48,6 +48,9 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             Card card = model.drawCard();
             model.playerHit(card);
+            model.updateRunningCount(card.getRank());
+            view.updateDeckCount(model.deckCount());
+            view.updateTrueCount(model.getTrueCount());
             view.displayMessage(Message.hit(card));
             view.updatePlayerHandValue(model.playerHandValue(),
                                        model.isSoft());
@@ -73,9 +76,11 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             view.disableAllChoices();
             view.disableOption("Hint");
-            view.revealHoleCard(model.holeCard());
+            view.revealHoleCard(model.holeCard().toString());
 
             model.dealerTurn();
+            view.updateDeckCount(model.deckCount());
+            view.updateTrueCount(model.getTrueCount());
 
             view.updatePlayerCards(model.playerCardNames());
             view.updateDealerCards(model.dealerCardNames());
@@ -124,6 +129,8 @@ public class Controller {
             model.doubleBet();
             Card card = model.drawCard();
             model.playerHit(card);
+            model.updateRunningCount(card.getRank());
+            view.updateTrueCount(model.getTrueCount());
 
             view.displayMessage(Message.doubleDown(model.playerBet(), card));
             view.updatePlayerHandValue(model.playerHandValue(),
@@ -132,6 +139,7 @@ public class Controller {
             view.updatePlayerCards(model.playerCardNames());
         
             view.updateStats(model.playerChips(), model.playerBet());
+            view.updateDeckCount(model.deckCount());
             view.disableChoice("Hit");
             view.disableChoice("Double Down");
             view.disableChoice("Surrender");
@@ -146,7 +154,9 @@ public class Controller {
             view.displayMessage(Message.surrender(model.playerBet()));
             model.givePayout(Payout.HALF);
             model.resetBet();
-            view.revealHoleCard(model.holeCard());
+            view.revealHoleCard(model.holeCard().toString());
+            model.updateRunningCount(model.holeCard().getRank());
+            view.updateTrueCount(model.getTrueCount());
             view.updateDealerHandValue(model.dealerHandValue());
             view.updateStats(model.playerChips(), model.playerBet());
             view.disableAllChoices();
@@ -172,8 +182,14 @@ public class Controller {
                 Card playerCard = model.drawCard();
                 Card dealerCard = model.drawCard();
                 model.playerHit(playerCard);
+                model.updateRunningCount(playerCard.getRank());
                 model.dealerHit(dealerCard);
+                if (i != 0) {
+                    model.updateRunningCount(dealerCard.getRank());
+                }
             }
+            view.updateTrueCount(model.getTrueCount());
+
 
             view.displayMessage(Message.deal(model.initialCards()[0],
                                              model.initialCards()[1]));
@@ -183,7 +199,8 @@ public class Controller {
 
             view.updatePlayerCards(model.playerCardNames());
             view.updateDealerCards(model.dealerCardNames());
-            view.hideHoleCard(model.holeCard());
+            view.hideHoleCard(model.holeCard().toString());
+            view.updateDeckCount(model.deckCount());
         }
     }
 
@@ -229,6 +246,7 @@ public class Controller {
 
             if (!model.shoeIsSufficient()) {
                 model.shuffleDeck();
+                model.resetRunningCount();
                 view.displayMessage("Deck is reshuffled.");
             }
 
@@ -248,6 +266,7 @@ public class Controller {
             view.enableAllChips();
             view.updateChips(model.playerChips(), Model.chips());
             view.updateStats(model.playerChips(), model.playerBet());
+            view.updateDeckCount(model.deckCount());
         }
     }
 
@@ -273,9 +292,7 @@ public class Controller {
 
         view.getBetOptions().forEach((betOption) -> {
             betOption.addActionListener(
-                    new BetAction(
-                            Integer.parseInt(betOption.getText())
-                    )
+                    new BetAction(Integer.parseInt(betOption.getText()))
             );
         });
     }
@@ -289,6 +306,8 @@ public class Controller {
         view.clearCards();
         view.displayTableBorder();
         view.updateStats(model.playerChips(), model.playerBet());
+        view.updateTrueCount(model.getTrueCount());
+        view.updateDeckCount(model.deckCount());
 
         view.disableAllChoices();
         if (model.betIsSufficient()) {

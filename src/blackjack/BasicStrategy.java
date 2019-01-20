@@ -1,5 +1,9 @@
 package blackjack;
 
+/**
+ * Basic strategy for blackjack.
+ * @author yeyoa
+ */
 public class BasicStrategy {
 
     public enum Action {
@@ -61,7 +65,23 @@ public class BasicStrategy {
         }
     }
 
+    /**
+     * Returns the action for the player to take based on basic strategy.
+     * 
+     * <p>The mathematically correct way to play blackjack, called basic
+     * strategy, can cut the dealer's edge to 0.5%.
+     * 
+     * @param softHand if the player has a soft hand
+     * @param p the player's hand value
+     * @param d the dealer's front facing card
+     * @return the action
+     */
     public static Action generate(boolean softHand, int p, int d) {
         return (softHand) ? Action.soft(p, d) : Action.hard(p, d);
+    }
+
+    // Suppress default constructor for noninstantiability
+    private BasicStrategy() {
+        throw new AssertionError();
     }
 }
