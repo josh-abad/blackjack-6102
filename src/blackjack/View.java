@@ -325,15 +325,11 @@ public class View {
      * 
      * <p>In blackjack, the dealer will hide one of his two cards after the
      * initial deal. This hidden card is called the hole card.
-     * 
-     * @param holeCardName the name of the hole card
      */
-    public void hideHoleCard(String holeCardName) {
-        String suit = holeCardName.split(" ")[2];
-        String path = "/images/cards/" + suit + "/Back.png";
-        URL location = View.class.getResource(path);
+    public void hideHoleCard() {
+        String path = "/images/back.png";
         try {
-            ImageIcon icon = new ImageIcon(location);
+            ImageIcon icon = new ImageIcon(View.class.getResource(path));
             dealerHand[0].setIcon(ImageResizer.getScaledImage(icon, 100));
         } catch (NullPointerException ex) {
             System.err.println("Could not find " + path);
@@ -354,12 +350,10 @@ public class View {
      */
     public void revealHoleCard(String holeCardName) {
         String[] comp = holeCardName.split(" ");
-        String value = comp[0];
-        String suit = comp[2];
+        String value = comp[0], suit = comp[2];
         String path = "/images/cards/" + suit + "/" + value + ".png";
-        URL location = View.class.getResource(path);
         try {
-            ImageIcon icon = new ImageIcon(location);
+            ImageIcon icon = new ImageIcon(View.class.getResource(path));
             dealerHand[0].setIcon(ImageResizer.getScaledImage(icon, 100));
         } catch (NullPointerException ex) {
             System.err.println("Could not find " + path);

@@ -199,7 +199,7 @@ public class Controller {
 
             view.updatePlayerCards(model.playerCardNames());
             view.updateDealerCards(model.dealerCardNames());
-            view.hideHoleCard(model.holeCard().toString());
+            view.hideHoleCard();
             view.updateDeckCount(model.deckCount());
         }
     }
