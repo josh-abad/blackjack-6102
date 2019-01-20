@@ -314,7 +314,7 @@ public class View {
      * Displays a border around the where the player and dealer's cards are.
      */
     public void displayTableBorder() {
-        Border border = new LineBorder(Palette.TABLE_LIGHT, 5);
+        Border border = new LineBorder(Palette.TABLE_LIGHT, 4);
         Border margin = new EmptyBorder(10, 10, 10, 10);
         playerPanel.setBorder(new CompoundBorder(margin, border));
         dealerPanel.setBorder(new CompoundBorder(margin, border));
@@ -327,7 +327,7 @@ public class View {
      * initial deal. This hidden card is called the hole card.
      */
     public void hideHoleCard() {
-        String path = "/images/back.png";
+        String path = "/images/" + cardStyle + "_back.png";
         try {
             ImageIcon icon = new ImageIcon(View.class.getResource(path));
             dealerHand[0].setIcon(ImageResizer.getScaledImage(icon, 100));
@@ -351,7 +351,8 @@ public class View {
     public void revealHoleCard(String holeCardName) {
         String[] comp = holeCardName.split(" ");
         String value = comp[0], suit = comp[2];
-        String path = "/images/cards/" + suit + "/" + value + ".png";
+        String path;
+        path = "/images/" + cardStyle + "/" + suit + "/" + value + ".png";
         try {
             ImageIcon icon = new ImageIcon(View.class.getResource(path));
             dealerHand[0].setIcon(ImageResizer.getScaledImage(icon, 100));
@@ -655,7 +656,8 @@ public class View {
             String[] comp = cardNames[i].split(" ");
             String value = comp[0];
             String suit = comp[2];
-            String path = "/images/cards/" + suit + "/" + value + ".png";
+            String path;
+            path = "/images/" + cardStyle + "/" + suit + "/" + value + ".png";
             try {
                 URL location = View.class.getResource(path);
                 ImageIcon icon = new ImageIcon(location);
@@ -665,7 +667,7 @@ public class View {
             }
         }
     }
-    
+
     private final JFrame frame;
     private final JPanel topPanel;
     private final JLabel titleLabel;
@@ -694,4 +696,6 @@ public class View {
     private final JLabel handOptionsLabel;
     private final Map<String, JButton> handOptions;
     private final DefaultFont font;
+    
+    private final String cardStyle = "classic";
 }
