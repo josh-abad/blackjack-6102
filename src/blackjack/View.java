@@ -75,7 +75,8 @@ public class View {
 
         optionsPanel = new JPanel();
         currentBetPanel = new JPanel();
-        currentBetLabel = new JLabel("Bet:");
+        deckCountLabel = new JLabel();
+        trueCountLabel = new JLabel();
         currentBetValueLabel = new JLabel();
         betOptionsPanel = new JPanel();
         betOptionsLabel = new JLabel("Chips");
@@ -103,6 +104,30 @@ public class View {
             System.err.println("Could not find " + path);
         }
 
+        path = "/images/deck.png";
+        try {
+            ImageIcon icon = new ImageIcon(View.class.getResource(path));
+            deckCountLabel.setIcon(ImageResizer.getScaledImage(icon, 28));
+        } catch (NullPointerException ex) {
+            System.err.println("Could not find " + path);
+        }
+
+        path = "/images/card_count.png";
+        try {
+            ImageIcon icon = new ImageIcon(View.class.getResource(path));
+            trueCountLabel.setIcon(ImageResizer.getScaledImage(icon, 28));
+        } catch (NullPointerException ex) {
+            System.err.println("Could not find " + path);
+        }
+
+        path = "/images/bet.png";
+        try {
+            ImageIcon icon = new ImageIcon(View.class.getResource(path));
+            currentBetValueLabel.setIcon(ImageResizer.getScaledImage(icon, 28));
+        } catch (NullPointerException ex) {
+            System.err.println("Could not find " + path);
+        }
+
         tablePanel.setBackground(Palette.TABLE);
         dealerHandValueLabel.setForeground(Palette.TEXT);
         dealerPanel.setBackground(Palette.TABLE);
@@ -116,13 +141,15 @@ public class View {
         betOptionsPanel.setBackground(Palette.TABLE_DARKER);
         playOptionsPanel.setBackground(Palette.TABLE_DARKER);
         handOptionsPanel.setBackground(Palette.TABLE_DARKER);
-        currentBetLabel.setForeground(Palette.TEXT);
+        deckCountLabel.setForeground(Palette.TEXT);
+        trueCountLabel.setForeground(Palette.TEXT);
         currentBetValueLabel.setForeground(Palette.TEXT);
         betOptionsLabel.setForeground(Palette.TEXT);
         playOptionsLabel.setForeground(Palette.TEXT);
         handOptionsLabel.setForeground(Palette.TEXT);
-        currentBetLabel.setFont(font.generateFont(18));
-        currentBetValueLabel.setFont(font.generateFont(18));
+        deckCountLabel.setFont(font.generateFont(28));
+        trueCountLabel.setFont(font.generateFont(28));
+        currentBetValueLabel.setFont(font.generateFont(28));
         betOptionsLabel.setFont(font.generateFont(12));
         playOptionsLabel.setFont(font.generateFont(12));
         handOptionsLabel.setFont(font.generateFont(12));
@@ -214,7 +241,9 @@ public class View {
         optionsPanel.add(playOptionsPanel);
         optionsPanel.add(handOptionsPanel);
 
-        currentBetPanel.add(currentBetLabel);
+        currentBetPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 0));
+        currentBetPanel.add(deckCountLabel);
+        currentBetPanel.add(trueCountLabel);
         currentBetPanel.add(currentBetValueLabel);
 
         betOptionsPanel.setLayout(new GridBagLayout());
@@ -455,11 +484,27 @@ public class View {
     }
 
     /**
+     * Updates the number of decks displayed on screen.
+     * @param count the number of decks
+     */
+    public void updateDeckCount(int count) {
+        deckCountLabel.setText(count + "");
+    }
+
+    /**
      * Updates the card images on the player's side of the screen.
      * @param cardNames the names of the cards
      */
     public void updatePlayerCards(String[] cardNames) {
         updateImages(cardNames, playerHand);
+    }
+
+    /**
+     * Updates the true count of cards displayed on the screen.
+     * @param count the true count
+     */
+    public void updateTrueCount(int count) {
+        trueCountLabel.setText(count + "");
     }
 
     /**
@@ -642,7 +687,8 @@ public class View {
     private final JLabel[] playerHand;
     private final JPanel optionsPanel;
     private final JPanel currentBetPanel;
-    private final JLabel currentBetLabel;
+    private final JLabel deckCountLabel;
+    private final JLabel trueCountLabel;
     private final JLabel currentBetValueLabel;
     private final JPanel betOptionsPanel;
     private final JLabel betOptionsLabel;
