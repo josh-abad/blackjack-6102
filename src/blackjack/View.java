@@ -85,7 +85,7 @@ public class View {
         topPanel.setBackground(Palette.TABLE);
         messagePanel.setBackground(Palette.TABLE_DARK);
         messageLabel.setForeground(Palette.TEXT);
-        messageLabel.setFont(font.generateFont(16));
+        messageLabel.setFont(font.generateFont(18));
 
         chipsLabel.setForeground(Palette.TEXT);
         chipsLabel.setFont(font.generateFont(36));
