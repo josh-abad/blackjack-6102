@@ -19,3 +19,6 @@ The player has a variety of standard choices available in blackjack.
 * **Surrender**
 
    The player can give up their hand by surrendering half their bet at the beginning of each hand.
+   
+The stats at the bottom left corner indicate the number of decks remaining, the true count, and the player's current bet.
+The player can follow [basic strategy](https://en.wikipedia.org/wiki/Blackjack#Basic_strategy) by clicking hint. The game finishes once the player has insufficient chips to play a hand.
