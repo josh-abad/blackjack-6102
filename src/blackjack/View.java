@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -53,13 +54,7 @@ public class View {
         topPanel = new JPanel();
         titleLabel = new JLabel();
 
-        path = "/images/logo1.png";
-        try {
-            ImageIcon icon = new ImageIcon(View.class.getResource(path));
-            titleLabel.setIcon(ImageResizer.getScaledImage(icon, 150));
-        } catch (NullPointerException ex) {
-            System.err.println("Could not find " + path);
-        }
+        setIcon(titleLabel, "/images/logo1.png", 150);
 
         messagePanel = new JPanel();
         messageLabel = new JLabel("Welcome to Blackjack! Place a bet.");
@@ -96,37 +91,10 @@ public class View {
         chipsLabel.setForeground(Palette.TEXT);
         chipsLabel.setFont(font.generateFont(36));
 
-        path = "/images/chip.png";
-        try {
-            ImageIcon icon = new ImageIcon(View.class.getResource(path));
-            chipsLabel.setIcon(ImageResizer.getScaledImage(icon, 36));
-        } catch (NullPointerException ex) {
-            System.err.println("Could not find " + path);
-        }
-
-        path = "/images/deck.png";
-        try {
-            ImageIcon icon = new ImageIcon(View.class.getResource(path));
-            deckCountLabel.setIcon(ImageResizer.getScaledImage(icon, 28));
-        } catch (NullPointerException ex) {
-            System.err.println("Could not find " + path);
-        }
-
-        path = "/images/card_count.png";
-        try {
-            ImageIcon icon = new ImageIcon(View.class.getResource(path));
-            trueCountLabel.setIcon(ImageResizer.getScaledImage(icon, 28));
-        } catch (NullPointerException ex) {
-            System.err.println("Could not find " + path);
-        }
-
-        path = "/images/bet.png";
-        try {
-            ImageIcon icon = new ImageIcon(View.class.getResource(path));
-            currentBetValueLabel.setIcon(ImageResizer.getScaledImage(icon, 28));
-        } catch (NullPointerException ex) {
-            System.err.println("Could not find " + path);
-        }
+        setIcon(chipsLabel, "/images/chip.png", 36);
+        setIcon(deckCountLabel, "/images/deck.png", 28);
+        setIcon(trueCountLabel, "/images/card_count.png", 28);
+        setIcon(currentBetValueLabel, "/images/bet.png", 28);
 
         tablePanel.setBackground(Palette.TABLE);
         dealerHandValueLabel.setForeground(Palette.TEXT);
@@ -349,16 +317,12 @@ public class View {
      * @param holeCardName the name of the hole card
      */
     public void revealHoleCard(String holeCardName) {
+        JLabel label = dealerHand[0];
         String[] comp = holeCardName.split(" ");
         String value = comp[0], suit = comp[2];
         String path;
         path = "/images/" + cardStyle + "/" + suit + "/" + value + ".png";
-        try {
-            ImageIcon icon = new ImageIcon(View.class.getResource(path));
-            dealerHand[0].setIcon(ImageResizer.getScaledImage(icon, 100));
-        } catch (NullPointerException ex) {
-            System.err.println("Could not find " + path);
-        }
+        setIcon(label, path, 100);
     }
 
     /**
@@ -384,8 +348,8 @@ public class View {
     /**
      * Enables a hand option.
      * 
-     * @param   option possible strings are: {@code "Deal"}, {@code "Next Hand"} 
-     *          and {@code "Quit Game"}
+     * @param   option possible strings are: {@code "Deal"},
+     *          {@code "Next Hand"}, {@code "Hint"} and {@code "Quit Game"}
      */
     public void enableOption(String option) {
         handOptions.get(option).setEnabled(true);
@@ -424,8 +388,8 @@ public class View {
     /**
      * Disables a hand option.
      * 
-     * @param   option possible strings are: {@code "Deal"}, {@code "Next Hand"} 
-     *          and {@code "Quit Game"}
+     * @param   option possible strings are: {@code "Deal"},
+     *          {@code "Next Hand"}, {@code "Hint"} and {@code "Quit Game"}
      */
     public void disableOption(String option) {
         if (handOptions.containsKey(option)) {
@@ -507,9 +471,7 @@ public class View {
      */
     public void resetHandValue() {
         playerHandValueLabel.setText("Player");
-        if (playerHandValueLabel.getIcon() != null) {
-            playerHandValueLabel.setIcon(null);
-        }
+        playerHandValueLabel.setIcon(null);
         dealerHandValueLabel.setText("Dealer");
     }
 
@@ -525,14 +487,8 @@ public class View {
 
         String path = "/images/";
         path += (isSoft) ? "soft.png" : "hard.png";
-        try {
-            ImageIcon icon = new ImageIcon(View.class.getResource(path));
-            int size = playerHandValueLabel.getFont().getSize();
-            icon = ImageResizer.getScaledImage(icon, size);
-            playerHandValueLabel.setIcon(icon);
-        } catch (NullPointerException ex) {
-            System.err.println("Could not find " + path);
-        }
+        int size = playerHandValueLabel.getFont().getSize();
+        setIcon(playerHandValueLabel, path, size);
 
         dealerHandValueLabel.setText("Dealer");
     }
@@ -547,6 +503,14 @@ public class View {
         currentBetValueLabel.setText(Format.currency(bet));
     }
 
+    /**
+     * Returns a collection of bet options.
+     * 
+     * <p>This method exists so that each button can have an action
+     * event without having to write code every time a new button is added.
+     * 
+     * @return the bet options 
+     */
     public Collection<JButton> getBetOptions() {
         return betOptions.values();
     }
@@ -631,13 +595,7 @@ public class View {
 
             if (hasIcon) {
                 String path = "/images/" + options[i] + ".png";
-                try {
-                    URL location = View.class.getResource(path);
-                    ImageIcon icon = new ImageIcon(location);
-                    option.setIcon(ImageResizer.getScaledImage(icon, 14));
-                } catch (NullPointerException ex) {
-                    System.err.println("Could not find " + path);
-                }
+                setIcon(option, path, 14);
             }
 
             map.put(options[i], option);
@@ -651,20 +609,31 @@ public class View {
         });
     }
 
+    private void setIcon(AbstractButton label, String path, int size) {
+        try {
+            ImageIcon icon = new ImageIcon(View.class.getResource(path));
+            label.setIcon(ImageResizer.getScaledImage(icon, size));
+        } catch (NullPointerException ex) {
+            System.err.println("Could not find " + path);
+        }
+    }
+
+    private void setIcon(JLabel label, String path, int size) {
+        try {
+            ImageIcon icon = new ImageIcon(View.class.getResource(path));
+            label.setIcon(ImageResizer.getScaledImage(icon, size));
+        } catch (NullPointerException ex) {
+            System.err.println("Could not find " + path);
+        }
+    }
+
     private void updateImages(String[] cardNames, JLabel[] labels) {
         for (int i = 0; i < cardNames.length; i++) {
             String[] comp = cardNames[i].split(" ");
-            String value = comp[0];
-            String suit = comp[2];
+            String value = comp[0], suit = comp[2];
             String path;
             path = "/images/" + cardStyle + "/" + suit + "/" + value + ".png";
-            try {
-                URL location = View.class.getResource(path);
-                ImageIcon icon = new ImageIcon(location);
-                labels[i].setIcon(ImageResizer.getScaledImage(icon, 100));
-            } catch (NullPointerException ex) {
-                System.err.println("Could not find " + path);
-            }
+            setIcon(labels[i], path, 100);
         }
     }
 
