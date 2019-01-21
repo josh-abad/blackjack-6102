@@ -11,7 +11,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -54,7 +53,7 @@ public class View {
         topPanel = new JPanel();
         titleLabel = new JLabel();
 
-        setIcon(titleLabel, "/images/logo1.png", 150);
+        setIcon(titleLabel, "/images/default_logo.png", 150);
 
         messagePanel = new JPanel();
         messageLabel = new JLabel("Welcome to Blackjack! Place a bet.");
@@ -209,7 +208,7 @@ public class View {
         optionsPanel.add(playOptionsPanel);
         optionsPanel.add(handOptionsPanel);
 
-        currentBetPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 0));
+        currentBetPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 40, 0));
         currentBetPanel.add(deckCountLabel);
         currentBetPanel.add(trueCountLabel);
         currentBetPanel.add(currentBetValueLabel);
@@ -231,8 +230,10 @@ public class View {
         String path = "/images/blank.png";
         try {
             ImageIcon icon = new ImageIcon(View.class.getResource(path));
-            resetImages(ImageResizer.getScaledImage(icon, 100), playerHand);
-            resetImages(ImageResizer.getScaledImage(icon, 100), dealerHand);
+            resetImages(ImageResizer.getScaledImage(icon, cardSize),
+                        playerHand);
+            resetImages(ImageResizer.getScaledImage(icon, cardSize),
+                        dealerHand);
         } catch (NullPointerException ex) {
             resetImages(null, playerHand);
             resetImages(null, dealerHand);
@@ -298,7 +299,7 @@ public class View {
         String path = "/images/" + cardStyle + "_back.png";
         try {
             ImageIcon icon = new ImageIcon(View.class.getResource(path));
-            dealerHand[0].setIcon(ImageResizer.getScaledImage(icon, 100));
+            dealerHand[0].setIcon(ImageResizer.getScaledImage(icon, cardSize));
         } catch (NullPointerException ex) {
             System.err.println("Could not find " + path);
         }
@@ -322,7 +323,7 @@ public class View {
         String value = comp[0], suit = comp[2];
         String path;
         path = "/images/" + cardStyle + "/" + suit + "/" + value + ".png";
-        setIcon(label, path, 100);
+        setIcon(label, path, cardSize);
     }
 
     /**
@@ -633,7 +634,7 @@ public class View {
             String value = comp[0], suit = comp[2];
             String path;
             path = "/images/" + cardStyle + "/" + suit + "/" + value + ".png";
-            setIcon(labels[i], path, 100);
+            setIcon(labels[i], path, cardSize);
         }
     }
 
@@ -667,4 +668,5 @@ public class View {
     private final DefaultFont font;
     
     private final String cardStyle = "classic";
+    private final int cardSize = (cardStyle.equals("default")) ? 100 : 105;
 }
