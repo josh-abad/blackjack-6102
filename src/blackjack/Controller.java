@@ -274,7 +274,6 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO: display a pop-up indicating whether player won or lost
             System.exit(0);
         }
     }
