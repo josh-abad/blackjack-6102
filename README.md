@@ -4,6 +4,8 @@
 A simple blackjack implementation, written in Java.
 
 ## Features
+![alt text](https://github.com/yeyoan/blackjack-6102/raw/master/image.png "Game screenshot")
+
 The player has a variety of standard choices available in blackjack.
 * **Hit**
 
