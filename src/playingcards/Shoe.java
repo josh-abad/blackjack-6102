@@ -27,7 +27,7 @@ public class Shoe implements CardContainer {
     }
 
     public int deckCount() {
-        return Math.round(shoe.size() / 52f);
+        return shoe.size() / 52;
     }
 
     /**
@@ -40,6 +40,7 @@ public class Shoe implements CardContainer {
         if (!shoe.isEmpty()) {
             Card pickedCard = shoe.get(topCard);
             shoe.remove(topCard);
+            System.out.println(shoe.size());
             return pickedCard;
         }
         return null;
