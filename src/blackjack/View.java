@@ -30,8 +30,6 @@ import javax.swing.border.LineBorder;
 public class View {
 
     public View() {
-        System.setProperty("awt.useSystemAAFontSettings","on");
-        System.setProperty("swing.aatext", "true");
         frame = new JFrame("Blackjack");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 725);
