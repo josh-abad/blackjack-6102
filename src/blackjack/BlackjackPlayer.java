@@ -7,17 +7,17 @@ package blackjack;
 public class BlackjackPlayer extends Player {
 
     /**
-     * Creates a new {@code BlackjackPlayer} with the specified chips.
-     * @param chips the desired amount of chips
+     * Creates a new {@code BlackjackPlayer} with the specified amount of chips.
+     * @param bankroll the starting amount of chips
      */
-    public BlackjackPlayer(double chips) {
+    public BlackjackPlayer(double bankroll) {
         super();
-        this.chips = chips;
+        this.bankroll = bankroll;
         this.bet = 0;
     }    
 
     /**
-     * Creates a new {@code BlackjackPlayer} with 1,000 chips.
+     * Creates a new {@code BlackjackPlayer} with 1,000 bankroll.
      */
     public BlackjackPlayer() {
         this(1000);
@@ -28,28 +28,28 @@ public class BlackjackPlayer extends Player {
      * @param amount the desired bet
      */
     public void addBet(double amount) {
-        if (amount <= chips) {
-            chips -= amount;
+        if (amount <= bankroll) {
+            bankroll -= amount;
         } else {
-            amount = chips;
-            chips = 0;
+            amount = bankroll;
+            bankroll = 0;
         }
         bet += amount;
     }
 
     /**
-     * Adds onto this player's amount of chips.
+     * Adds to this player's bankroll.
      * @param amount the desired amount
      */
     public void addChips(double amount) {
-        chips += amount;
+        bankroll += amount;
     }
 
     /**
      * Doubles this player's current bet.
      */
     public void doubleBet() {
-        if (bet <= chips) {
+        if (bet <= bankroll) {
             addBet(bet);
         }
     }
@@ -59,21 +59,21 @@ public class BlackjackPlayer extends Player {
      * @param amount the desired amount of chips
      */
     public void setBet(double amount) {
-        if (amount <= chips) {
-            chips -= amount;
+        if (amount <= bankroll) {
+            bankroll -= amount;
         } else {
-            amount = chips;
-            chips = 0;
+            amount = bankroll;
+            bankroll = 0;
         }
         bet = amount;
     }
 
     /**
-     * Returns this player's chips
-     * @return this player's chips
+     * Returns this player's bankroll
+     * @return this player's bankroll
      */
-    public double getChips() {
-        return chips;
+    public double getBankroll() {
+        return bankroll;
     }
 
     /**
@@ -84,6 +84,6 @@ public class BlackjackPlayer extends Player {
         return bet;
     }
 
-    private double chips;
+    private double bankroll;
     private double bet; 
 }

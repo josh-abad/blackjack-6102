@@ -1,5 +1,6 @@
 package blackjack;
 
+import design.Palette;
 import playingcards.Card;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -53,7 +54,7 @@ public class Controller {
             view.updateTrueCount(model.getTrueCount());
             view.displayMessage(Message.hit(card));
             view.updatePlayerHandValue(model.playerHandValue(),
-                                       model.isSoft());
+                                       model.playerHasSoftHand());
             view.updatePlayerCards(model.playerCardNames());
             view.disableChoice("Surrender");
             if (model.shoeIsEmpty()) {
@@ -86,8 +87,9 @@ public class Controller {
             view.updateDealerCards(model.dealerCardNames());
 
             view.updatePlayerHandValue(model.playerHandValue(),
-                                       model.isSoft());
-            view.updateDealerHandValue(model.dealerHandValue());
+                                       model.playerHasSoftHand());
+            view.updateDealerHandValue(model.dealerHandValue(),
+                                       model.dealerHasSoftHand());
 
             String message;
             if (model.isTie()) {
@@ -101,19 +103,19 @@ public class Controller {
                     message = Message.playerWon(model.playerBet());
                     model.givePayout(Payout.REGULAR);
                 }
-                view.displayMessage(message, Color.GREEN);
+                view.displayMessage(message);
             } else if (model.playerLost()) {
                 message = (model.dealerHasBlackjack()) ?
                         Message.dealerBlackjack(model.playerBet()) :
                         Message.playerLost(model.playerBet());
-                view.displayMessage(message, Color.RED);
+                view.displayMessage(message);
                 model.resetBet();
             } else {
-                view.displayMessage(Message.bothOver(), Color.RED);
+                view.displayMessage(Message.bothOver());
             }
 
             if (model.outOfChips()) {
-                view.displayMessage(Message.outOfChips(), Color.RED);
+                view.displayMessage(Message.outOfChips());
             } else {
                 view.enableOption("Next Hand");
             }
@@ -134,7 +136,7 @@ public class Controller {
 
             view.displayMessage(Message.doubleDown(model.playerBet(), card));
             view.updatePlayerHandValue(model.playerHandValue(),
-                                       model.isSoft());
+                                       model.playerHasSoftHand());
         
             view.updatePlayerCards(model.playerCardNames());
         
@@ -157,7 +159,8 @@ public class Controller {
             view.revealHoleCard(model.holeCard().toString());
             model.updateRunningCount(model.holeCard().getRank());
             view.updateTrueCount(model.getTrueCount());
-            view.updateDealerHandValue(model.dealerHandValue());
+            view.updateDealerHandValue(model.dealerHandValue(),
+                                       model.dealerHasSoftHand());
             view.updateStats(model.playerChips(), model.playerBet());
             view.disableAllChoices();
             view.enableOption("Next Hand");
@@ -195,7 +198,8 @@ public class Controller {
                                              model.initialCards()[1]));
 
             view.updatePlayerHandValue(model.playerHandValue(),
-                                       model.isSoft());
+                                       model.playerHasSoftHand());
+            view.updateDealerHandValue(model.dealerFrontCard());
 
             view.updatePlayerCards(model.playerCardNames());
             view.updateDealerCards(model.dealerCardNames());
@@ -250,7 +254,6 @@ public class Controller {
                 view.displayMessage("Deck is reshuffled.");
             }
 
-            view.updateDealerHandValue(0);
             view.resetHandValue();
             view.disableOption("Next Hand");
             view.disableOption("Hint");
@@ -303,7 +306,6 @@ public class Controller {
 
         view.resetHandValue();
         view.clearCards();
-        view.displayTableBorder();
         view.updateStats(model.playerChips(), model.playerBet());
         view.updateTrueCount(model.getTrueCount());
         view.updateDeckCount(model.deckCount());

@@ -21,7 +21,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
@@ -53,11 +52,10 @@ public class View {
 
         setIcon(titleLabel, "/images/default_logo.png", 150);
 
-        messagePanel = new JPanel();
         messageLabel = new JLabel("Welcome to Blackjack! Place a bet.");
         chipsLabel = new JLabel();
 
-        tablePanel = new JPanel();
+        tablePanel = new Table();
         dealerHandValueLabel = new JLabel();        
         dealerPanel = new JPanel();
         dealerHand = new JLabel[10];
@@ -80,8 +78,7 @@ public class View {
         handOptionsLabel = new JLabel("Options");
         handOptions = new HashMap<>();
 
-        topPanel.setBackground(Palette.TABLE);
-        messagePanel.setBackground(Palette.TABLE_DARK);
+        topPanel.setBackground(Palette.TABLE_DARK);
         messageLabel.setForeground(Palette.TEXT);
         messageLabel.setFont(font.generateFont(18));
 
@@ -103,9 +100,9 @@ public class View {
 
         optionsPanel.setBackground(Palette.TABLE_DARK);
         currentBetPanel.setBackground(Palette.TABLE_DARK);
-        betOptionsPanel.setBackground(Palette.TABLE_DARKER);
-        playOptionsPanel.setBackground(Palette.TABLE_DARKER);
-        handOptionsPanel.setBackground(Palette.TABLE_DARKER);
+        betOptionsPanel.setBackground(Palette.TABLE_DARK);
+        playOptionsPanel.setBackground(Palette.TABLE_DARK);
+        handOptionsPanel.setBackground(Palette.TABLE_DARK);
         deckCountLabel.setForeground(Palette.TEXT);
         trueCountLabel.setForeground(Palette.TEXT);
         currentBetValueLabel.setForeground(Palette.TEXT);
@@ -128,44 +125,40 @@ public class View {
 
         topPanelConstraints.gridx = 0;
         topPanelConstraints.gridy = 0;
-        topPanelConstraints.gridheight = 2;
+        topPanelConstraints.gridheight = 3;
         topPanelConstraints.fill = GridBagConstraints.VERTICAL;
         topPanelConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
         topPanelConstraints.weightx = 1.0;
-        topPanelConstraints.insets = new Insets(10, 10, 0, 0);
+        topPanelConstraints.insets = new Insets(10, 20, 10, 0);
         topPanel.add(titleLabel, topPanelConstraints);
 
         topPanelConstraints.gridx = 1;
-        topPanelConstraints.gridy = 0;
+        topPanelConstraints.gridy = 2;
         topPanelConstraints.gridheight = 1;
-        topPanelConstraints.fill = GridBagConstraints.HORIZONTAL;
-        topPanelConstraints.anchor = GridBagConstraints.PAGE_START;
-        topPanelConstraints.weightx = 0;
-        topPanelConstraints.weighty = 1.0;
-        topPanelConstraints.insets = new Insets(0, 0, 10, 10);
-        topPanel.add(messagePanel, topPanelConstraints);
+        topPanelConstraints.anchor = GridBagConstraints.CENTER;
+        topPanelConstraints.weightx = 1.0;
+        topPanelConstraints.weighty = 0;
+        topPanelConstraints.insets = new Insets(0, 0, 0, 0);
+        topPanel.add(messageLabel, topPanelConstraints);
 
         topPanelConstraints.gridx = 2;
-        topPanelConstraints.gridy = 0;
-        topPanelConstraints.gridheight = 2;
-        topPanelConstraints.fill = GridBagConstraints.VERTICAL;
+        topPanelConstraints.gridy = 2;
+        topPanelConstraints.gridheight = 1;
         topPanelConstraints.anchor = GridBagConstraints.FIRST_LINE_END;
         topPanelConstraints.weightx = 1.0;
         topPanelConstraints.weighty = 0;
         topPanelConstraints.insets = new Insets(0, 0, 0, 20);
         topPanel.add(chipsLabel, topPanelConstraints);
 
-        messagePanel.add(messageLabel);
-
-        dealerPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 25, 25));
-        playerPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 25, 25));
+        dealerPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 20, 10));
+        playerPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 20, 10));
 
         tablePanel.setLayout(new GridBagLayout());
         GridBagConstraints tablePanelConstraints = new GridBagConstraints();
         tablePanelConstraints.gridx = 0;
         tablePanelConstraints.gridy = 0;
         tablePanelConstraints.gridwidth = 1;
-        tablePanelConstraints.insets = new Insets(10, 10, 0, 0);
+        tablePanelConstraints.insets = new Insets(0, 20, 0, 0);
         tablePanelConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
         tablePanel.add(dealerHandValueLabel, tablePanelConstraints);
 
@@ -174,14 +167,14 @@ public class View {
         tablePanelConstraints.ipadx = 100;
         tablePanelConstraints.weightx = 1.0;
         tablePanelConstraints.fill = GridBagConstraints.HORIZONTAL;
-        tablePanelConstraints.insets = new Insets(0, 0, 10, 0);
+        tablePanelConstraints.insets = new Insets(0, 0, 40, 0);
         tablePanel.add(dealerPanel, tablePanelConstraints);
 
         tablePanelConstraints.gridy = 2;
         tablePanelConstraints.gridwidth = 1;
         tablePanelConstraints.ipadx = 0;
         tablePanelConstraints.weightx = 0;
-        tablePanelConstraints.insets = new Insets(10, 10, 0, 0);
+        tablePanelConstraints.insets = new Insets(0, 20, 0, 0);
         tablePanel.add(playerHandValueLabel, tablePanelConstraints);
 
         tablePanelConstraints.gridy = 3;
@@ -214,6 +207,8 @@ public class View {
         betOptionsPanel.setLayout(new GridBagLayout());
         playOptionsPanel.setLayout(new GridBagLayout());
         handOptionsPanel.setLayout(new GridBagLayout());
+        playerPanel.setOpaque(false);
+        dealerPanel.setOpaque(false);
     }
 
     /**
@@ -244,7 +239,6 @@ public class View {
      */
     public void clearMessage() {
         messageLabel.setText("");
-        messagePanel.setOpaque(false);
     }
 
     /**
@@ -256,32 +250,19 @@ public class View {
     }
 
     /**
-     * Displays a message on the screen with the specified background color.
-     * @param message the message
-     * @param bg the desired background color
-     */
-    public void displayMessage(String message, Color bg) {
-        messagePanel.setVisible(true);
-        messagePanel.setOpaque(true);
-        messagePanel.setBackground(bg);
-        messageLabel.setText(message);
-        messageLabel.setForeground(bg.equals(Color.GREEN)
-                ? Palette.BLACK : Palette.TEXT);
-    }
-
-    /**
-     * Displays a message on the screen with a dark green background.
+     * Displays a message on the screen.
      * @param message the message
      */
     public void displayMessage(String message) {
-        displayMessage(message, Palette.TABLE_DARK);
+        messageLabel.setText(message);
     }
 
+    @Deprecated
     /**
      * Displays a border around the where the player and dealer's cards are.
      */
     public void displayTableBorder() {
-        Border border = new LineBorder(Palette.TABLE_LIGHT, 4);
+        Border border = new LineBorder(Color.WHITE, 4);
         Border margin = new EmptyBorder(10, 10, 10, 10);
         playerPanel.setBorder(new CompoundBorder(margin, border));
         dealerPanel.setBorder(new CompoundBorder(margin, border));
@@ -438,7 +419,19 @@ public class View {
      */
     public void updateDealerHandValue(int dealerHandValue) {
         dealerHandValueLabel.setText(dealerHandValue + " — Dealer");
-        dealerHandValueLabel.setAlignmentX(SwingConstants.LEADING);
+
+        String path = "/images/question.png";
+        int size = dealerHandValueLabel.getFont().getSize();
+        setIcon(dealerHandValueLabel, path, size);
+    }
+
+    public void updateDealerHandValue(int dealerHandValue, boolean isSoft) {
+        dealerHandValueLabel.setText(dealerHandValue + " — Dealer");
+
+        String path = "/images/";
+        path += (isSoft) ? "soft.png" : "hard.png";
+        int size = dealerHandValueLabel.getFont().getSize();
+        setIcon(dealerHandValueLabel, path, size);
     }
 
     /**
@@ -469,9 +462,10 @@ public class View {
      * Clears the player and dealer's hand value.
      */
     public void resetHandValue() {
-        playerHandValueLabel.setText("Player");
+        playerHandValueLabel.setText(" ");
         playerHandValueLabel.setIcon(null);
-        dealerHandValueLabel.setText("Dealer");
+        dealerHandValueLabel.setText(" ");
+        dealerHandValueLabel.setIcon(null);
     }
 
     /**
@@ -488,8 +482,6 @@ public class View {
         path += (isSoft) ? "soft.png" : "hard.png";
         int size = playerHandValueLabel.getFont().getSize();
         setIcon(playerHandValueLabel, path, size);
-
-        dealerHandValueLabel.setText("Dealer");
     }
 
     /**
@@ -639,7 +631,6 @@ public class View {
     private final JFrame frame;
     private final JPanel topPanel;
     private final JLabel titleLabel;
-    private final JPanel messagePanel;
     private final JLabel messageLabel;
     private final JLabel chipsLabel;
     private final JPanel tablePanel;
@@ -666,5 +657,5 @@ public class View {
     private final DefaultFont font;
     
     private final String cardStyle = "classic";
-    private final int cardSize = (cardStyle.equals("default")) ? 100 : 105;
+    private final int cardSize = (cardStyle.equals("default")) ? 100 : 115;
 }

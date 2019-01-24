@@ -14,7 +14,7 @@ public class Model {
     public static final int MINIMUM_BET = 25;
 
     public Model() {
-        player = new BlackjackPlayer();
+        player = new BlackjackPlayer(1000000);
         dealer = new Dealer();
         shoe = new Shoe(NUMBER_OF_DECKS);
         discardDeck = new ArrayList<>();
@@ -66,7 +66,7 @@ public class Model {
      * @return true if player's current bet is less than or equal to their chips
      */
     public boolean canDoubleDown() {
-        return player.getBet() <= player.getChips();
+        return player.getBet() <= player.getBankroll();
     }
 
     /**
@@ -145,7 +145,7 @@ public class Model {
      * Determines if the player has a soft hand.
      * @return true if the player has a soft hand
      */
-    public boolean isSoft() {
+    public boolean playerHasSoftHand() {
         return player.hasSoftHand();
     }
 
@@ -250,7 +250,9 @@ public class Model {
     public int getTrueCount() {
         if (shoe.getClass() == Shoe.class) {
             Shoe s = (Shoe) this.shoe;
-            return runningCount / s.deckCount();
+            if (s.deckCount() > 0) {
+                return Math.round(runningCount / s.deckCount());
+            }
         }
         return runningCount;
     }
@@ -260,7 +262,7 @@ public class Model {
      * @return true if the chips are less than the minimum bet
      */
     public boolean outOfChips() {
-        return player.getChips() < MINIMUM_BET;
+        return player.getBankroll() < MINIMUM_BET;
     }
 
     /**
@@ -335,7 +337,7 @@ public class Model {
     }
 
     public double playerChips() {
-        return player.getChips();
+        return player.getBankroll();
     }
 
     public String[] dealerCardNames() {
@@ -347,8 +349,20 @@ public class Model {
         return cardNames;
     }
 
+    public int dealerFrontCard() {
+        int value = dealer.getHand().get(1).getRank();
+        if (value == 1) {
+            return 11;
+        }
+        return value;
+    }
+
     public int dealerHandValue() {
         return dealer.getHandValue();
+    }
+
+    public boolean dealerHasSoftHand() {
+        return dealer.hasSoftHand();
     }
 
     public Card holeCard() {
