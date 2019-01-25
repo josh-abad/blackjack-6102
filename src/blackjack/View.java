@@ -100,9 +100,9 @@ public class View {
 
         optionsPanel.setBackground(Palette.TABLE_DARK);
         currentBetPanel.setBackground(Palette.TABLE_DARK);
-        betOptionsPanel.setBackground(Palette.TABLE_DARK);
-        playOptionsPanel.setBackground(Palette.TABLE_DARK);
-        handOptionsPanel.setBackground(Palette.TABLE_DARK);
+        betOptionsPanel.setBackground(Palette.TABLE_DARKER);
+        playOptionsPanel.setBackground(Palette.TABLE_DARKER);
+        handOptionsPanel.setBackground(Palette.TABLE_DARKER);
         deckCountLabel.setForeground(Palette.TEXT);
         trueCountLabel.setForeground(Palette.TEXT);
         currentBetValueLabel.setForeground(Palette.TEXT);

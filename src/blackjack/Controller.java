@@ -1,8 +1,6 @@
 package blackjack;
 
-import design.Palette;
 import playingcards.Card;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
