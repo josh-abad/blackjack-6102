@@ -40,7 +40,6 @@ public class Shoe implements CardContainer {
         if (!shoe.isEmpty()) {
             Card pickedCard = shoe.get(topCard);
             shoe.remove(topCard);
-            System.out.println(shoe.size());
             return pickedCard;
         }
         return null;
@@ -62,6 +61,7 @@ public class Shoe implements CardContainer {
     @Override
     public void reset(List<Card> discarded) {
         discarded.forEach(shoe::add);
+        discarded.clear();
         shuffle();
     }
 

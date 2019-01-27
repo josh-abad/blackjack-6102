@@ -52,7 +52,7 @@ public class View {
 
         setIcon(titleLabel, "/images/default_logo.png", 150);
 
-        messageLabel = new JLabel("Welcome to Blackjack! Place a bet.");
+        messageLabel = new JLabel();
         chipsLabel = new JLabel();
 
         tablePanel = new Table();
@@ -329,7 +329,8 @@ public class View {
      * Enables a hand option.
      * 
      * @param   option possible strings are: {@code "Deal"},
-     *          {@code "Next Hand"}, {@code "Hint"} and {@code "Quit Game"}
+     *          {@code "Next Hand"}, {@code "Hint"}, {@code "New Game"} and
+     *          {@code "Quit Game"}
      */
     public void enableOption(String option) {
         handOptions.get(option).setEnabled(true);
@@ -369,12 +370,11 @@ public class View {
      * Disables a hand option.
      * 
      * @param   option possible strings are: {@code "Deal"},
-     *          {@code "Next Hand"}, {@code "Hint"} and {@code "Quit Game"}
+     *          {@code "Next Hand"}, {@code "Hint"}, {@code "New Game"} and
+     *          {@code "Quit Game"}
      */
     public void disableOption(String option) {
-        if (handOptions.containsKey(option)) {
-            handOptions.get(option).setEnabled(false);
-        }
+        disableButton(option);
     }
 
     /**
@@ -384,9 +384,7 @@ public class View {
      *          {@code "Double Down"} and {@code "Surrender"}
      */
     public void disableChoice(String option) {
-        if (playOptions.containsKey(option)) {
-            playOptions.get(option).setEnabled(false);
-        }
+        disableButton(option);
     }
 
     /**
@@ -399,7 +397,7 @@ public class View {
             String betValue = String.valueOf(betValues[i]);
             if (chips < betValues[i]) {
                 betOptions.get(betValue).setEnabled(false);
-            } else if (!betOptions.get(betValue).isEnabled()) {
+            } else {
                 betOptions.get(betValue).setEnabled(true);
             }
         }
@@ -526,35 +524,58 @@ public class View {
     }
 
     public void initHitActionListener(ActionListener l) {
-        playOptions.get("Hit").addActionListener(l);
+        initButtonActionListener("Hit", l);
     }
 
     public void initStandActionListener(ActionListener l) {
-        playOptions.get("Stand").addActionListener(l);
+        initButtonActionListener("Stand", l);
     }
 
     public void initDoubleDownActionListener(ActionListener l) {
-        playOptions.get("Double Down").addActionListener(l);
+        initButtonActionListener("Double Down", l);
     }
 
     public void initSurrenderActionListener(ActionListener l) {
-        playOptions.get("Surrender").addActionListener(l);
+        initButtonActionListener("Surrender", l);
     }
 
     public void initDealActionListener(ActionListener l) {
-        handOptions.get("Deal").addActionListener(l);
+        initButtonActionListener("Deal", l);
     }
 
     public void initHintActionListener(ActionListener l) {
-        handOptions.get("Hint").addActionListener(l);
+        initButtonActionListener("Hint", l);
     }
 
     public void initNextHandActionListener(ActionListener l) {
-        handOptions.get("Next Hand").addActionListener(l);
+        initButtonActionListener("Next Hand", l);
+    }
+
+    public void initNewGameActionListener(ActionListener l) {
+        initButtonActionListener("New Game", l);
     }
 
     public void initQuitGameActionListener(ActionListener l) {
-        handOptions.get("Quit Game").addActionListener(l);
+        initButtonActionListener("Quit Game", l);
+    }
+
+    private void initButtonActionListener(String key, ActionListener l) {
+        if (handOptions.containsKey(key)) {
+            handOptions.get(key).addActionListener(l);
+        } else if (playOptions.containsKey(key)) {
+            playOptions.get(key).addActionListener(l);
+        } else {
+        }
+    }
+
+    private void disableButton(String key) {
+        if (handOptions.containsKey(key)) {
+            handOptions.get(key).setEnabled(false);
+        } else if (playOptions.containsKey(key)) {
+            playOptions.get(key).setEnabled(false);
+        } else {
+            System.err.println("Invalid key: " + key);
+        }
     }
 
     private void initOptionLabel(JPanel panel, JLabel label, int gridWidth) {
@@ -579,7 +600,7 @@ public class View {
             gbc.gridwidth = 1;
             int right = (i == options.length - 1) ? 5 : 0;
             gbc.insets = new Insets(0, 5, 5, right);
-            JButton option = new JButton(options[i]);
+                JButton option = new JButton(options[i]);
             option.setForeground(Palette.TEXT);
             option.setBackground(Palette.TABLE_DARKEST);
             option.setFont(font.generateFont(14));

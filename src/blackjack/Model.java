@@ -8,13 +8,19 @@ import playingcards.Shoe;
 
 public class Model {
     
+    
+    /**
+     * The initial amount of chips the player has at the start of the game
+     */
+    public static final int BANKROLL = 1000;
+
     /**
      * The required amount of chips for the player to be able to play.
      */
     public static final int MINIMUM_BET = 25;
 
     public Model() {
-        player = new BlackjackPlayer(1000000);
+        player = new BlackjackPlayer(BANKROLL);
         dealer = new Dealer();
         shoe = new Shoe(NUMBER_OF_DECKS);
         discardDeck = new ArrayList<>();
@@ -301,6 +307,17 @@ public class Model {
         dealer.discardHand(discardDeck);
     }
 
+    public void restartGame() {
+        player.addBet(player.getBankroll());
+        player.setBet(0);
+        player.addChips(BANKROLL);
+        player.discardHand(discardDeck);
+        dealer.discardHand(discardDeck);
+        shoe.reset(discardDeck);
+        shoe.shuffle();
+        runningCount = 0;
+    }
+
     /**
      * This method returns the player's bet.
      */
@@ -429,7 +446,7 @@ public class Model {
         "Hit", "Stand", "Double Down", "Surrender"
     };
     private static final String[] OPTIONS = {
-        "Deal", "Next Hand", "Hint", "Quit Game"
+        "Deal", "Next Hand", "Hint", "New Game", "Quit Game"
     };
     private static final int[] CHIPS = {5, 10, 25, 50, 100};
 }

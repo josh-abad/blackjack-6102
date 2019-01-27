@@ -9,8 +9,8 @@ public class Controller {
     public Controller(Model model, View view) {
         this.model = model;
         this.view = view;
-        initView();
         initController();
+        initView();
     }
 
     public void run() {
@@ -271,6 +271,15 @@ public class Controller {
         }
     }
 
+    public class NewGameAction implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            model.restartGame();
+            initView();
+        }
+    }
+
     public class QuitGameAction implements ActionListener {
 
         @Override
@@ -280,6 +289,10 @@ public class Controller {
     }
 
     private void initController() {
+        view.initBetOptions(Model.chips());
+        view.initPlayOptions(Model.choices());
+        view.initHandOptions(Model.options());
+
         view.initHitActionListener(new HitAction());
         view.initStandActionListener(new StandAction());
         view.initDoubleDownActionListener(new DoubleDownAction());
@@ -288,6 +301,7 @@ public class Controller {
         view.initDealActionListener(new DealAction());
         view.initHintActionListener(new HintAction());
         view.initNextHandActionListener(new NextHandAction());
+        view.initNewGameActionListener(new NewGameAction());
         view.initQuitGameActionListener(new QuitGameAction());
 
         view.getBetOptions().forEach((betOption) -> {
@@ -298,17 +312,17 @@ public class Controller {
     }
 
     private void initView() {
-        view.initBetOptions(Model.chips());
-        view.initPlayOptions(Model.choices());
-        view.initHandOptions(Model.options());
-
         view.resetHandValue();
         view.clearCards();
         view.updateStats(model.playerChips(), model.playerBet());
         view.updateTrueCount(model.getTrueCount());
         view.updateDeckCount(model.deckCount());
+        view.displayMessage("Welcome to Blackjack! Place a bet.");
 
+        view.enableAllChips();
+        view.updateChips(model.playerChips(), Model.chips());
         view.disableAllChoices();
+
         if (model.betIsSufficient()) {
             view.enableOption("Deal");
         } else {
