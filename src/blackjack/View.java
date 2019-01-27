@@ -6,6 +6,8 @@ import design.Palette;
 import design.ImageResizer;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -16,6 +18,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.AbstractButton;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -69,13 +73,10 @@ public class View {
         trueCountLabel = new JLabel();
         currentBetValueLabel = new JLabel();
         betOptionsPanel = new JPanel();
-        betOptionsLabel = new JLabel("Chips");
         betOptions = new HashMap<>();
         playOptionsPanel = new JPanel();
-        playOptionsLabel = new JLabel("Choices");
         playOptions = new HashMap<>();
         handOptionsPanel = new JPanel();
-        handOptionsLabel = new JLabel("Options");
         handOptions = new HashMap<>();
 
         topPanel.setBackground(Palette.TABLE_DARK);
@@ -86,9 +87,9 @@ public class View {
         chipsLabel.setFont(font.generateFont(36));
 
         setIcon(chipsLabel, "/images/chip.png", 36);
-        setIcon(deckCountLabel, "/images/deck.png", 28);
-        setIcon(trueCountLabel, "/images/card_count.png", 28);
-        setIcon(currentBetValueLabel, "/images/bet.png", 28);
+        setIcon(deckCountLabel, "/images/deck.png", 30);
+        setIcon(trueCountLabel, "/images/card_count.png", 30);
+        setIcon(currentBetValueLabel, "/images/bet.png", 30);
 
         tablePanel.setBackground(Palette.TABLE);
         dealerHandValueLabel.setForeground(Palette.TEXT);
@@ -100,21 +101,15 @@ public class View {
 
         optionsPanel.setBackground(Palette.TABLE_DARK);
         currentBetPanel.setBackground(Palette.TABLE_DARK);
-        betOptionsPanel.setBackground(Palette.TABLE_DARKER);
-        playOptionsPanel.setBackground(Palette.TABLE_DARKER);
-        handOptionsPanel.setBackground(Palette.TABLE_DARKER);
+        betOptionsPanel.setBackground(Palette.TABLE_DARK);
+        playOptionsPanel.setBackground(Palette.TABLE_DARK);
+        handOptionsPanel.setBackground(Palette.TABLE_DARK);
         deckCountLabel.setForeground(Palette.TEXT);
         trueCountLabel.setForeground(Palette.TEXT);
         currentBetValueLabel.setForeground(Palette.TEXT);
-        betOptionsLabel.setForeground(Palette.TEXT);
-        playOptionsLabel.setForeground(Palette.TEXT);
-        handOptionsLabel.setForeground(Palette.TEXT);
-        deckCountLabel.setFont(font.generateFont(28));
-        trueCountLabel.setFont(font.generateFont(28));
-        currentBetValueLabel.setFont(font.generateFont(28));
-        betOptionsLabel.setFont(font.generateFont(12));
-        playOptionsLabel.setFont(font.generateFont(12));
-        handOptionsLabel.setFont(font.generateFont(12));
+        deckCountLabel.setFont(font.generateFont(30));
+        trueCountLabel.setFont(font.generateFont(30));
+        currentBetValueLabel.setFont(font.generateFont(30));
 
         frame.add(topPanel, BorderLayout.NORTH);
         frame.add(tablePanel, BorderLayout.CENTER);
@@ -125,29 +120,21 @@ public class View {
 
         topPanelConstraints.gridx = 0;
         topPanelConstraints.gridy = 0;
-        topPanelConstraints.gridheight = 3;
-        topPanelConstraints.fill = GridBagConstraints.VERTICAL;
-        topPanelConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
+        topPanelConstraints.anchor = GridBagConstraints.LINE_START;
         topPanelConstraints.weightx = 1.0;
-        topPanelConstraints.insets = new Insets(10, 20, 10, 0);
+        topPanelConstraints.insets = new Insets(10, 40, 10, 0);
         topPanel.add(titleLabel, topPanelConstraints);
 
         topPanelConstraints.gridx = 1;
-        topPanelConstraints.gridy = 2;
-        topPanelConstraints.gridheight = 1;
         topPanelConstraints.anchor = GridBagConstraints.CENTER;
         topPanelConstraints.weightx = 1.0;
-        topPanelConstraints.weighty = 0;
         topPanelConstraints.insets = new Insets(0, 0, 0, 0);
         topPanel.add(messageLabel, topPanelConstraints);
 
         topPanelConstraints.gridx = 2;
-        topPanelConstraints.gridy = 2;
-        topPanelConstraints.gridheight = 1;
-        topPanelConstraints.anchor = GridBagConstraints.FIRST_LINE_END;
+        topPanelConstraints.anchor = GridBagConstraints.LINE_END;
         topPanelConstraints.weightx = 1.0;
-        topPanelConstraints.weighty = 0;
-        topPanelConstraints.insets = new Insets(0, 0, 0, 20);
+        topPanelConstraints.insets = new Insets(0, 0, 0, 40);
         topPanel.add(chipsLabel, topPanelConstraints);
 
         dealerPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 20, 10));
@@ -194,10 +181,29 @@ public class View {
             playerPanel.add(playerCard);
         }
 
-        optionsPanel.add(currentBetPanel);
-        optionsPanel.add(betOptionsPanel);
-        optionsPanel.add(playOptionsPanel);
-        optionsPanel.add(handOptionsPanel);
+        optionsPanel.setLayout(new GridBagLayout());
+        GridBagConstraints optionsPanelConstraints = new GridBagConstraints();
+
+        optionsPanelConstraints.gridx = 0;
+        optionsPanelConstraints.gridy = 0;
+        optionsPanelConstraints.weightx = 1.0;
+        optionsPanelConstraints.weighty = 1.0;
+        optionsPanelConstraints.anchor = GridBagConstraints.LINE_START;
+        optionsPanelConstraints.insets = new Insets(10, 0, 10, 0);
+        optionsPanel.add(currentBetPanel, optionsPanelConstraints);
+
+        optionsPanelConstraints.gridx = 1;
+        optionsPanelConstraints.weightx = 0;
+        optionsPanelConstraints.weighty = 0;
+        optionsPanelConstraints.anchor = GridBagConstraints.CENTER;
+        optionsPanel.add(betOptionsPanel, optionsPanelConstraints);
+        optionsPanel.add(playOptionsPanel, optionsPanelConstraints);
+
+        optionsPanelConstraints.gridx = 2;
+        optionsPanelConstraints.weightx = 1.0;
+        optionsPanelConstraints.anchor = GridBagConstraints.LINE_END;
+        optionsPanelConstraints.insets = new Insets(10, 0, 10, 40);
+        optionsPanel.add(handOptionsPanel, optionsPanelConstraints);
 
         currentBetPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 40, 0));
         currentBetPanel.add(deckCountLabel);
@@ -505,7 +511,6 @@ public class View {
     }
 
     public void initBetOptions(int[] options) {
-        initOptionLabel(betOptionsPanel, betOptionsLabel, options.length);
         String[] stringOptions = new String[options.length];
         for (int i = 0; i < stringOptions.length; i++) {
             stringOptions[i] = String.valueOf(options[i]);
@@ -514,12 +519,10 @@ public class View {
     }
 
     public void initPlayOptions(String[] options) {
-        initOptionLabel(playOptionsPanel, playOptionsLabel, options.length);
         initOptions(options, this.playOptions, playOptionsPanel, false);
     }
 
     public void initHandOptions(String[] options) {
-        initOptionLabel(handOptionsPanel, handOptionsLabel, options.length);
         initOptions(options, this.handOptions, handOptionsPanel, false);
     }
 
@@ -565,6 +568,7 @@ public class View {
         } else if (playOptions.containsKey(key)) {
             playOptions.get(key).addActionListener(l);
         } else {
+            System.err.println("Invalid key: " + key);
         }
     }
 
@@ -578,16 +582,6 @@ public class View {
         }
     }
 
-    private void initOptionLabel(JPanel panel, JLabel label, int gridWidth) {
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = gridWidth;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(5, 5, 5, 5);
-        panel.add(label, gbc);
-    }
-
     private void initOptions(String[] options,
                              Map<String, JButton> map,
                              JPanel panel,
@@ -596,14 +590,13 @@ public class View {
         GridBagConstraints gbc = new GridBagConstraints();
         for (int i = 0; i < options.length; i++) {
             gbc.gridx = i;
-            gbc.gridy = 1;
-            gbc.gridwidth = 1;
+            gbc.gridy = 0;
             int right = (i == options.length - 1) ? 5 : 0;
-            gbc.insets = new Insets(0, 5, 5, right);
-                JButton option = new JButton(options[i]);
+            gbc.insets = new Insets(5, 5, 5, right);
+            JButton option = new JButton(options[i]);
             option.setForeground(Palette.TEXT);
-            option.setBackground(Palette.TABLE_DARKEST);
-            option.setFont(font.generateFont(14));
+            option.setBackground(Palette.TABLE_DARKER);
+            option.setFont(font.generateFont(16));
 
             if (hasIcon) {
                 String path = "/images/" + options[i] + ".png";
@@ -667,13 +660,13 @@ public class View {
     private final JLabel trueCountLabel;
     private final JLabel currentBetValueLabel;
     private final JPanel betOptionsPanel;
-    private final JLabel betOptionsLabel;
+    // private final JLabel betOptionsLabel;
     private final Map<String, JButton> betOptions;
     private final JPanel playOptionsPanel;
-    private final JLabel playOptionsLabel;
+    // private final JLabel playOptionsLabel;
     private final Map<String, JButton> playOptions;
     private final JPanel handOptionsPanel;
-    private final JLabel handOptionsLabel;
+    // private final JLabel handOptionsLabel;
     private final Map<String, JButton> handOptions;
     private final DefaultFont font;
     
