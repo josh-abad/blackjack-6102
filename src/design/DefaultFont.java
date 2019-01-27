@@ -26,7 +26,7 @@ public class DefaultFont {
      * @return the font
      */
     public Font generateFont(int size) {
-        int style = (size <= 12) ? 1 : 0;
+        int style = (size < 12) ? 1 : 0;
         return new Font(name, style, size);
     }
     

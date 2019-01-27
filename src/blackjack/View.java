@@ -24,8 +24,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -50,6 +52,14 @@ public class View {
         }
 
         font = new DefaultFont("Segoe UI");
+
+        UIManager.put("OptionPane.messageFont", font.generateFont(14));
+        UIManager.put("OptionPane.background", Palette.TABLE_DARK);
+        UIManager.put("OptionPane.messageForeground", Palette.TEXT);
+        UIManager.put("Panel.background", Palette.TABLE_DARK);
+        UIManager.put("OptionPane.buttonFont", font.generateFont(12));
+        UIManager.put("Button.foreground", Palette.TEXT);
+        UIManager.put("Button.background", Palette.TABLE_DARKER);
 
         topPanel = new JPanel();
         titleLabel = new JLabel();
@@ -261,6 +271,15 @@ public class View {
      */
     public void displayMessage(String message) {
         messageLabel.setText(message);
+    }
+
+    public boolean displayPrompt(String message, String title) {
+        
+        int option = JOptionPane.showConfirmDialog(frame,
+                                                   message,
+                                                   title,
+                                                   JOptionPane.YES_NO_OPTION);
+        return option == 0;
     }
 
     @Deprecated

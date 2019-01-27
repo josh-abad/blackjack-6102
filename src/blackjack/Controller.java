@@ -275,8 +275,13 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            model.restartGame();
-            initView();
+            String message = "Are you sure you want to start a new game? "
+                           + "You will lose your current winnings.";
+            String title = "New Game";
+            if (model.outOfChips() || view.displayPrompt(message, title)) {
+                model.restartGame();
+                initView();
+            }
         }
     }
 
@@ -284,7 +289,12 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.exit(0);
+            String message = "Are you sure you want to quit? "
+                           + "You will lose your current winnings.";
+            String title = "Quit Game";
+            if (model.outOfChips() || view.displayPrompt(message, title)) {
+                System.exit(0);
+            }
         }
     }
 
