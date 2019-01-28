@@ -41,7 +41,7 @@ public class Message {
     }
 
     public static String newGame() {
-        return "Are you sure you want to quit? "
+        return "Are you sure you want to start a new game? "
              + "You will lose your current winnings.";
     }
 
