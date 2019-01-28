@@ -29,7 +29,7 @@ public class Controller {
 
             if (model.betIsSufficient()) {
                 view.clearMessage();
-                view.enableOption("Deal");
+                view.enableButton("Deal");
             } else {
                 view.displayMessage(Message.minimumBet(Model.MINIMUM_BET));
             }
@@ -54,17 +54,17 @@ public class Controller {
             view.updatePlayerHandValue(model.playerHandValue(),
                                        model.playerHasSoftHand());
             view.updatePlayerCards(model.playerCardNames());
-            view.disableChoice("Surrender");
+            view.disableButton("Surrender");
             if (model.shoeIsEmpty()) {
                 view.displayMessage(Message.deckIsEmpty());
-                view.disableChoice("Hit");
-                view.disableChoice("Double Down");
-                view.disableOption("Hint");
+                view.disableButton("Hit");
+                view.disableButton("Double Down");
+                view.disableButton("Hint");
             }
             if (model.wentOver()) {
-                view.disableChoice("Hit");
-                view.disableChoice("Double Down");
-                view.disableOption("Hint");
+                view.disableButton("Hit");
+                view.disableButton("Double Down");
+                view.disableButton("Hint");
             } 
         }
     }
@@ -74,7 +74,7 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             view.disableAllChoices();
-            view.disableOption("Hint");
+            view.disableButton("Hint");
             view.revealHoleCard(model.holeCard().toString());
 
             model.dealerTurn();
@@ -115,7 +115,7 @@ public class Controller {
             if (model.outOfChips()) {
                 view.displayMessage(Message.outOfChips());
             } else {
-                view.enableOption("Next Hand");
+                view.enableButton("Next Hand");
             }
         
             view.updateStats(model.playerChips(), model.playerBet());
@@ -140,10 +140,10 @@ public class Controller {
         
             view.updateStats(model.playerChips(), model.playerBet());
             view.updateDeckCount(model.deckCount());
-            view.disableChoice("Hit");
-            view.disableChoice("Double Down");
-            view.disableChoice("Surrender");
-            view.disableOption("Hint");
+            view.disableButton("Hit");
+            view.disableButton("Double Down");
+            view.disableButton("Surrender");
+            view.disableButton("Hint");
         }
     }
 
@@ -161,8 +161,8 @@ public class Controller {
                                        model.dealerHasSoftHand());
             view.updateStats(model.playerChips(), model.playerBet());
             view.disableAllChoices();
-            view.enableOption("Next Hand");
-            view.disableOption("Hint");
+            view.enableButton("Next Hand");
+            view.disableButton("Hint");
         }
     }
 
@@ -172,11 +172,11 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             view.disableAllChips();
             view.enableAllChoices();
-            view.enableOption("Hint");
-            view.disableOption("Deal");
+            view.enableButton("Hint");
+            view.disableButton("Deal");
 
             if (!model.canDoubleDown()) {
-                view.disableChoice("Double Down");
+                view.disableButton("Double Down");
             }
         
             for (int i = 0; i < 2; i++) {
@@ -253,15 +253,15 @@ public class Controller {
             }
 
             view.resetHandValue();
-            view.disableOption("Next Hand");
-            view.disableOption("Hint");
+            view.disableButton("Next Hand");
+            view.disableButton("Hint");
             model.resetHand();
 
             view.disableAllChoices();
             if (model.betIsSufficient()) {
-                view.enableOption("Deal");
+                view.enableButton("Deal");
             } else {
-                view.disableOption("Deal");
+                view.disableButton("Deal");
             }
 
             view.enableAllChips();
@@ -299,16 +299,16 @@ public class Controller {
         view.initPlayOptions(Model.choices());
         view.initHandOptions(Model.options());
 
-        view.initHitActionListener(new HitAction());
-        view.initStandActionListener(new StandAction());
-        view.initDoubleDownActionListener(new DoubleDownAction());
-        view.initSurrenderActionListener(new SurrenderAction());
+        view.initButtonActionListener("Hit", new HitAction());
+        view.initButtonActionListener("Stand", new StandAction());
+        view.initButtonActionListener("Double Down", new DoubleDownAction());
+        view.initButtonActionListener("Surrender", new SurrenderAction());
 
-        view.initDealActionListener(new DealAction());
-        view.initHintActionListener(new HintAction());
-        view.initNextHandActionListener(new NextHandAction());
-        view.initNewGameActionListener(new NewGameAction());
-        view.initQuitGameActionListener(new QuitGameAction());
+        view.initButtonActionListener("Deal", new DealAction());
+        view.initButtonActionListener("Hint", new HintAction());
+        view.initButtonActionListener("Next Hand", new NextHandAction());
+        view.initButtonActionListener("New Game", new NewGameAction());
+        view.initButtonActionListener("Quit Game", new QuitGameAction());
 
         view.getBetOptions().forEach((betOption) -> {
             int value = Integer.parseInt(betOption.getText());
@@ -329,12 +329,12 @@ public class Controller {
         view.disableAllChoices();
 
         if (model.betIsSufficient()) {
-            view.enableOption("Deal");
+            view.enableButton("Deal");
         } else {
-            view.disableOption("Deal");
+            view.disableButton("Deal");
         }
-        view.disableOption("Next Hand");
-        view.disableOption("Hint");
+        view.disableButton("Next Hand");
+        view.disableButton("Hint");
     }
     
     private final Model model;

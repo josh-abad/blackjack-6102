@@ -360,27 +360,6 @@ public class View {
     }
 
     /**
-     * Enables a hand option.
-     * 
-     * @param   option possible strings are: {@code "Deal"},
-     *          {@code "Next Hand"}, {@code "Hint"}, {@code "New Game"} and
-     *          {@code "Quit Game"}
-     */
-    public void enableOption(String option) {
-        enableButton(option);
-    }
-
-    /**
-     * Enables a play option.
-     * 
-     * @param   option possible strings are: {@code "Hit"}, {@code "Stand"},
-     *          {@code "Double Down"} and {@code "Surrender"}
-     */
-    public void enablePlayOption(String option) {
-        enableButton(option);
-    }
-
-    /**
      * Removes all bet options from display.
      */
     public void disableAllChips() {
@@ -401,23 +380,6 @@ public class View {
             playOption.setVisible(false);
         });
     }
-
-    /**
-     * Disables a hand option.
-     * 
-     * @param   option possible strings are: {@code "Deal"},
-     *          {@code "Next Hand"}, {@code "Hint"}, {@code "New Game"} and
-     *          {@code "Quit Game"}
-     */
-    public void disableOption(String option) { disableButton(option); }
-
-    /**
-     * Disables a play option.
-     * 
-     * @param   option possible strings are: {@code "Hit"}, {@code "Stand"},
-     *          {@code "Double Down"} and {@code "Surrender"}
-     */
-    public void disableChoice(String option) { disableButton(option); }
 
     /**
      * Updates the bet options according to the player's remaining chips.
@@ -554,43 +516,18 @@ public class View {
         initOptions(options, this.handOptions, handOptionsPanel, false);
     }
 
-    public void initHitActionListener(ActionListener l) {
-        initButtonActionListener("Hit", l);
-    }
-
-    public void initStandActionListener(ActionListener l) {
-        initButtonActionListener("Stand", l);
-    }
-
-    public void initDoubleDownActionListener(ActionListener l) {
-        initButtonActionListener("Double Down", l);
-    }
-
-    public void initSurrenderActionListener(ActionListener l) {
-        initButtonActionListener("Surrender", l);
-    }
-
-    public void initDealActionListener(ActionListener l) {
-        initButtonActionListener("Deal", l);
-    }
-
-    public void initHintActionListener(ActionListener l) {
-        initButtonActionListener("Hint", l);
-    }
-
-    public void initNextHandActionListener(ActionListener l) {
-        initButtonActionListener("Next Hand", l);
-    }
-
-    public void initNewGameActionListener(ActionListener l) {
-        initButtonActionListener("New Game", l);
-    }
-
-    public void initQuitGameActionListener(ActionListener l) {
-        initButtonActionListener("Quit Game", l);
-    }
-
-    private void initButtonActionListener(String key, ActionListener l) {
+    /**
+     * Adds an ActionListener to a button. 
+     * 
+     * <p>This methods checks if the key is an option button or a choice button.
+     * Options include: {@code Deal}, {@code Next Hand}, {@code Hint},
+     * {@code New Game} and {@code Quit Game}. Choices include: {@code Hit},
+     * {@code Double Down}, {@code Surrender} and {@code Stand}.
+     * 
+     * @param key the name of the button 
+     * @param l the ActionListener
+     */
+    public void initButtonActionListener(String key, ActionListener l) {
         if (handOptions.containsKey(key)) {
             handOptions.get(key).addActionListener(l);
         } else if (playOptions.containsKey(key)) {
@@ -600,7 +537,17 @@ public class View {
         }
     }
 
-    private void disableButton(String key) {
+    /**
+     * Disables and removes a button from the screen. 
+     * 
+     * <p>This methods checks if the key is an option button or a choice button.
+     * Options include: {@code Deal}, {@code Next Hand}, {@code Hint},
+     * {@code New Game} and {@code Quit Game}. Choices include: {@code Hit},
+     * {@code Double Down}, {@code Surrender} and {@code Stand}.
+     * 
+     * @param key the name of the button 
+     */
+    public void disableButton(String key) {
         if (handOptions.containsKey(key)) {
             handOptions.get(key).setEnabled(false);
             handOptions.get(key).setVisible(false);
@@ -612,7 +559,17 @@ public class View {
         }
     }
 
-    private void enableButton(String key) {
+    /**
+     * Enables and displays a button to the screen. 
+     * 
+     * <p>This methods checks if the key is an option button or a choice button.
+     * Options include: {@code Deal}, {@code Next Hand}, {@code Hint},
+     * {@code New Game} and {@code Quit Game}. Choices include: {@code Hit},
+     * {@code Double Down}, {@code Surrender} and {@code Stand}.
+     * 
+     * @param key the name of the button 
+     */
+    public void enableButton(String key) {
         if (handOptions.containsKey(key)) {
             handOptions.get(key).setEnabled(true);
             handOptions.get(key).setVisible(true);
