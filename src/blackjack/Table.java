@@ -18,8 +18,8 @@ public class Table extends JPanel {
     private void initTable() {
         loadTexture();
 
-        int w = texture.getWidth(this);
-        int h =  texture.getHeight(this);
+        int w = (texture != null) ? texture.getWidth(this) : 1600;
+        int h = (texture != null) ? texture.getHeight(this) : 900;
         setPreferredSize(new Dimension(w, h));        
     }
 
