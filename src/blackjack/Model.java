@@ -436,10 +436,10 @@ public class Model {
     private int runningCount;
     private static final int NUMBER_OF_DECKS = 4;
     private static final String[] CHOICES = {
-        "Hit", "Stand", "Double Down", "Surrender"
+        "Hit", "Double Down", "Surrender", "Stand"
     };
     private static final String[] OPTIONS = {
         "Deal", "Next Hand", "Hint", "New Game", "Quit Game"
     };
-    private static final int[] CHIPS = {5, 10, 25, 50, 100};
+    private static final int[] CHIPS = {100, 50, 25, 10, 5};
 }

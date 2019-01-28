@@ -344,6 +344,7 @@ public class View {
         betOptionsPanel.setVisible(true);
         betOptions.values().forEach((betOption) -> {
             betOption.setEnabled(true);
+            betOption.setVisible(true);
         });
     }
 
@@ -354,6 +355,7 @@ public class View {
         playOptionsPanel.setVisible(true);
         playOptions.values().forEach((playOption) -> {
             playOption.setEnabled(true);
+            playOption.setVisible(true);
         });
     }
 
@@ -365,7 +367,7 @@ public class View {
      *          {@code "Quit Game"}
      */
     public void enableOption(String option) {
-        handOptions.get(option).setEnabled(true);
+        enableButton(option);
     }
 
     /**
@@ -375,7 +377,7 @@ public class View {
      *          {@code "Double Down"} and {@code "Surrender"}
      */
     public void enablePlayOption(String option) {
-        playOptions.get(option).setEnabled(true);
+        enableButton(option);
     }
 
     /**
@@ -385,6 +387,7 @@ public class View {
         betOptionsPanel.setVisible(false);
         betOptions.values().forEach((betOption) -> {
             betOption.setEnabled(false);
+            betOption.setVisible(false);
         });
     }
 
@@ -395,6 +398,7 @@ public class View {
         playOptionsPanel.setVisible(false);
         playOptions.values().forEach((playOption) -> {
             playOption.setEnabled(false);
+            playOption.setVisible(false);
         });
     }
 
@@ -425,8 +429,10 @@ public class View {
             String betValue = String.valueOf(betValues[i]);
             if (chips < betValues[i]) {
                 betOptions.get(betValue).setEnabled(false);
+                betOptions.get(betValue).setVisible(false);
             } else {
                 betOptions.get(betValue).setEnabled(true);
+                betOptions.get(betValue).setVisible(true);
             }
         }
     }
@@ -597,8 +603,22 @@ public class View {
     private void disableButton(String key) {
         if (handOptions.containsKey(key)) {
             handOptions.get(key).setEnabled(false);
+            handOptions.get(key).setVisible(false);
         } else if (playOptions.containsKey(key)) {
             playOptions.get(key).setEnabled(false);
+            playOptions.get(key).setVisible(false);
+        } else {
+            System.err.println("Invalid key: " + key);
+        }
+    }
+
+    private void enableButton(String key) {
+        if (handOptions.containsKey(key)) {
+            handOptions.get(key).setEnabled(true);
+            handOptions.get(key).setVisible(true);
+        } else if (playOptions.containsKey(key)) {
+            playOptions.get(key).setEnabled(true);
+            playOptions.get(key).setVisible(true);
         } else {
             System.err.println("Invalid key: " + key);
         }
