@@ -273,7 +273,7 @@ public class View {
         messageLabel.setText(message);
     }
 
-    public boolean displayPrompt(String message, String title) {
+    public boolean prompt(String message, String title) {
         
         int option = JOptionPane.showConfirmDialog(frame,
                                                    message,

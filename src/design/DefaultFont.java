@@ -19,7 +19,7 @@ public class DefaultFont {
     /**
      * Returns a font with the specified size.
      * 
-     * <p>If the size is less than or equal to 12, the font style is bold.
+     * <p>If the size is less than 12, the font style is bold.
      * Larger font sizes have a plain style.
      * 
      * @param size the point size of the font

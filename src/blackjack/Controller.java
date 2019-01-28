@@ -275,10 +275,8 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            String message = "Are you sure you want to start a new game? "
-                           + "You will lose your current winnings.";
-            String title = "New Game";
-            if (model.outOfChips() || view.displayPrompt(message, title)) {
+            if (model.outOfChips() ||
+                    view.prompt(Message.newGame(), "New Game")) {
                 model.restartGame();
                 initView();
             }
@@ -289,10 +287,8 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            String message = "Are you sure you want to quit? "
-                           + "You will lose your current winnings.";
-            String title = "Quit Game";
-            if (model.outOfChips() || view.displayPrompt(message, title)) {
+            if (model.outOfChips() ||
+                    view.prompt(Message.quit(), "Quit Game")) {
                 System.exit(0);
             }
         }
@@ -315,9 +311,8 @@ public class Controller {
         view.initQuitGameActionListener(new QuitGameAction());
 
         view.getBetOptions().forEach((betOption) -> {
-            betOption.addActionListener(
-                    new BetAction(Integer.parseInt(betOption.getText()))
-            );
+            int value = Integer.parseInt(betOption.getText());
+            betOption.addActionListener(new BetAction(value));
         });
     }
 
@@ -327,7 +322,7 @@ public class Controller {
         view.updateStats(model.playerChips(), model.playerBet());
         view.updateTrueCount(model.getTrueCount());
         view.updateDeckCount(model.deckCount());
-        view.displayMessage("Welcome to Blackjack! Place a bet.");
+        view.displayMessage(Message.welcome());
 
         view.enableAllChips();
         view.updateChips(model.playerChips(), Model.chips());

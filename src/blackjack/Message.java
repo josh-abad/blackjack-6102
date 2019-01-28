@@ -10,8 +10,8 @@ public class Message {
     }
 
     public static String deal(String firstCard, String secondCard) {
-        return "Your first two cards are " + firstCard 
-                + " and " + secondCard + ".";
+        return "Your first two cards are " + firstCard
+             + " and " + secondCard + ".";
     }
 
     public static String dealerBlackjack(double bet) {
@@ -25,7 +25,7 @@ public class Message {
     public static String doubleDown(double bet, Card card) {
         String chips = Format.currency(bet);
         return "You double your bet to " + chips + " Chips " 
-                + "and draw " + card + ".";
+             + "and draw " + card + ".";
     }
 
     public static String hit(Card card) {
@@ -38,6 +38,11 @@ public class Message {
 
     public static String nextHand() {
         return "Place a bet.";
+    }
+
+    public static String newGame() {
+        return "Are you sure you want to quit? "
+             + "You will lose your current winnings.";
     }
 
     public static String outOfChips() {
@@ -58,6 +63,11 @@ public class Message {
         return "You won " + chips + " Chips!";
     }
 
+    public static String quit() {
+        return "Are you sure you want to quit? "
+             + "You will lose your current winnings.";
+    }
+
     public static String surrender(double bet) {
         String chips = Format.currency(bet / 2);
         return "You surrendered and got back " + chips + " Chips.";
@@ -65,6 +75,10 @@ public class Message {
 
     public static String tie() {
         return "You pushed for a tie.";
+    }
+
+    public static String welcome() {
+        return "Welcome to Blackjack! Place a bet.";
     }
 
     // Suppress default constructor for noninstantiability

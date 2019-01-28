@@ -171,13 +171,6 @@ public class Model {
     }
 
     /**
-     * This method removes the chips from the player's bet.
-     */
-    public void clearBet() {
-        player.setBet(0);
-    }
-
-    /**
      * Determines if there are any remaining cards in the shoe.
      * @return true if there are any remaining cards in the shoe
      */
