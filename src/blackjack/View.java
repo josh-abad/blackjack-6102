@@ -6,8 +6,6 @@ import design.Palette;
 import design.ImageResizer;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -18,8 +16,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.AbstractButton;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -41,6 +37,8 @@ public class View {
         frame.setSize(800, 725);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
+        backgroundPanel = new Table();
+
         String path;
 
         path = "/images/logo2.png";
@@ -54,12 +52,12 @@ public class View {
         font = new DefaultFont("Segoe UI");
 
         UIManager.put("OptionPane.messageFont", font.generateFont(14));
-        UIManager.put("OptionPane.background", Palette.TABLE_DARK);
+        UIManager.put("OptionPane.background", Palette.BLACK);
         UIManager.put("OptionPane.messageForeground", Palette.TEXT);
-        UIManager.put("Panel.background", Palette.TABLE_DARK);
+        UIManager.put("Panel.background", Palette.BLACK);
         UIManager.put("OptionPane.buttonFont", font.generateFont(12));
         UIManager.put("Button.foreground", Palette.TEXT);
-        UIManager.put("Button.background", Palette.TABLE_DARKER);
+        UIManager.put("Button.background", Palette.BLACK);
 
         topPanel = new JPanel();
         titleLabel = new JLabel();
@@ -69,7 +67,7 @@ public class View {
         messageLabel = new JLabel();
         chipsLabel = new JLabel();
 
-        tablePanel = new Table();
+        tablePanel = new JPanel();
         dealerHandValueLabel = new JLabel();        
         dealerPanel = new JPanel();
         dealerHand = new JLabel[10];
@@ -109,11 +107,11 @@ public class View {
         dealerHandValueLabel.setFont(font.generateFont(16));
         playerHandValueLabel.setFont(font.generateFont(16));
 
-        optionsPanel.setBackground(Palette.TABLE_DARK);
-        currentBetPanel.setBackground(Palette.TABLE_DARK);
-        betOptionsPanel.setBackground(Palette.TABLE_DARK);
-        playOptionsPanel.setBackground(Palette.TABLE_DARK);
-        handOptionsPanel.setBackground(Palette.TABLE_DARK);
+        optionsPanel.setBackground(Palette.BLACK);
+        currentBetPanel.setBackground(Palette.BLACK);
+        betOptionsPanel.setBackground(Palette.BLACK);
+        playOptionsPanel.setBackground(Palette.BLACK);
+        handOptionsPanel.setBackground(Palette.BLACK);
         deckCountLabel.setForeground(Palette.TEXT);
         trueCountLabel.setForeground(Palette.TEXT);
         currentBetValueLabel.setForeground(Palette.TEXT);
@@ -121,9 +119,12 @@ public class View {
         trueCountLabel.setFont(font.generateFont(30));
         currentBetValueLabel.setFont(font.generateFont(30));
 
-        frame.add(topPanel, BorderLayout.NORTH);
-        frame.add(tablePanel, BorderLayout.CENTER);
-        frame.add(optionsPanel, BorderLayout.SOUTH);
+        frame.add(backgroundPanel, BorderLayout.CENTER);
+
+        backgroundPanel.setLayout(new BorderLayout());
+        backgroundPanel.add(topPanel, BorderLayout.NORTH);
+        backgroundPanel.add(tablePanel, BorderLayout.CENTER);
+        backgroundPanel.add(optionsPanel, BorderLayout.SOUTH);
 
         topPanel.setLayout(new GridBagLayout());
         GridBagConstraints topPanelConstraints = new GridBagConstraints();
@@ -223,8 +224,14 @@ public class View {
         betOptionsPanel.setLayout(new GridBagLayout());
         playOptionsPanel.setLayout(new GridBagLayout());
         handOptionsPanel.setLayout(new GridBagLayout());
-        playerPanel.setOpaque(false);
-        dealerPanel.setOpaque(false);
+        if (backgroundPanel.getBackground() != Palette.TABLE) {
+            playerPanel.setOpaque(false);
+            dealerPanel.setOpaque(false);
+            topPanel.setOpaque(false);
+            tablePanel.setOpaque(false);
+            optionsPanel.setOpaque(false);
+            currentBetPanel.setOpaque(false);
+        }
     }
 
     /**
@@ -398,9 +405,7 @@ public class View {
      *          {@code "Next Hand"}, {@code "Hint"}, {@code "New Game"} and
      *          {@code "Quit Game"}
      */
-    public void disableOption(String option) {
-        disableButton(option);
-    }
+    public void disableOption(String option) { disableButton(option); }
 
     /**
      * Disables a play option.
@@ -408,9 +413,7 @@ public class View {
      * @param   option possible strings are: {@code "Hit"}, {@code "Stand"},
      *          {@code "Double Down"} and {@code "Surrender"}
      */
-    public void disableChoice(String option) {
-        disableButton(option);
-    }
+    public void disableChoice(String option) { disableButton(option); }
 
     /**
      * Updates the bet options according to the player's remaining chips.
@@ -610,16 +613,16 @@ public class View {
         for (int i = 0; i < options.length; i++) {
             gbc.gridx = i;
             gbc.gridy = 0;
-            int right = (i == options.length - 1) ? 5 : 0;
-            gbc.insets = new Insets(5, 5, 5, right);
+            int right = (i == options.length - 1) ? 10 : 0;
+            gbc.insets = new Insets(10, 10, 10, right);
             JButton option = new JButton(options[i]);
             option.setForeground(Palette.TEXT);
-            option.setBackground(Palette.TABLE_DARKER);
+            option.setBackground(Palette.BLACK);
             option.setFont(font.generateFont(16));
 
             if (hasIcon) {
                 String path = "/images/" + options[i] + ".png";
-                setIcon(option, path, 14);
+                setIcon(option, path, 16);
             }
 
             map.put(options[i], option);
@@ -662,6 +665,7 @@ public class View {
     }
 
     private final JFrame frame;
+    private final JPanel backgroundPanel;
     private final JPanel topPanel;
     private final JLabel titleLabel;
     private final JLabel messageLabel;
@@ -679,16 +683,13 @@ public class View {
     private final JLabel trueCountLabel;
     private final JLabel currentBetValueLabel;
     private final JPanel betOptionsPanel;
-    // private final JLabel betOptionsLabel;
     private final Map<String, JButton> betOptions;
     private final JPanel playOptionsPanel;
-    // private final JLabel playOptionsLabel;
     private final Map<String, JButton> playOptions;
     private final JPanel handOptionsPanel;
-    // private final JLabel handOptionsLabel;
     private final Map<String, JButton> handOptions;
     private final DefaultFont font;
     
     private final String cardStyle = "classic";
-    private final int cardSize = (cardStyle.equals("default")) ? 100 : 115;
+    private final int cardSize = 115;
 }
