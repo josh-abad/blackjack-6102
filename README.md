@@ -1,10 +1,10 @@
 # Blackjack
-![Blackjack logo](/src/images/default_logo_s.png "Blackjack")
+![Blackjack logo](/src/images/default_logo_s.png?raw=true "Blackjack")
 
 A simple blackjack implementation, written in Java.
 
 ## Features
-![Game screenshot](screenshot.png "Game screenshot")
+![Game screenshot](screenshot.png?raw=true "Game screenshot")
 
 The player has a variety of standard choices available in blackjack.
 * **Hit**
