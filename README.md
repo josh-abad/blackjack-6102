@@ -1,10 +1,10 @@
 # Blackjack
-![Blackjack logo](https://github.com/yeyoan/blackjack-6102/raw/master/src/images/default_logo_s.png "Blackjack")
+![Blackjack logo](/src/images/default_logo_s.png "Blackjack")
 
 A simple blackjack implementation, written in Java.
 
 ## Features
-![Game screenshot](https://github.com/yeyoan/blackjack-6102/raw/master/screenshot.png "Game screenshot")
+![Game screenshot](screenshot.png "Game screenshot")
 
 The player has a variety of standard choices available in blackjack.
 * **Hit**
