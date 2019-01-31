@@ -5,7 +5,6 @@ import design.Palette;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -23,20 +22,30 @@ public class SettingsPanel extends JPanel {
         initPanel(font);
     }
 
-    public String getDealerBehavior() {
-        return (standRadioButton.isSelected()) ? "Stand" : "Hit";
+    public int[] getSettings() {
+        int[] settings = {
+            deckAmount(),
+            minimumBet(),
+            dealerBehavior(),
+            handValueVisible()
+        };
+        return settings;
     }
 
-    public int getDeckAmount() {
+    private int dealerBehavior() {
+        return (standRadioButton.isSelected()) ? STAND : HIT;
+    }
+
+    private int deckAmount() {
         return (int) deckAmountSpinner.getValue();
     }
 
-    public int getMinimumBet() {
+    private int minimumBet() {
         return (int) minimumBetSpinner.getValue();
     }
 
-    public boolean handValueVisible() {
-        return displayHandValue.isSelected();
+    private int handValueVisible() {
+        return (displayHandValue.isSelected()) ? 1 : 0;
     }
 
     private void initPanel(DefaultFont font) {
@@ -51,8 +60,7 @@ public class SettingsPanel extends JPanel {
         hitRadioButton = new JRadioButton("Hit");
         dealerBehaviorGroup = new ButtonGroup();
         displayHandValue = new JCheckBox("Show hand value");
-        cancelButton = new JButton("Cancel");
-        saveButton = new JButton("Save");
+        playButton = new JButton("Play");
 
         hitRadioButton.setSelected(true);
         dealerBehaviorGroup.add(standRadioButton);
@@ -72,8 +80,7 @@ public class SettingsPanel extends JPanel {
         standRadioButton.setFont(font.generateFont(12));
         hitRadioButton.setFont(font.generateFont(12));
         displayHandValue.setFont(font.generateFont(12));
-        cancelButton.setFont(font.generateFont(12));
-        saveButton.setFont(font.generateFont(12));
+        playButton.setFont(font.generateFont(12));
 
         settingsLabel.setForeground(Palette.TEXT);
         deckAmountLabel.setForeground(Palette.TEXT);
@@ -84,14 +91,12 @@ public class SettingsPanel extends JPanel {
         standRadioButton.setForeground(Palette.TEXT);
         hitRadioButton.setForeground(Palette.TEXT);
         displayHandValue.setForeground(Palette.TEXT);
-        cancelButton.setForeground(Palette.TEXT);
-        saveButton.setForeground(Palette.TEXT);
+        playButton.setForeground(Palette.TEXT);
 
         standRadioButton.setBackground(Palette.BLACK);
         hitRadioButton.setBackground(Palette.BLACK);
         displayHandValue.setBackground(Palette.BLACK);
-        cancelButton.setBackground(Palette.BLACK);
-        saveButton.setBackground(Palette.BLACK);
+        playButton.setBackground(Palette.BLACK);
         setBackground(Palette.BLACK);
 
         setLayout(new GridBagLayout());
@@ -163,25 +168,14 @@ public class SettingsPanel extends JPanel {
 
         gbc.gridx = 0;
         gbc.gridy = 6;
-        gbc.gridwidth = 1;
+        gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(0, 10, 10, 10);
-        add(cancelButton, gbc);
+        add(playButton, gbc);
+    }
 
-        gbc.gridx = 1;
-        gbc.gridy = 6;
-        gbc.gridwidth = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(0, 0, 10, 10);
-        add(saveButton, gbc);
-
-        saveButton.addActionListener((ActionEvent e) -> {
-            System.out.println("Dealer behavior: " + getDealerBehavior());
-            System.out.println("Deck amount: " + getDeckAmount());
-            System.out.println("Minimum bet: " + getMinimumBet());
-            String hv = (handValueVisible()) ? "Visible" : "Hidden";
-            System.out.println("Hand value: " + hv);
-        });
+    public void initPlayActionListener(ActionListener l) {
+        playButton.addActionListener(l);
     }
 
     public static void main(String[] args) {
@@ -205,7 +199,8 @@ public class SettingsPanel extends JPanel {
     private JRadioButton hitRadioButton;
     private ButtonGroup dealerBehaviorGroup;
     private JCheckBox displayHandValue;
-    private JButton cancelButton;
-    private JButton saveButton;
+    private JButton playButton;
     private DefaultFont font;
+    private final static int HIT = 0;
+    private final static int STAND = 1;
 }

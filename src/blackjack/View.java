@@ -67,6 +67,8 @@ public class View {
         messageLabel = new JLabel();
         chipsLabel = new JLabel();
 
+        settingsPanel = new SettingsPanel(font);
+
         tablePanel = new JPanel();
         dealerHandValueLabel = new JLabel();        
         dealerPanel = new JPanel();
@@ -121,9 +123,21 @@ public class View {
 
         frame.add(backgroundPanel, BorderLayout.CENTER);
 
+        JPanel placeholder = new JPanel();
+        placeholder.setOpaque(false);
+        placeholder.setLayout(new GridBagLayout());
+        GridBagConstraints placeholderConstraints = new GridBagConstraints();
+        placeholderConstraints.gridx = 0;
+        placeholderConstraints.gridy = 0;
+        placeholderConstraints.weightx = 10.0;
+        placeholderConstraints.weighty = 10.0;
+        placeholderConstraints.anchor = GridBagConstraints.CENTER;
+        placeholder.add(settingsPanel, placeholderConstraints);
+
         backgroundPanel.setLayout(new BorderLayout());
         backgroundPanel.add(topPanel, BorderLayout.NORTH);
-        backgroundPanel.add(tablePanel, BorderLayout.CENTER);
+        backgroundPanel.add(placeholder, BorderLayout.CENTER);
+        // backgroundPanel.add(tablePanel, BorderLayout.CENTER);
         backgroundPanel.add(optionsPanel, BorderLayout.SOUTH);
 
         topPanel.setLayout(new GridBagLayout());
@@ -270,6 +284,16 @@ public class View {
     public void displayFrame() {
         frame.setVisible(true);
         SwingUtilities.invokeLater(View::new);
+    }
+
+    public void displaySettings() {
+        tablePanel.setVisible(false);
+    }
+
+    public void displayTable() {
+        backgroundPanel.remove(1);
+        backgroundPanel.add(tablePanel, BorderLayout.CENTER);
+        tablePanel.setVisible(true);
     }
 
     /**
@@ -500,6 +524,11 @@ public class View {
         return betOptions.values();
     }
 
+    public int[] getSettings() {
+        SettingsPanel settings = (SettingsPanel) settingsPanel;
+        return settings.getSettings();
+    }
+
     public void initBetOptions(int[] options) {
         String[] stringOptions = new String[options.length];
         for (int i = 0; i < stringOptions.length; i++) {
@@ -532,6 +561,8 @@ public class View {
             handOptions.get(key).addActionListener(l);
         } else if (playOptions.containsKey(key)) {
             playOptions.get(key).addActionListener(l);
+        } else if (key.equals("Play")) {
+            settingsPanel.initPlayActionListener(l);
         } else {
             System.err.println("Invalid key: " + key);
         }
@@ -648,6 +679,7 @@ public class View {
     private final JLabel messageLabel;
     private final JLabel chipsLabel;
     private final JPanel tablePanel;
+    private final SettingsPanel settingsPanel;
     private final JLabel dealerHandValueLabel;
     private final JPanel dealerPanel;
     private final JLabel[] dealerHand;

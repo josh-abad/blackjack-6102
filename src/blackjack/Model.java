@@ -8,7 +8,6 @@ import playingcards.Shoe;
 
 public class Model {
     
-    
     /**
      * The initial amount of chips the player has at the start of the game
      */
@@ -22,9 +21,8 @@ public class Model {
     public Model() {
         player = new BlackjackPlayer(BANKROLL);
         dealer = new Dealer();
-        shoe = new Shoe(NUMBER_OF_DECKS);
         discardDeck = new ArrayList<>();
-        shoe.shuffle();
+        minimumBet = MINIMUM_BET;
     }
 
     /**
@@ -99,10 +97,14 @@ public class Model {
 
     /**
      * Performs a dealer's turn in blackjack.
+     * 
+     * <p>In blackjack, the dealer hits until their hand value is greater than
+     * 16. The dealer may also hit a soft 17 in some games, depending on the
+     * casino rules.
      */
     public void dealerTurn() {
         while (dealer.hasSoft17() || dealer.getHandValue() <= 16) {
-            if (shoe.isEmpty()) {
+            if ((dealer.hasSoft17() && stand17) || shoe.isEmpty()) {
                 return;
             }
             Card card = shoe.drawCard();
@@ -151,6 +153,15 @@ public class Model {
     public void givePayout(Payout type) {
         player.addChips(type.pay(player.getBet()));
         resetBet();
+    }
+
+    public void loadSettings(int[] settings) {
+        this.settings = settings;
+        int deckAmount = settings[0];
+        minimumBet = settings[1];
+        stand17 = settings[2] == 1;
+        shoe = new Shoe(deckAmount);
+        shoe.shuffle();
     }
 
     /**
@@ -437,8 +448,9 @@ public class Model {
 
     private final BlackjackPlayer player;
     private final Dealer dealer;
-    private final CardContainer shoe;
+    private CardContainer shoe;
     private final List<Card> discardDeck;
+    private int minimumBet;
     private int runningCount;
     private static final int NUMBER_OF_DECKS = 4;
     private static final String[] CHOICES = {
@@ -448,4 +460,6 @@ public class Model {
         "Deal", "Next Hand", "Hint", "New Game", "Quit Game"
     };
     private static final int[] CHIPS = {100, 50, 25, 10, 5};
+    private int[] settings; 
+    private boolean stand17;
 }

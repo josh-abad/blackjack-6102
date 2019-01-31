@@ -17,6 +17,33 @@ public class Controller {
         view.displayFrame();
     }
 
+    public class PlayAction implements ActionListener {
+
+        @Override 
+        public void actionPerformed(ActionEvent e) {
+            model.loadSettings(view.getSettings());
+            view.displayTable();
+            view.resetHandValue();
+            view.clearCards();
+            view.updateStats(model.playerChips(), model.playerBet());
+            view.updateTrueCount(model.getTrueCount());
+            view.updateDeckCount(model.deckCount());
+            view.displayMessage(Message.welcome());
+
+            view.enableAllChips();
+            view.updateChips(model.playerChips(), Model.chips());
+            view.disableAllChoices();
+
+            if (model.betIsSufficient()) {
+                view.enableButton("Deal");
+            } else {
+                view.disableButton("Deal");
+            }
+            view.disableButton("Next Hand");
+            view.disableButton("Hint");
+        }
+    }
+
     public class BetAction implements ActionListener {
 
         public BetAction(int value) {
@@ -299,6 +326,8 @@ public class Controller {
         view.initPlayOptions(Model.choices());
         view.initHandOptions(Model.options());
 
+        view.initButtonActionListener("Play", new PlayAction());
+
         view.initButtonActionListener("Hit", new HitAction());
         view.initButtonActionListener("Stand", new StandAction());
         view.initButtonActionListener("Double Down", new DoubleDownAction());
@@ -319,20 +348,21 @@ public class Controller {
     private void initView() {
         view.resetHandValue();
         view.clearCards();
-        view.updateStats(model.playerChips(), model.playerBet());
-        view.updateTrueCount(model.getTrueCount());
-        view.updateDeckCount(model.deckCount());
-        view.displayMessage(Message.welcome());
+        // view.updateStats(model.playerChips(), model.playerBet());
+        // view.updateTrueCount(model.getTrueCount());
+        // view.updateDeckCount(model.deckCount());
+        // view.displayMessage(Message.welcome());
+        view.displaySettings();
 
         view.enableAllChips();
         view.updateChips(model.playerChips(), Model.chips());
         view.disableAllChoices();
 
-        if (model.betIsSufficient()) {
-            view.enableButton("Deal");
-        } else {
-            view.disableButton("Deal");
-        }
+        // if (model.betIsSufficient()) {
+        //     view.enableButton("Deal");
+        // } else {
+        //     view.disableButton("Deal");
+        // }
         view.disableButton("Next Hand");
         view.disableButton("Hint");
     }
