@@ -54,11 +54,17 @@ public class Message {
     }
 
     public static String playerLost(double bet) {
+        if (bet == 0) {
+            return "You lost.";
+        }
         String chips = Format.currency(bet);
         return "You lost " + chips + " chips.";
     }
 
     public static String playerWon(double bet) {
+        if (bet == 0) {
+            return "You won!";
+        }
         String chips = Format.currency(bet);
         return "You won " + chips + " Chips!";
     }
