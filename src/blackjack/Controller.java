@@ -58,7 +58,7 @@ public class Controller {
                 view.clearMessage();
                 view.enableButton("Deal");
             } else {
-                view.displayMessage(Message.minimumBet(Model.MINIMUM_BET));
+                view.displayMessage(Message.minimumBet(model.minimumBet()));
             }
 
             view.updateStats(model.playerChips(), model.playerBet());
@@ -304,8 +304,8 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             if (model.outOfChips() ||
                     view.prompt(Message.newGame(), "New Game")) {
-                model.restartGame();
                 initView();
+                model.restartGame();
             }
         }
     }
@@ -346,25 +346,7 @@ public class Controller {
     }
 
     private void initView() {
-        view.resetHandValue();
-        view.clearCards();
-        // view.updateStats(model.playerChips(), model.playerBet());
-        // view.updateTrueCount(model.getTrueCount());
-        // view.updateDeckCount(model.deckCount());
-        // view.displayMessage(Message.welcome());
         view.displaySettings();
-
-        view.enableAllChips();
-        view.updateChips(model.playerChips(), Model.chips());
-        view.disableAllChoices();
-
-        // if (model.betIsSufficient()) {
-        //     view.enableButton("Deal");
-        // } else {
-        //     view.disableButton("Deal");
-        // }
-        view.disableButton("Next Hand");
-        view.disableButton("Hint");
     }
     
     private final Model model;

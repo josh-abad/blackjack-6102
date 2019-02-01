@@ -123,7 +123,7 @@ public class View {
 
         frame.add(backgroundPanel, BorderLayout.CENTER);
 
-        JPanel placeholder = new JPanel();
+        placeholder = new JPanel();
         placeholder.setOpaque(false);
         placeholder.setLayout(new GridBagLayout());
         GridBagConstraints placeholderConstraints = new GridBagConstraints();
@@ -136,8 +136,8 @@ public class View {
 
         backgroundPanel.setLayout(new BorderLayout());
         backgroundPanel.add(topPanel, BorderLayout.NORTH);
-        backgroundPanel.add(placeholder, BorderLayout.CENTER);
-        // backgroundPanel.add(tablePanel, BorderLayout.CENTER);
+        // backgroundPanel.add(placeholder, BorderLayout.CENTER);
+        backgroundPanel.add(tablePanel, BorderLayout.CENTER);
         backgroundPanel.add(optionsPanel, BorderLayout.SOUTH);
 
         topPanel.setLayout(new GridBagLayout());
@@ -287,13 +287,17 @@ public class View {
     }
 
     public void displaySettings() {
-        tablePanel.setVisible(false);
+        backgroundPanel.removeAll();
+        backgroundPanel.add(placeholder);
+        backgroundPanel.repaint();
     }
 
     public void displayTable() {
-        backgroundPanel.remove(1);
+        backgroundPanel.removeAll();
+        backgroundPanel.add(topPanel, BorderLayout.NORTH);
         backgroundPanel.add(tablePanel, BorderLayout.CENTER);
-        tablePanel.setVisible(true);
+        backgroundPanel.add(optionsPanel, BorderLayout.SOUTH);
+        backgroundPanel.repaint();
     }
 
     /**
@@ -673,6 +677,7 @@ public class View {
     }
 
     private final JFrame frame;
+    private final JPanel placeholder;
     private final JPanel backgroundPanel;
     private final JPanel topPanel;
     private final JLabel titleLabel;

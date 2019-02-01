@@ -68,7 +68,7 @@ public class Model {
      * @return true if player's bet has reached the minimum bet
      */
     public boolean betIsSufficient() {
-        return player.getBet() >= MINIMUM_BET;
+        return player.getBet() >= minimumBet;
     }
 
     /**
@@ -156,7 +156,6 @@ public class Model {
     }
 
     public void loadSettings(int[] settings) {
-        this.settings = settings;
         int deckAmount = settings[0];
         minimumBet = settings[1];
         stand17 = settings[2] == 1;
@@ -273,6 +272,10 @@ public class Model {
         return runningCount;
     }
 
+    public int minimumBet() {
+        return minimumBet;
+    }
+
     /**
      * Determines if the player has enough chips to continue playing.
      * @return true if the chips are less than the minimum bet
@@ -318,13 +321,10 @@ public class Model {
     }
 
     public void restartGame() {
-        player.addBet(player.getBankroll());
-        player.setBet(0);
-        player.addChips(BANKROLL);
-        player.discardHand(discardDeck);
-        dealer.discardHand(discardDeck);
-        shoe.reset(discardDeck);
-        shoe.shuffle();
+        player = new BlackjackPlayer(BANKROLL);
+        dealer = new Dealer();
+        discardDeck = new ArrayList<>();
+        minimumBet = MINIMUM_BET;
         runningCount = 0;
     }
 
@@ -446,10 +446,10 @@ public class Model {
         return player.isBelowLimit();
     }
 
-    private final BlackjackPlayer player;
-    private final Dealer dealer;
+    private BlackjackPlayer player;
+    private Dealer dealer;
     private CardContainer shoe;
-    private final List<Card> discardDeck;
+    private List<Card> discardDeck;
     private int minimumBet;
     private int runningCount;
     private static final int NUMBER_OF_DECKS = 4;
@@ -460,6 +460,5 @@ public class Model {
         "Deal", "Next Hand", "Hint", "New Game", "Quit Game"
     };
     private static final int[] CHIPS = {100, 50, 25, 10, 5};
-    private int[] settings; 
     private boolean stand17;
 }

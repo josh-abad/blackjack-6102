@@ -1,12 +1,14 @@
 package blackjack;
 
 import design.DefaultFont;
+import design.ImageResizer;
 import design.Palette;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -49,8 +51,7 @@ public class SettingsPanel extends JPanel {
     }
 
     private void initPanel(DefaultFont font) {
-        this.font = font;
-        settingsLabel = new JLabel("Settings");
+        logoLabel = new JLabel();
         deckAmountLabel = new JLabel("Number of decks");
         minimumBetLabel = new JLabel("Minimum bet");
         dealerBehaviorLabel = new JLabel("Dealer behavior for soft 17");
@@ -62,6 +63,14 @@ public class SettingsPanel extends JPanel {
         displayHandValue = new JCheckBox("Show hand value");
         playButton = new JButton("Play");
 
+        String path = "/images/default_logo.png";
+        try {
+            ImageIcon icon = new ImageIcon(View.class.getResource(path));
+            logoLabel.setIcon(ImageResizer.getScaledImage(icon, 150));
+        } catch (NullPointerException ex) {
+            System.err.println("Could not find " + path);
+        }
+
         hitRadioButton.setSelected(true);
         dealerBehaviorGroup.add(standRadioButton);
         dealerBehaviorGroup.add(hitRadioButton);
@@ -71,18 +80,16 @@ public class SettingsPanel extends JPanel {
         deckAmountSpinner.setModel(new SpinnerNumberModel(4, 1, 8, 1));
         minimumBetSpinner.setModel(new SpinnerNumberModel(25, 0, 1000, 5));
 
-        settingsLabel.setFont(font.generateFont(16));
-        deckAmountLabel.setFont(font.generateFont(12));
-        deckAmountSpinner.setFont(font.generateFont(12));
-        minimumBetLabel.setFont(font.generateFont(12));
-        minimumBetSpinner.setFont(font.generateFont(12));
-        dealerBehaviorLabel.setFont(font.generateFont(12));
-        standRadioButton.setFont(font.generateFont(12));
-        hitRadioButton.setFont(font.generateFont(12));
-        displayHandValue.setFont(font.generateFont(12));
-        playButton.setFont(font.generateFont(12));
+        deckAmountLabel.setFont(font.generateFont(16));
+        deckAmountSpinner.setFont(font.generateFont(16));
+        minimumBetLabel.setFont(font.generateFont(16));
+        minimumBetSpinner.setFont(font.generateFont(16));
+        dealerBehaviorLabel.setFont(font.generateFont(16));
+        standRadioButton.setFont(font.generateFont(16));
+        hitRadioButton.setFont(font.generateFont(16));
+        displayHandValue.setFont(font.generateFont(16));
+        playButton.setFont(font.generateFont(16));
 
-        settingsLabel.setForeground(Palette.TEXT);
         deckAmountLabel.setForeground(Palette.TEXT);
         deckAmountSpinner.setForeground(Palette.TEXT);
         minimumBetLabel.setForeground(Palette.TEXT);
@@ -106,90 +113,67 @@ public class SettingsPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
+        gbc.insets = new Insets(40, 40, 40, 20);
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(10, 10, 10, 10);
-        add(settingsLabel, gbc);
+        add(logoLabel, gbc);
 
-        gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(0, 10, 10, 10);
         add(deckAmountLabel, gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.gridwidth = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(0, 0, 10, 10);
         add(deckAmountSpinner, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
-        gbc.gridwidth = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(0, 10, 10, 10);
         add(minimumBetLabel, gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 2;
-        gbc.gridwidth = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(0, 0, 10, 10);
         add(minimumBetSpinner, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.gridwidth = 2;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(0, 10, 10, 10);
         add(dealerBehaviorLabel, gbc);
 
-        gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.gridwidth = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(0, 10, 10, 10);
         add(hitRadioButton, gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 4;
-        gbc.gridwidth = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(0, 0, 10, 10);
         add(standRadioButton, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.gridwidth = 2;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(0, 10, 10, 10);
+        gbc.insets = new Insets(0, 10, 20, 10);
         add(displayHandValue, gbc);
 
-        gbc.gridx = 0;
         gbc.gridy = 6;
-        gbc.gridwidth = 2;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(0, 10, 10, 10);
         add(playButton, gbc);
+    }
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 400);
+        frame.add(new SettingsPanel(new DefaultFont("Segoe UI")));
+        frame.setVisible(true);
     }
 
     public void initPlayActionListener(ActionListener l) {
         playButton.addActionListener(l);
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.setSize(600, 750);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JPanel settings = new SettingsPanel(new DefaultFont("Segoe UI"));
-
-        frame.add(settings);
-        frame.setVisible(true);
-    }
-    
-    private JLabel settingsLabel;
+    private JLabel logoLabel;
     private JLabel deckAmountLabel;
     private JLabel minimumBetLabel;
     private JLabel dealerBehaviorLabel;
@@ -200,7 +184,6 @@ public class SettingsPanel extends JPanel {
     private ButtonGroup dealerBehaviorGroup;
     private JCheckBox displayHandValue;
     private JButton playButton;
-    private DefaultFont font;
     private final static int HIT = 0;
     private final static int STAND = 1;
 }
