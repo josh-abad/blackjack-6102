@@ -34,7 +34,8 @@ public class View {
     public View() {
         frame = new JFrame("Blackjack");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 725);
+        frame.setSize(1366, 725);
+        frame.setLocationRelativeTo(null);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         backgroundPanel = new Table();
@@ -59,6 +60,7 @@ public class View {
         UIManager.put("Button.foreground", Palette.TEXT);
         UIManager.put("Button.background", Palette.BLACK);
 
+        startPanel = new JPanel();
         topPanel = new JPanel();
         titleLabel = new JLabel();
 
@@ -123,79 +125,14 @@ public class View {
 
         frame.add(backgroundPanel, BorderLayout.CENTER);
 
-        placeholder = new JPanel();
-        placeholder.setOpaque(false);
-        placeholder.setLayout(new GridBagLayout());
-        GridBagConstraints placeholderConstraints = new GridBagConstraints();
-        placeholderConstraints.gridx = 0;
-        placeholderConstraints.gridy = 0;
-        placeholderConstraints.weightx = 10.0;
-        placeholderConstraints.weighty = 10.0;
-        placeholderConstraints.anchor = GridBagConstraints.CENTER;
-        placeholder.add(settingsPanel, placeholderConstraints);
-
         backgroundPanel.setLayout(new BorderLayout());
-        backgroundPanel.add(topPanel, BorderLayout.NORTH);
-        // backgroundPanel.add(placeholder, BorderLayout.CENTER);
-        backgroundPanel.add(tablePanel, BorderLayout.CENTER);
-        backgroundPanel.add(optionsPanel, BorderLayout.SOUTH);
 
-        topPanel.setLayout(new GridBagLayout());
-        GridBagConstraints topPanelConstraints = new GridBagConstraints();
+        layoutStartPanel();
+        layoutTopPanel();
+        layoutTablePanel();
 
-        topPanelConstraints.gridx = 0;
-        topPanelConstraints.gridy = 0;
-        topPanelConstraints.anchor = GridBagConstraints.LINE_START;
-        topPanelConstraints.weightx = 1.0;
-        topPanelConstraints.insets = new Insets(10, 40, 10, 0);
-        topPanel.add(titleLabel, topPanelConstraints);
-
-        topPanelConstraints.gridx = 1;
-        topPanelConstraints.anchor = GridBagConstraints.CENTER;
-        topPanelConstraints.weightx = 1.0;
-        topPanelConstraints.insets = new Insets(0, 0, 0, 0);
-        topPanel.add(messageLabel, topPanelConstraints);
-
-        topPanelConstraints.gridx = 2;
-        topPanelConstraints.anchor = GridBagConstraints.LINE_END;
-        topPanelConstraints.weightx = 1.0;
-        topPanelConstraints.insets = new Insets(0, 0, 0, 40);
-        topPanel.add(chipsLabel, topPanelConstraints);
-
-        dealerPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 20, 10));
-        playerPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 20, 10));
-
-        tablePanel.setLayout(new GridBagLayout());
-        GridBagConstraints tablePanelConstraints = new GridBagConstraints();
-        tablePanelConstraints.gridx = 0;
-        tablePanelConstraints.gridy = 0;
-        tablePanelConstraints.gridwidth = 1;
-        tablePanelConstraints.insets = new Insets(0, 20, 0, 0);
-        tablePanelConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
-        tablePanel.add(dealerHandValueLabel, tablePanelConstraints);
-
-        tablePanelConstraints.gridy = 1;
-        tablePanelConstraints.gridwidth = 2;
-        tablePanelConstraints.ipadx = 100;
-        tablePanelConstraints.weightx = 1.0;
-        tablePanelConstraints.fill = GridBagConstraints.HORIZONTAL;
-        tablePanelConstraints.insets = new Insets(0, 0, 40, 0);
-        tablePanel.add(dealerPanel, tablePanelConstraints);
-
-        tablePanelConstraints.gridy = 2;
-        tablePanelConstraints.gridwidth = 1;
-        tablePanelConstraints.ipadx = 0;
-        tablePanelConstraints.weightx = 0;
-        tablePanelConstraints.insets = new Insets(0, 20, 0, 0);
-        tablePanel.add(playerHandValueLabel, tablePanelConstraints);
-
-        tablePanelConstraints.gridy = 3;
-        tablePanelConstraints.gridwidth = 2;
-        tablePanelConstraints.ipadx = 100;
-        tablePanelConstraints.weightx = 1.0;
-        tablePanelConstraints.fill = GridBagConstraints.HORIZONTAL;
-        tablePanelConstraints.insets = new Insets(0, 0, 10, 0);
-        tablePanel.add(playerPanel, tablePanelConstraints);
+        dealerPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 20, 20));
+        playerPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 20, 20));
 
         for (int i = 0; i < dealerHand.length; i++) {
             JLabel dealerCard = new JLabel();
@@ -206,39 +143,10 @@ public class View {
             playerPanel.add(playerCard);
         }
 
-        optionsPanel.setLayout(new GridBagLayout());
-        GridBagConstraints optionsPanelConstraints = new GridBagConstraints();
+        layoutOptionsPanel();
 
-        optionsPanelConstraints.gridx = 0;
-        optionsPanelConstraints.gridy = 0;
-        optionsPanelConstraints.weightx = 1.0;
-        optionsPanelConstraints.weighty = 1.0;
-        optionsPanelConstraints.anchor = GridBagConstraints.LINE_START;
-        optionsPanelConstraints.insets = new Insets(10, 0, 10, 0);
-        optionsPanel.add(currentBetPanel, optionsPanelConstraints);
-
-        optionsPanelConstraints.gridx = 1;
-        optionsPanelConstraints.weightx = 0;
-        optionsPanelConstraints.weighty = 0;
-        optionsPanelConstraints.anchor = GridBagConstraints.CENTER;
-        optionsPanel.add(betOptionsPanel, optionsPanelConstraints);
-        optionsPanel.add(playOptionsPanel, optionsPanelConstraints);
-
-        optionsPanelConstraints.gridx = 2;
-        optionsPanelConstraints.weightx = 1.0;
-        optionsPanelConstraints.anchor = GridBagConstraints.LINE_END;
-        optionsPanelConstraints.insets = new Insets(10, 0, 10, 40);
-        optionsPanel.add(handOptionsPanel, optionsPanelConstraints);
-
-        currentBetPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 40, 0));
-        currentBetPanel.add(deckCountLabel);
-        currentBetPanel.add(trueCountLabel);
-        currentBetPanel.add(currentBetValueLabel);
-
-        betOptionsPanel.setLayout(new GridBagLayout());
-        playOptionsPanel.setLayout(new GridBagLayout());
-        handOptionsPanel.setLayout(new GridBagLayout());
         if (backgroundPanel.getBackground() != Palette.TABLE) {
+            startPanel.setOpaque(false);
             playerPanel.setOpaque(false);
             dealerPanel.setOpaque(false);
             topPanel.setOpaque(false);
@@ -288,7 +196,7 @@ public class View {
 
     public void displaySettings() {
         backgroundPanel.removeAll();
-        backgroundPanel.add(placeholder);
+        backgroundPanel.add(startPanel);
         backgroundPanel.repaint();
     }
 
@@ -621,6 +529,7 @@ public class View {
                              JPanel panel,
                              boolean hasIcon)
     {
+        panel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         for (int i = 0; i < options.length; i++) {
             gbc.gridx = i;
@@ -640,6 +549,100 @@ public class View {
             map.put(options[i], option);
             panel.add(option, gbc);
         }
+    }
+
+    private void layoutStartPanel() {
+        startPanel.setLayout(new GridBagLayout());
+        GridBagConstraints placeholderConstraints = new GridBagConstraints();
+        placeholderConstraints.gridx = 0;
+        placeholderConstraints.gridy = 0;
+        placeholderConstraints.anchor = GridBagConstraints.CENTER;
+        startPanel.add(settingsPanel, placeholderConstraints);
+    }
+
+    private void layoutTopPanel() {
+        topPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.LINE_START;
+        gbc.weightx = 1.0;
+        gbc.insets = new Insets(10, 20, 10, 0);
+        topPanel.add(titleLabel, gbc);
+
+        gbc.gridx++;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.insets = new Insets(0, 0, 0, 0);
+        topPanel.add(messageLabel, gbc);
+
+        gbc.gridx++;
+        gbc.anchor = GridBagConstraints.LINE_END;
+        gbc.insets = new Insets(0, 0, 0, 20);
+        topPanel.add(chipsLabel, gbc);
+    }
+
+    private void layoutTablePanel() {
+        tablePanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(0, 20, 0, 0);
+        gbc.anchor = GridBagConstraints.FIRST_LINE_START;
+        tablePanel.add(dealerHandValueLabel, gbc);
+
+        gbc.gridy++;
+        gbc.gridwidth = 2;
+        gbc.ipadx = 100;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 0, 40, 0);
+        tablePanel.add(dealerPanel, gbc);
+
+        gbc.gridy++;
+        gbc.gridwidth = 1;
+        gbc.ipadx = 0;
+        gbc.weightx = 0;
+        gbc.insets = new Insets(0, 20, 0, 0);
+        tablePanel.add(playerHandValueLabel, gbc);
+
+        gbc.gridy++;
+        gbc.gridwidth = 2;
+        gbc.ipadx = 100;
+        gbc.weightx = 1.0;
+        gbc.insets = new Insets(0, 0, 10, 0);
+        tablePanel.add(playerPanel, gbc);
+    }
+
+    private void layoutOptionsPanel() {
+        optionsPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.LINE_START;
+        gbc.insets = new Insets(10, 0, 10, 0);
+        optionsPanel.add(currentBetPanel, gbc);
+
+        gbc.gridx++;
+        gbc.weightx = 0;
+        gbc.weighty = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        optionsPanel.add(betOptionsPanel, gbc);
+        optionsPanel.add(playOptionsPanel, gbc);
+
+        gbc.gridx++;
+        gbc.weightx = 1.0;
+        gbc.anchor = GridBagConstraints.LINE_END;
+        gbc.insets = new Insets(10, 0, 10, 20);
+        optionsPanel.add(handOptionsPanel, gbc);
+
+        currentBetPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 40, 0));
+        currentBetPanel.add(deckCountLabel);
+        currentBetPanel.add(trueCountLabel);
+        currentBetPanel.add(currentBetValueLabel);
     }
 
     private void resetImages(ImageIcon image, JLabel[] playerHand) {
@@ -677,7 +680,7 @@ public class View {
     }
 
     private final JFrame frame;
-    private final JPanel placeholder;
+    private final JPanel startPanel;
     private final JPanel backgroundPanel;
     private final JPanel topPanel;
     private final JLabel titleLabel;
