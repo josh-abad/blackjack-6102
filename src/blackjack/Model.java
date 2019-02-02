@@ -63,6 +63,10 @@ public class Model {
         player.addBet(amount);
     }
 
+    public boolean betIsEmpty() {
+        return player.getBet() == 0;
+    }
+
     /**
      * Checks if the player's current bet has reached the minimum bet.
      * @return true if player's bet has reached the minimum bet
@@ -224,7 +228,7 @@ public class Model {
         boolean softHand = player.hasSoftHand();
         int p = player.getHandValue();
         int d = dealer.getHand().get(1).getRank();
-        return BasicStrategy.generate(softHand, p, d);
+        return BasicStrategy.generate(!stand17, softHand, p, d);
     }
 
     /**

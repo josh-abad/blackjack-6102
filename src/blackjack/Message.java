@@ -75,8 +75,10 @@ public class Message {
     }
 
     public static String surrender(double bet) {
+        String message = "You surrendered";
         String chips = Format.currency(bet / 2);
-        return "You surrendered and got back " + chips + " Chips.";
+        message += (bet > 0) ? " and got back " + chips + " Chips." : ".";
+        return message;
     }
 
     public static String tie() {

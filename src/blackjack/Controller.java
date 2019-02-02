@@ -202,7 +202,7 @@ public class Controller {
             view.enableButton("Hint");
             view.disableButton("Deal");
 
-            if (!model.canDoubleDown()) {
+            if (model.betIsEmpty() || !model.canDoubleDown()) {
                 view.disableButton("Double Down");
             }
         
