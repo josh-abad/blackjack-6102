@@ -17,16 +17,21 @@ public class DefaultFont {
     }
 
     /**
-     * Returns a font with the specified size.
-     * 
-     * <p>If the size is less than 12, the font style is bold.
-     * Larger font sizes have a plain style.
-     * 
+     * Returns a regular-styled font with the specified size.
      * @param size the point size of the font
      * @return the font
      */
     public Font generateFont(int size) {
-        int style = (size < 12) ? 1 : 0;
+        return generateFont(size, Font.PLAIN);
+    }
+    
+    /**
+     * Returns a font with the specified size and style.
+     * @param size the point size of the font
+     * @param style the style of the font
+     * @return the font
+     */
+    public Font generateFont(int size, int style) {
         return new Font(name, style, size);
     }
     
