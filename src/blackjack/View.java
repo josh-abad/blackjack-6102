@@ -184,6 +184,7 @@ public class View {
      */
     public void clearMessage() {
         messageLabel.setText("");
+        messageLabel.setIcon(null);
     }
 
     /**
@@ -209,11 +210,21 @@ public class View {
     }
 
     /**
-     * Displays a message on the screen.
+     * Displays a message on the screen with a message bubble icon.
      * @param message the message
      */
     public void displayMessage(String message) {
+        displayMessage(message, "/images/message.png");
+    }
+
+    /**
+     * Displays a message on the screen with the specified icon.
+     * @param message the message
+     */
+    public void displayMessage(String message, String path) {
         messageLabel.setText(message);
+        int size = messageLabel.getFont().getSize();
+        setIcon(messageLabel, path, size);
     }
 
     public boolean prompt(String message, String title) {
