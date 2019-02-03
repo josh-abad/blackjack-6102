@@ -13,16 +13,10 @@ public class Model {
      */
     public static final int BANKROLL = 1000;
 
-    /**
-     * The required amount of chips for the player to be able to play.
-     */
-    public static final int MINIMUM_BET = 25;
-
     public Model() {
         player = new BlackjackPlayer(BANKROLL);
         dealer = new Dealer();
         discardDeck = new ArrayList<>();
-        minimumBet = MINIMUM_BET;
     }
 
     /**
@@ -276,6 +270,10 @@ public class Model {
         return runningCount;
     }
 
+    /**
+     * The required amount of chips for the player to be able to play.
+     * @return the minimum bet 
+     */
     public int minimumBet() {
         return minimumBet;
     }
@@ -285,7 +283,7 @@ public class Model {
      * @return true if the chips are less than the minimum bet
      */
     public boolean outOfChips() {
-        return player.getBankroll() < MINIMUM_BET;
+        return player.getBankroll() < minimumBet;
     }
 
     /**
@@ -328,7 +326,6 @@ public class Model {
         player = new BlackjackPlayer(BANKROLL);
         dealer = new Dealer();
         discardDeck = new ArrayList<>();
-        minimumBet = MINIMUM_BET;
         runningCount = 0;
     }
 

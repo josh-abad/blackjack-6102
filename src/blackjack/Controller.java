@@ -102,7 +102,7 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             view.disableAllChoices();
             view.disableButton("Hint");
-            view.revealHoleCard(model.holeCard().toString());
+            view.revealHoleCard(model.holeCard());
 
             model.dealerTurn();
             view.updateDeckCount(model.deckCount());
@@ -181,7 +181,7 @@ public class Controller {
             view.displayMessage(Message.surrender(model.playerBet()));
             model.givePayout(Payout.HALF);
             model.resetBet();
-            view.revealHoleCard(model.holeCard().toString());
+            view.revealHoleCard(model.holeCard());
             model.updateRunningCount(model.holeCard().getRank());
             view.updateTrueCount(model.getTrueCount());
             view.updateDealerHandValue(model.dealerHandValue(),
@@ -190,6 +190,7 @@ public class Controller {
             view.disableAllChoices();
             view.enableButton("Next Hand");
             view.disableButton("Hint");
+            System.out.println();
         }
     }
 
@@ -218,9 +219,7 @@ public class Controller {
             }
             view.updateTrueCount(model.getTrueCount());
 
-
-            view.displayMessage(Message.deal(model.initialCards()[0],
-                                             model.initialCards()[1]));
+            view.displayMessage(Message.deal(model.initialCards()));
 
             view.updatePlayerHandValue(model.playerHandValue(),
                                        model.playerHasSoftHand());
@@ -276,7 +275,7 @@ public class Controller {
             if (!model.shoeIsSufficient()) {
                 model.shuffleDeck();
                 model.resetRunningCount();
-                view.displayMessage("Deck is reshuffled.");
+                view.displayMessage(Message.reshuffle());
             }
 
             view.resetHandValue();

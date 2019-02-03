@@ -52,6 +52,7 @@ public class View {
 
         font = new DefaultFont("Segoe UI");
 
+        // Styling for the option pane
         UIManager.put("OptionPane.messageFont", font.generateFont(14));
         UIManager.put("OptionPane.background", Palette.BLACK);
         UIManager.put("OptionPane.messageForeground", Palette.TEXT);
@@ -134,6 +135,12 @@ public class View {
         dealerPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 20, 20));
         playerPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 20, 20));
 
+        /*
+        Images are displayed using ten labels each for the player and dealer.
+        I used ten as I don't know how to dynamically add labels to screen
+        without ruining everything so, unless the player or dealer gets ten aces
+        straight, ten labels should suffice.
+        */
         for (int i = 0; i < dealerHand.length; i++) {
             JLabel dealerCard = new JLabel();
             JLabel playerCard = new JLabel();
@@ -145,6 +152,7 @@ public class View {
 
         layoutOptionsPanel();
 
+        // Fallback for when the background texture fails to load
         if (backgroundPanel.getBackground() != Palette.TABLE) {
             startPanel.setOpaque(false);
             playerPanel.setOpaque(false);
@@ -236,17 +244,6 @@ public class View {
         return option == 0;
     }
 
-    @Deprecated
-    /**
-     * Displays a border around the where the player and dealer's cards are.
-     */
-    public void displayTableBorder() {
-        Border border = new LineBorder(Color.WHITE, 4);
-        Border margin = new EmptyBorder(10, 10, 10, 10);
-        playerPanel.setBorder(new CompoundBorder(margin, border));
-        dealerPanel.setBorder(new CompoundBorder(margin, border));
-    }
-
     /**
      * Places the front side of the dealer's hole card down.
      * 
@@ -282,6 +279,18 @@ public class View {
         String path;
         path = "/images/" + cardStyle + "/" + suit + "/" + value + ".png";
         setIcon(label, path, cardSize);
+    }
+
+    /**
+     * Flips over the dealer's hole card.
+     * 
+     * <p>The dealer's hole card is usually revealed after the player has
+     * finished their turn.
+     * 
+     * @param holeCardName the name of the hole card
+     */
+    public void revealHoleCard(Object holeCardName) {
+        revealHoleCard(holeCardName.toString());
     }
 
     /**

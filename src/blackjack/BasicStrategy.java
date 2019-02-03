@@ -109,16 +109,16 @@ public class BasicStrategy {
      * strategy, can cut the dealer's edge to 0.5%.
      * 
      * @param h17 if the dealer hits a soft 17
-     * @param softHand if the player has a soft hand
+     * @param soft if the player has a soft hand
      * @param p the player's hand value
      * @param d the dealer's front facing card
      * @return the action
      */
-    public static Action generate(boolean h17, boolean softHand, int p, int d) {
+    public static Action generate(boolean h17, boolean soft, int p, int d) {
         if (h17) {
-            return (softHand) ? Action.softH17(p, d) : Action.hardH17(p, d);
+            return (soft) ? Action.softH17(p, d) : Action.hardH17(p, d);
         }
-        return (softHand) ? Action.softS17(p, d) : Action.hardS17(p, d);
+        return (soft) ? Action.softS17(p, d) : Action.hardS17(p, d);
     }
 
     // Suppress default constructor for noninstantiability

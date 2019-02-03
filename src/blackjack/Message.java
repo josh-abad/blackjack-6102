@@ -14,6 +14,13 @@ public class Message {
              + " and " + secondCard + ".";
     }
 
+    public static String deal(String[] initialCards) {
+        if (initialCards.length < 2) {
+            return "";
+        }
+        return deal(initialCards[0], initialCards[1]);
+    }
+
     public static String dealerBlackjack(double bet) {
         return "The Dealer got Blackjack. " + Message.playerLost(bet);
     }
@@ -72,6 +79,10 @@ public class Message {
     public static String quit() {
         return "Are you sure you want to quit? "
              + "You will lose your current winnings.";
+    }
+
+    public static String reshuffle() {
+        return "Deck is reshuffled.";
     }
 
     public static String surrender(double bet) {

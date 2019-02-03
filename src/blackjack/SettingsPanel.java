@@ -33,7 +33,7 @@ public class SettingsPanel extends JPanel {
             deckAmount(),
             minimumBet(),
             dealerBehavior(),
-            handValueVisible()
+            // handValueVisible()
         };
         return settings;
     }
@@ -178,15 +178,16 @@ public class SettingsPanel extends JPanel {
         menuItemsPanel.add(standRadioButton, innerGBC);
 
         innerGBC.gridx = 0;
-        innerGBC.gridy++;
+        // innerGBC.gridy++;
         innerGBC.gridwidth = 2;
-        innerGBC.insets = new Insets(0, 10, 10, 10);
-        menuItemsPanel.add(createSeparator(Palette.DARK_GREY), innerGBC);
+        // innerGBC.insets = new Insets(0, 10, 10, 10);
+        // menuItemsPanel.add(createSeparator(Palette.DARK_GREY), innerGBC);
 
+        /*
         innerGBC.gridy++;
-        innerGBC.gridwidth = 2;
         innerGBC.insets = new Insets(0, 10, 20, 10);
         menuItemsPanel.add(displayHandValue, innerGBC);
+        */
 
         innerGBC.gridy++;
         innerGBC.insets = new Insets(0, 10, 10, 10);
