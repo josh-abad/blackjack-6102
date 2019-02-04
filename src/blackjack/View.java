@@ -92,7 +92,7 @@ public class View {
         handOptionsPanel = new JPanel();
         handOptions = new HashMap<>();
 
-        topPanel.setBackground(Palette.TABLE_DARK);
+        topPanel.setBackground(Palette.TABLE);
         messageLabel.setForeground(Palette.TEXT);
         messageLabel.setFont(font.generateFont(18));
 
@@ -112,8 +112,9 @@ public class View {
         dealerHandValueLabel.setFont(font.generateFont(16));
         playerHandValueLabel.setFont(font.generateFont(16));
 
-        optionsPanel.setBackground(Palette.BLACK);
-        currentBetPanel.setBackground(Palette.BLACK);
+        startPanel.setBackground(Palette.TABLE);
+        optionsPanel.setBackground(Palette.TABLE);
+        currentBetPanel.setBackground(Palette.TABLE);
         betOptionsPanel.setBackground(Palette.BLACK);
         playOptionsPanel.setBackground(Palette.BLACK);
         handOptionsPanel.setBackground(Palette.BLACK);
@@ -152,7 +153,7 @@ public class View {
 
         layoutOptionsPanel();
 
-        // Fallback for when the background texture fails to load
+        // Remove background from every panel so texture can be seen
         if (backgroundPanel.getBackground() != Palette.TABLE) {
             startPanel.setOpaque(false);
             playerPanel.setOpaque(false);
