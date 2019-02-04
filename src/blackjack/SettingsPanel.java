@@ -26,8 +26,8 @@ import javax.swing.border.EmptyBorder;
 
 public class SettingsPanel extends JPanel {
 
-    public SettingsPanel(DefaultFont font) {
-        initPanel(font);
+    public SettingsPanel(DefaultFont font, Palette palette) {
+        initPanel(font, palette);
     }
 
     public int[] getSettings() {
@@ -56,7 +56,7 @@ public class SettingsPanel extends JPanel {
         return (displayHandValue.isSelected()) ? 1 : 0;
     }
 
-    private void initPanel(DefaultFont font) {
+    private void initPanel(DefaultFont font, Palette palette) {
         menuItemsPanel = new JPanel();
         logoLabel = new JLabel();
         nameLabel = new JLabel("Name");
@@ -94,12 +94,12 @@ public class SettingsPanel extends JPanel {
         int len = deckSpinner.getEditor().getComponentCount();
         for (int i = 0; i < len; i++) {
             Component dc = deckSpinner.getEditor().getComponent(i);
-            dc.setBackground(Palette.BLACK);
-            dc.setForeground(Palette.TEXT);
+            dc.setBackground(palette.menu());
+            dc.setForeground(palette.text());
 
             Component bc = betSpinner.getEditor().getComponent(i);
-            bc.setBackground(Palette.BLACK);
-            bc.setForeground(Palette.TEXT);
+            bc.setBackground(palette.menu());
+            bc.setForeground(palette.text());
         }
 
         nameLabel.setFont(font.generate(14));
@@ -117,28 +117,28 @@ public class SettingsPanel extends JPanel {
         displayHandValue.setFont(font.generate(14));
         playButton.setFont(font.generate(14));
 
-        nameLabel.setForeground(Palette.TEXT);
-        houseRulesLabel.setForeground(Palette.LIGHT_GREY);
-        deckAmountLabel.setForeground(Palette.TEXT);
-        minimumBetLabel.setForeground(Palette.TEXT);
-        dealerBehaviorLabel.setForeground(Palette.LIGHT_GREY);
-        standDescriptionLabel.setForeground(Palette.LIGHT_GREY);
-        hitDescriptionLabel.setForeground(Palette.LIGHT_GREY);
-        standRadioButton.setForeground(Palette.TEXT);
-        hitRadioButton.setForeground(Palette.TEXT);
-        displayHandValue.setForeground(Palette.TEXT);
-        playButton.setForeground(Palette.BLACK);
+        nameLabel.setForeground(palette.text());
+        houseRulesLabel.setForeground(palette.heading());
+        deckAmountLabel.setForeground(palette.text());
+        minimumBetLabel.setForeground(palette.text());
+        dealerBehaviorLabel.setForeground(palette.heading());
+        standDescriptionLabel.setForeground(palette.heading());
+        hitDescriptionLabel.setForeground(palette.heading());
+        standRadioButton.setForeground(palette.text());
+        hitRadioButton.setForeground(palette.text());
+        displayHandValue.setForeground(palette.text());
+        playButton.setForeground(palette.menu());
 
         deckSpinner.setBorder(new EmptyBorder(1, 1, 1, 1));
         betSpinner.setBorder(new EmptyBorder(1, 1, 1, 1));
 
-        deckSpinner.setBackground(Palette.DARK_GREY);
-        betSpinner.setBackground(Palette.DARK_GREY);
-        menuItemsPanel.setBackground(Palette.BLACK);
-        standRadioButton.setBackground(Palette.BLACK);
-        hitRadioButton.setBackground(Palette.BLACK);
-        displayHandValue.setBackground(Palette.BLACK);
-        playButton.setBackground(Palette.BUTTON);
+        deckSpinner.setBackground(palette.separator());
+        betSpinner.setBackground(palette.separator());
+        menuItemsPanel.setBackground(palette.menu());
+        standRadioButton.setBackground(palette.menu());
+        hitRadioButton.setBackground(palette.menu());
+        displayHandValue.setBackground(palette.menu());
+        playButton.setBackground(palette.button());
         setOpaque(false);
 
         menuItemsPanel.setLayout(new GridBagLayout());
@@ -166,7 +166,7 @@ public class SettingsPanel extends JPanel {
 
         innerGBC.gridy++;
         innerGBC.insets = new Insets(0, 10, 10, 10);
-        menuItemsPanel.add(createSeparator(Palette.DARK_GREY), innerGBC);
+        menuItemsPanel.add(createSeparator(palette.separator()), innerGBC);
 
         innerGBC.gridy++;
         innerGBC.gridwidth = 1;
@@ -194,7 +194,7 @@ public class SettingsPanel extends JPanel {
 
         innerGBC.gridy++;
         innerGBC.insets = new Insets(0, 10, 10, 10);
-        menuItemsPanel.add(createSeparator(Palette.DARK_GREY), innerGBC);
+        menuItemsPanel.add(createSeparator(palette.separator()), innerGBC);
 
         innerGBC.gridy++;
         innerGBC.gridwidth = 1;
@@ -233,15 +233,6 @@ public class SettingsPanel extends JPanel {
         separator.setForeground(fg);
         separator.setBackground(fg);
         return separator;
-    }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(250, 400);
-        frame.setLocationRelativeTo(null);
-        frame.add(new SettingsPanel(new DefaultFont("Segoe UI")));
-        frame.setVisible(true);
     }
 
     public void initPlayActionListener(ActionListener l) {

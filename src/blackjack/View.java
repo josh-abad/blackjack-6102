@@ -1,10 +1,12 @@
 package blackjack;
 
+import design.DarkPalette;
 import design.Format;
 import design.DefaultFont;
 import design.Palette;
 import design.ImageResizer;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -48,15 +50,16 @@ public class View {
         }
 
         font = new DefaultFont("Segoe UI");
+        palette = new DarkPalette();
 
         // Styling for the option pane
         UIManager.put("OptionPane.messageFont", font.generate(14));
-        UIManager.put("OptionPane.background", Palette.BLACK);
-        UIManager.put("OptionPane.messageForeground", Palette.TEXT);
-        UIManager.put("Panel.background", Palette.BLACK);
+        UIManager.put("OptionPane.background", palette.menu());
+        UIManager.put("OptionPane.messageForeground", palette.text());
+        UIManager.put("Panel.background", palette.menu());
         UIManager.put("OptionPane.buttonFont", font.generate(12));
-        UIManager.put("Button.foreground", Palette.TEXT);
-        UIManager.put("Button.background", Palette.BLACK);
+        UIManager.put("Button.foreground", palette.text());
+        UIManager.put("Button.background", palette.menu());
 
         startPanel = new JPanel();
         topPanel = new JPanel();
@@ -67,7 +70,7 @@ public class View {
         messageLabel = new JLabel();
         chipsLabel = new JLabel();
 
-        settingsPanel = new SettingsPanel(font);
+        settingsPanel = new SettingsPanel(font, palette);
 
         tablePanel = new JPanel();
         dealerHandValueLabel = new JLabel();        
@@ -89,11 +92,11 @@ public class View {
         handOptionsPanel = new JPanel();
         handOptions = new HashMap<>();
 
-        topPanel.setBackground(Palette.TABLE);
-        messageLabel.setForeground(Palette.TEXT);
+        topPanel.setBackground(palette.table());
+        messageLabel.setForeground(Color.WHITE);
         messageLabel.setFont(font.generate(18));
 
-        chipsLabel.setForeground(Palette.TEXT);
+        chipsLabel.setForeground(Color.WHITE);
         chipsLabel.setFont(font.generate(36));
 
         setIcon(chipsLabel, "/images/chip.png", 36);
@@ -101,23 +104,23 @@ public class View {
         setIcon(trueCountLabel, "/images/card_count.png", 30);
         setIcon(currentBetValueLabel, "/images/bet.png", 30);
 
-        tablePanel.setBackground(Palette.TABLE);
-        dealerHandValueLabel.setForeground(Palette.TEXT);
-        dealerPanel.setBackground(Palette.TABLE);
-        playerHandValueLabel.setForeground(Palette.TEXT);
-        playerPanel.setBackground(Palette.TABLE);
+        tablePanel.setBackground(palette.table());
+        dealerHandValueLabel.setForeground(Color.WHITE);
+        dealerPanel.setBackground(palette.table());
+        playerHandValueLabel.setForeground(Color.WHITE);
+        playerPanel.setBackground(palette.table());
         dealerHandValueLabel.setFont(font.generate(16));
         playerHandValueLabel.setFont(font.generate(16));
 
-        startPanel.setBackground(Palette.TABLE);
-        optionsPanel.setBackground(Palette.TABLE);
-        currentBetPanel.setBackground(Palette.TABLE);
-        betOptionsPanel.setBackground(Palette.BLACK);
-        playOptionsPanel.setBackground(Palette.BLACK);
-        handOptionsPanel.setBackground(Palette.BLACK);
-        deckCountLabel.setForeground(Palette.TEXT);
-        trueCountLabel.setForeground(Palette.TEXT);
-        currentBetValueLabel.setForeground(Palette.TEXT);
+        startPanel.setBackground(palette.table());
+        optionsPanel.setBackground(palette.table());
+        currentBetPanel.setBackground(palette.table());
+        betOptionsPanel.setBackground(palette.menu());
+        playOptionsPanel.setBackground(palette.menu());
+        handOptionsPanel.setBackground(palette.menu());
+        deckCountLabel.setForeground(Color.WHITE);
+        trueCountLabel.setForeground(Color.WHITE);
+        currentBetValueLabel.setForeground(Color.WHITE);
         deckCountLabel.setFont(font.generate(30));
         trueCountLabel.setFont(font.generate(30));
         currentBetValueLabel.setFont(font.generate(30));
@@ -151,7 +154,7 @@ public class View {
         layoutOptionsPanel();
 
         // Remove background from every panel so texture can be seen
-        if (backgroundPanel.getBackground() != Palette.TABLE) {
+        if (backgroundPanel.getBackground() != palette.table()) {
             startPanel.setOpaque(false);
             playerPanel.setOpaque(false);
             dealerPanel.setOpaque(false);
@@ -550,7 +553,7 @@ public class View {
     {
         JLabel label = new JLabel(name);
         label.setFont(font.generate(12, Font.BOLD));
-        label.setForeground(Palette.LIGHT_GREY);
+        label.setForeground(palette.heading());
 
         panel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -562,8 +565,8 @@ public class View {
         panel.add(label, gbc);
 
         JSeparator separator = new JSeparator();
-        separator.setForeground(Palette.DARK_GREY);
-        separator.setBackground(Palette.DARK_GREY);
+        separator.setForeground(palette.separator());
+        separator.setBackground(palette.separator());
 
         gbc.gridy++;
         gbc.insets = new Insets(0, 10, 10, 10);
@@ -577,8 +580,8 @@ public class View {
             int right = (i == options.length - 1) ? 10 : 0;
             gbc.insets = new Insets(0, 10, 10, right);
             JButton option = new JButton(options[i]);
-            option.setForeground(Palette.TEXT);
-            option.setBackground(Palette.BLACK);
+            option.setForeground(palette.text());
+            option.setBackground(palette.menu());
             option.setFont(font.generate(16));
 
             if (hasIcon) {
@@ -746,6 +749,7 @@ public class View {
     private final JPanel handOptionsPanel;
     private final Map<String, JButton> handOptions;
     private final DefaultFont font;
+    private final Palette palette;
     
     private final String cardStyle = "classic";
     private final int cardSize = 115;

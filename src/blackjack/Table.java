@@ -1,6 +1,6 @@
 package blackjack;
 
-import design.Palette;
+import design.DarkPalette;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -30,7 +30,7 @@ public class Table extends JPanel {
             texture = icon.getImage();
         } catch (NullPointerException ex) {
             System.out.println("Could not find " + path);
-            setBackground(Palette.TABLE);
+            setBackground(new DarkPalette().table());
         }
     }
 

@@ -6,23 +6,20 @@ import java.awt.Color;
  * A color palette for the blackjack GUI.
  * @author Joshua Abad
  */
-public class Palette {
+public interface Palette {
     
-    public static final Color BLACK = new Color(26, 26, 27);
-    public static final Color DARK_GREY = new Color(52, 53, 54);
-    public static final Color LIGHT_GREY = new Color(129, 131, 132);
-    public static final Color TABLE = new Color(0, 102, 51);
-    public static final Color TABLE_DARK = TABLE.darker();
-    public static final Color TABLE_DARKER = TABLE_DARK.darker();
-    public static final Color TABLE_DARKEST = TABLE_DARKER.darker();
-    public static final Color TABLE_LIGHT = TABLE.brighter();
-    public static final Color TEXT = Color.WHITE;
-    public static final Color GREEN = new Color(42, 193, 88);
-    public static final Color RED = new Color(201, 63, 63);
-    public static final Color BUTTON = new Color(215, 218, 220);
+    Color background();
+    Color menu();
+    Color separator();
+    Color heading();
+    Color text();
+    Color button();
 
-    // Suppress default constructor for noninstantiability
-    private Palette() {
-        throw new AssertionError();
-    }
+    default Color table() { return new Color(0, 102, 51); }
+    default Color tableDark() { return table().darker(); }
+    default Color tableDarker() { return tableDark().darker(); }
+    default Color tableDarkest() { return tableDarker().darker(); }
+    default Color tableLight() { return table().brighter(); }
+    default Color green() { return new Color(42, 193, 88); }
+    default Color red() { return new Color(201, 63, 63); }
 }
