@@ -21,8 +21,8 @@ public class DefaultFont {
      * @param size the point size of the font
      * @return the font
      */
-    public Font generateFont(int size) {
-        return generateFont(size, Font.PLAIN);
+    public Font generate(int size) {
+        return generate(size, Font.PLAIN);
     }
     
     /**
@@ -31,7 +31,7 @@ public class DefaultFont {
      * @param style the style of the font
      * @return the font
      */
-    public Font generateFont(int size, int style) {
+    public Font generate(int size, int style) {
         return new Font(name, style, size);
     }
     

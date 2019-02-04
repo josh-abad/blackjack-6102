@@ -5,8 +5,8 @@ import design.DefaultFont;
 import design.Palette;
 import design.ImageResizer;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -22,12 +22,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 
 public class View {
 
@@ -53,11 +50,11 @@ public class View {
         font = new DefaultFont("Segoe UI");
 
         // Styling for the option pane
-        UIManager.put("OptionPane.messageFont", font.generateFont(14));
+        UIManager.put("OptionPane.messageFont", font.generate(14));
         UIManager.put("OptionPane.background", Palette.BLACK);
         UIManager.put("OptionPane.messageForeground", Palette.TEXT);
         UIManager.put("Panel.background", Palette.BLACK);
-        UIManager.put("OptionPane.buttonFont", font.generateFont(12));
+        UIManager.put("OptionPane.buttonFont", font.generate(12));
         UIManager.put("Button.foreground", Palette.TEXT);
         UIManager.put("Button.background", Palette.BLACK);
 
@@ -94,10 +91,10 @@ public class View {
 
         topPanel.setBackground(Palette.TABLE);
         messageLabel.setForeground(Palette.TEXT);
-        messageLabel.setFont(font.generateFont(18));
+        messageLabel.setFont(font.generate(18));
 
         chipsLabel.setForeground(Palette.TEXT);
-        chipsLabel.setFont(font.generateFont(36));
+        chipsLabel.setFont(font.generate(36));
 
         setIcon(chipsLabel, "/images/chip.png", 36);
         setIcon(deckCountLabel, "/images/deck.png", 30);
@@ -109,8 +106,8 @@ public class View {
         dealerPanel.setBackground(Palette.TABLE);
         playerHandValueLabel.setForeground(Palette.TEXT);
         playerPanel.setBackground(Palette.TABLE);
-        dealerHandValueLabel.setFont(font.generateFont(16));
-        playerHandValueLabel.setFont(font.generateFont(16));
+        dealerHandValueLabel.setFont(font.generate(16));
+        playerHandValueLabel.setFont(font.generate(16));
 
         startPanel.setBackground(Palette.TABLE);
         optionsPanel.setBackground(Palette.TABLE);
@@ -121,9 +118,9 @@ public class View {
         deckCountLabel.setForeground(Palette.TEXT);
         trueCountLabel.setForeground(Palette.TEXT);
         currentBetValueLabel.setForeground(Palette.TEXT);
-        deckCountLabel.setFont(font.generateFont(30));
-        trueCountLabel.setFont(font.generateFont(30));
-        currentBetValueLabel.setFont(font.generateFont(30));
+        deckCountLabel.setFont(font.generate(30));
+        trueCountLabel.setFont(font.generate(30));
+        currentBetValueLabel.setFont(font.generate(30));
 
         frame.add(backgroundPanel, BorderLayout.CENTER);
 
@@ -467,15 +464,15 @@ public class View {
         for (int i = 0; i < stringOptions.length; i++) {
             stringOptions[i] = String.valueOf(options[i]);
         }
-        initOptions(stringOptions, betOptions, betOptionsPanel, true);
+        initOptions("CHIPS", stringOptions, betOptions, betOptionsPanel, true);
     }
 
     public void initPlayOptions(String[] options) {
-        initOptions(options, this.playOptions, playOptionsPanel, false);
+        initOptions("CHOICES", options, this.playOptions, playOptionsPanel, false);
     }
 
     public void initHandOptions(String[] options) {
-        initOptions(options, this.handOptions, handOptionsPanel, false);
+        initOptions("OPTIONS", options, this.handOptions, handOptionsPanel, false);
     }
 
     /**
@@ -545,22 +542,44 @@ public class View {
         }
     }
 
-    private void initOptions(String[] options,
+    private void initOptions(String name,
+                             String[] options,
                              Map<String, JButton> map,
                              JPanel panel,
                              boolean hasIcon)
     {
+        JLabel label = new JLabel(name);
+        label.setFont(font.generate(12, Font.BOLD));
+        label.setForeground(Palette.LIGHT_GREY);
+
         panel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = options.length;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(10, 10, 2, 10);
+        panel.add(label, gbc);
+
+        JSeparator separator = new JSeparator();
+        separator.setForeground(Palette.DARK_GREY);
+        separator.setBackground(Palette.DARK_GREY);
+
+        gbc.gridy++;
+        gbc.insets = new Insets(0, 10, 10, 10);
+        panel.add(separator, gbc);
+
+        gbc.gridy++;
+        gbc.gridwidth = 1;
+        gbc.fill = GridBagConstraints.NONE;
         for (int i = 0; i < options.length; i++) {
             gbc.gridx = i;
-            gbc.gridy = 0;
             int right = (i == options.length - 1) ? 10 : 0;
-            gbc.insets = new Insets(10, 10, 10, right);
+            gbc.insets = new Insets(0, 10, 10, right);
             JButton option = new JButton(options[i]);
             option.setForeground(Palette.TEXT);
             option.setBackground(Palette.BLACK);
-            option.setFont(font.generateFont(16));
+            option.setFont(font.generate(16));
 
             if (hasIcon) {
                 String path = "/images/" + options[i] + ".png";
