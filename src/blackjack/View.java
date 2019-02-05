@@ -684,7 +684,7 @@ public class View {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.insets = new Insets(0, 20, 0, 0);
+        gbc.insets = new Insets(10, 20, 0, 0);
         gbc.anchor = GridBagConstraints.FIRST_LINE_START;
         tablePanel.add(dealerHandValueLabel, gbc);
 
@@ -693,7 +693,7 @@ public class View {
         gbc.ipadx = 100;
         gbc.weightx = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(0, 0, 40, 0);
+        gbc.insets = new Insets(0, 0, 10, 0);
         tablePanel.add(dealerPanel, gbc);
 
         gbc.gridy++;
