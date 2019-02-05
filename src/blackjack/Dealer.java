@@ -6,6 +6,10 @@ package blackjack;
  */
 public class Dealer extends Player {
 
+    public Dealer() {
+        super("Dealer");
+    }
+
     /**
      * Determines if this dealer has a soft 17. 
      * 

@@ -11,7 +11,8 @@ import java.util.List;
  */
 abstract public class Player {
 
-    public Player() {
+    public Player(String name) {
+        this.name = name;
         this.hand = new ArrayList<>();
     }
 
@@ -123,5 +124,11 @@ abstract public class Player {
         return hand;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    private final String name;
     private final List<Card> hand;
 }

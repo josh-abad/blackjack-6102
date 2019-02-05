@@ -14,7 +14,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -22,7 +21,9 @@ import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 public class SettingsPanel extends JPanel {
 
@@ -30,14 +31,19 @@ public class SettingsPanel extends JPanel {
         initPanel(font, palette);
     }
 
-    public int[] getSettings() {
-        int[] settings = {
+    public Object[] getSettings() {
+        Object[] settings = {
+            name(),
             deckAmount(),
             minimumBet(),
             dealerBehavior(),
             // handValueVisible()
         };
         return settings;
+    }
+
+    private String name() {
+        return nameTextField.getText();
     }
 
     private int dealerBehavior() {
@@ -59,6 +65,7 @@ public class SettingsPanel extends JPanel {
     private void initPanel(DefaultFont font, Palette palette) {
         menuItemsPanel = new JPanel();
         logoLabel = new JLabel();
+        playerLabel = new JLabel("PLAYER");
         nameLabel = new JLabel("Name");
         houseRulesLabel = new JLabel("HOUSE RULES");
         deckAmountLabel = new JLabel("Number of decks");
@@ -102,6 +109,7 @@ public class SettingsPanel extends JPanel {
             bc.setForeground(palette.text());
         }
 
+        playerLabel.setFont(font.generate(12, Font.BOLD));
         nameLabel.setFont(font.generate(14));
         houseRulesLabel.setFont(font.generate(12, Font.BOLD));
         deckAmountLabel.setFont(font.generate(14));
@@ -117,6 +125,7 @@ public class SettingsPanel extends JPanel {
         displayHandValue.setFont(font.generate(14));
         playButton.setFont(font.generate(14));
 
+        playerLabel.setForeground(palette.heading());
         nameLabel.setForeground(palette.text());
         houseRulesLabel.setForeground(palette.heading());
         deckAmountLabel.setForeground(palette.text());
@@ -124,14 +133,19 @@ public class SettingsPanel extends JPanel {
         dealerBehaviorLabel.setForeground(palette.heading());
         standDescriptionLabel.setForeground(palette.heading());
         hitDescriptionLabel.setForeground(palette.heading());
+        nameTextField.setForeground(palette.text());
         standRadioButton.setForeground(palette.text());
         hitRadioButton.setForeground(palette.text());
         displayHandValue.setForeground(palette.text());
         playButton.setForeground(palette.menu());
 
-        deckSpinner.setBorder(new EmptyBorder(1, 1, 1, 1));
-        betSpinner.setBorder(new EmptyBorder(1, 1, 1, 1));
+        EmptyBorder eb = new EmptyBorder(1, 1, 1, 1);
+        LineBorder lb = new LineBorder(palette.separator());
+        nameTextField.setBorder(new CompoundBorder(lb, eb));
+        deckSpinner.setBorder(eb);
+        betSpinner.setBorder(eb);
 
+        nameTextField.setBackground(palette.menu());
         deckSpinner.setBackground(palette.separator());
         betSpinner.setBackground(palette.separator());
         menuItemsPanel.setBackground(palette.menu());
@@ -162,6 +176,25 @@ public class SettingsPanel extends JPanel {
         innerGBC.gridwidth = 2;
         innerGBC.insets = new Insets(10, 10, 2, 10);
         innerGBC.fill = GridBagConstraints.HORIZONTAL;
+        menuItemsPanel.add(playerLabel, innerGBC);
+
+        innerGBC.gridy++;
+        innerGBC.insets = new Insets(0, 10, 10, 10);
+        menuItemsPanel.add(createSeparator(palette.separator()), innerGBC);
+
+        innerGBC.gridy++;
+        innerGBC.gridwidth = 1;
+        innerGBC.insets = new Insets(0, 10, 10, 10);
+        menuItemsPanel.add(nameLabel, innerGBC);
+
+        innerGBC.gridx++;
+        innerGBC.insets = new Insets(0, 0, 10, 10);
+        menuItemsPanel.add(nameTextField, innerGBC);
+
+        innerGBC.gridx = 0;
+        innerGBC.gridy++;
+        innerGBC.gridwidth = 2;
+        innerGBC.insets = new Insets(10, 10, 2, 10);
         menuItemsPanel.add(houseRulesLabel, innerGBC);
 
         innerGBC.gridy++;
@@ -241,6 +274,7 @@ public class SettingsPanel extends JPanel {
 
     private JPanel menuItemsPanel;
     private JLabel logoLabel;
+    private JLabel playerLabel;
     private JLabel nameLabel;
     private JLabel houseRulesLabel;
     private JLabel deckAmountLabel;

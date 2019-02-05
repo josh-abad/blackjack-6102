@@ -7,20 +7,40 @@ package blackjack;
 public class BlackjackPlayer extends Player {
 
     /**
-     * Creates a new {@code BlackjackPlayer} with the specified amount of chips.
+     * Creates a new {@code BlackjackPlayer} with the specified name and
+     * amount of chips.
+     * @param name the player's name
      * @param bankroll the starting amount of chips
      */
-    public BlackjackPlayer(double bankroll) {
-        super();
+    public BlackjackPlayer(String name, double bankroll) {
+        super(name);
         this.bankroll = bankroll;
         this.bet = 0;
     }    
 
     /**
-     * Creates a new {@code BlackjackPlayer} with 1,000 bankroll.
+     * Creates a new {@code BlackjackPlayer} with 1,000 chips and the specified
+     * name.
+     * @param name the player's name
+     */
+    public BlackjackPlayer(String name) {
+        this(name, 1000);
+    }    
+
+    /**
+     * Creates a new {@code BlackjackPlayer} named Player with the specified
+     * amount of chips.
+     * @param bankroll the starting amount of chips
+     */
+    public BlackjackPlayer(double bankroll) {
+        this("Player", bankroll);
+    }    
+
+    /**
+     * Creates a new {@code BlackjackPlayer} named Player with 1,000 chips.
      */
     public BlackjackPlayer() {
-        this(1000);
+        this("Player", 1000);
     }    
 
     /**

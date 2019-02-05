@@ -39,8 +39,7 @@ public class Controller {
             } else {
                 view.disableButton("Deal");
             }
-            view.disableButton("Next Hand");
-            view.disableButton("Hint");
+            view.disableButton("Next Hand", "Hint");
         }
     }
 
@@ -78,21 +77,19 @@ public class Controller {
             view.updateDeckCount(model.deckCount());
             view.updateTrueCount(model.getTrueCount());
             view.displayMessage(Message.hit(card));
-            view.updatePlayerHandValue(model.playerHandValue(),
-                                       model.playerHasSoftHand());
+            view.updatePlayerHandValue(
+                    model.playerName(),
+                    model.playerHandValue(),
+                    model.playerHasSoftHand()
+            );
             view.updatePlayerCards(model.playerCardNames());
             view.disableButton("Surrender");
-            if (model.shoeIsEmpty()) {
-                view.displayMessage(Message.deckIsEmpty());
-                view.disableButton("Hit");
-                view.disableButton("Double Down");
-                view.disableButton("Hint");
+            if (model.wentOver() || model.shoeIsEmpty()) {
+                view.disableButton("Hit", "Double Down", "Hint");
+                if (model.shoeIsEmpty()) {
+                    view.displayMessage(Message.deckIsEmpty());
+                }
             }
-            if (model.wentOver()) {
-                view.disableButton("Hit");
-                view.disableButton("Double Down");
-                view.disableButton("Hint");
-            } 
         }
     }
 
@@ -111,7 +108,8 @@ public class Controller {
             view.updatePlayerCards(model.playerCardNames());
             view.updateDealerCards(model.dealerCardNames());
 
-            view.updatePlayerHandValue(model.playerHandValue(),
+            view.updatePlayerHandValue(model.playerName(),
+                                       model.playerHandValue(),
                                        model.playerHasSoftHand());
             view.updateDealerHandValue(model.dealerHandValue(),
                                        model.dealerHasSoftHand());
@@ -160,17 +158,17 @@ public class Controller {
             view.updateTrueCount(model.getTrueCount());
 
             view.displayMessage(Message.doubleDown(model.playerBet(), card));
-            view.updatePlayerHandValue(model.playerHandValue(),
-                                       model.playerHasSoftHand());
+            view.updatePlayerHandValue(
+                    model.playerName(),
+                    model.playerHandValue(),
+                    model.playerHasSoftHand()
+            );
         
             view.updatePlayerCards(model.playerCardNames());
         
             view.updateStats(model.playerChips(), model.playerBet());
             view.updateDeckCount(model.deckCount());
-            view.disableButton("Hit");
-            view.disableButton("Double Down");
-            view.disableButton("Surrender");
-            view.disableButton("Hint");
+            view.disableButton("Hit", "Double Down", "Surrender", "Hint");
         }
     }
 
@@ -221,8 +219,11 @@ public class Controller {
 
             view.displayMessage(Message.deal(model.initialCards()));
 
-            view.updatePlayerHandValue(model.playerHandValue(),
-                                       model.playerHasSoftHand());
+            view.updatePlayerHandValue(
+                    model.playerName(),
+                    model.playerHandValue(),
+                    model.playerHasSoftHand()
+            );
             view.updateDealerHandValue(model.dealerFrontCard());
 
             view.updatePlayerCards(model.playerCardNames());
@@ -279,8 +280,7 @@ public class Controller {
             }
 
             view.resetHandValue();
-            view.disableButton("Next Hand");
-            view.disableButton("Hint");
+            view.disableButton("Next Hand", "Hint");
             model.resetHand();
 
             view.disableAllChoices();

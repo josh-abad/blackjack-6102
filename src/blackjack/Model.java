@@ -153,10 +153,16 @@ public class Model {
         resetBet();
     }
 
-    public void loadSettings(int[] settings) {
-        int deckAmount = settings[0];
-        minimumBet = settings[1];
-        stand17 = settings[2] == 1;
+    public void loadSettings(Object[] settings) {
+        String name = (String) settings[0];
+        if (name.isEmpty()) {
+            player = new BlackjackPlayer();
+        } else {
+            player = new BlackjackPlayer(name);
+        }
+        int deckAmount = (int) settings[1];
+        minimumBet = (int) settings[2];
+        stand17 = (int) settings[3] == 1;
         shoe = new Shoe(deckAmount);
         shoe.shuffle();
     }
@@ -323,7 +329,7 @@ public class Model {
     }
 
     public void restartGame() {
-        player = new BlackjackPlayer(BANKROLL);
+        // player = new BlackjackPlayer(BANKROLL);
         dealer = new Dealer();
         discardDeck = new ArrayList<>();
         runningCount = 0;
@@ -415,6 +421,10 @@ public class Model {
 
     public int playerHandValue() {
         return player.getHandValue();
+    }
+
+    public String playerName() {
+        return player + "";
     }
 
     private boolean bothBelowLimit(Player player, Player opponent) {

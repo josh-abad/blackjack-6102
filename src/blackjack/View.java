@@ -229,6 +229,7 @@ public class View {
     /**
      * Displays a message on the screen with the specified icon.
      * @param message the message
+     * @param path the path to the icon
      */
     public void displayMessage(String message, String path) {
         messageLabel.setText(message);
@@ -422,15 +423,16 @@ public class View {
     /**
      * Updates the maximum value and the type of the player's hand.
      * 
-     * @param   playerHandValue the player's hand value
-     * @param   isSoft if true, an S indicating a soft hand will be displayed 
+     * @param   name the player's name
+     * @param   value the player's hand value
+     * @param   soft if true, an S indicating a soft hand will be displayed 
      *          next to the value, else an H for a hard hand
      */
-    public void updatePlayerHandValue(int playerHandValue, boolean isSoft) {
-        playerHandValueLabel.setText(playerHandValue + " — Player");
+    public void updatePlayerHandValue(String name, int value, boolean soft) {
+        playerHandValueLabel.setText(value + " — " + name);
 
         String path = "/images/";
-        path += (isSoft) ? "soft.png" : "hard.png";
+        path += (soft) ? "soft.png" : "hard.png";
         int size = playerHandValueLabel.getFont().getSize();
         setIcon(playerHandValueLabel, path, size);
     }
@@ -457,9 +459,8 @@ public class View {
         return betOptions.values();
     }
 
-    public int[] getSettings() {
-        SettingsPanel settings = (SettingsPanel) settingsPanel;
-        return settings.getSettings();
+    public Object[] getSettings() {
+        return settingsPanel.getSettings();
     }
 
     public void initBetOptions(int[] options) {
@@ -509,17 +510,19 @@ public class View {
      * {@code New Game} and {@code Quit Game}. Choices include: {@code Hit},
      * {@code Double Down}, {@code Surrender} and {@code Stand}.
      * 
-     * @param key the name of the button 
+     * @param keys the names of the buttons 
      */
-    public void disableButton(String key) {
-        if (handOptions.containsKey(key)) {
-            handOptions.get(key).setEnabled(false);
-            handOptions.get(key).setVisible(false);
-        } else if (playOptions.containsKey(key)) {
-            playOptions.get(key).setEnabled(false);
-            playOptions.get(key).setVisible(false);
-        } else {
-            System.err.println("Invalid key: " + key);
+    public void disableButton(String ... keys) {
+        for (String key : keys) {
+            if (handOptions.containsKey(key)) {
+                handOptions.get(key).setEnabled(false);
+                handOptions.get(key).setVisible(false);
+            } else if (playOptions.containsKey(key)) {
+                playOptions.get(key).setEnabled(false);
+                playOptions.get(key).setVisible(false);
+            } else {
+                System.err.println("Invalid key: " + key);
+            }
         }
     }
 
@@ -531,17 +534,19 @@ public class View {
      * {@code New Game} and {@code Quit Game}. Choices include: {@code Hit},
      * {@code Double Down}, {@code Surrender} and {@code Stand}.
      * 
-     * @param key the name of the button 
+     * @param keys the names of the buttons 
      */
-    public void enableButton(String key) {
-        if (handOptions.containsKey(key)) {
-            handOptions.get(key).setEnabled(true);
-            handOptions.get(key).setVisible(true);
-        } else if (playOptions.containsKey(key)) {
-            playOptions.get(key).setEnabled(true);
-            playOptions.get(key).setVisible(true);
-        } else {
-            System.err.println("Invalid key: " + key);
+    public void enableButton(String ... keys) {
+        for (String key : keys) {
+            if (handOptions.containsKey(key)) {
+                handOptions.get(key).setEnabled(true);
+                handOptions.get(key).setVisible(true);
+            } else if (playOptions.containsKey(key)) {
+                playOptions.get(key).setEnabled(true);
+                playOptions.get(key).setVisible(true);
+            } else {
+                System.err.println("Invalid key: " + key);
+            }
         }
     }
 
