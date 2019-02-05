@@ -14,6 +14,7 @@ public interface Palette {
     Color heading();
     Color text();
     Color button();
+    Color altButton();
 
     default Color table() { return new Color(0, 102, 51); }
     default Color tableDark() { return table().darker(); }

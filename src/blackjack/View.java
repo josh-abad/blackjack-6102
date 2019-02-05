@@ -5,14 +5,19 @@ import design.Format;
 import design.DefaultFont;
 import design.Palette;
 import design.ImageResizer;
+import design.LightPalette;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -27,8 +32,17 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
 
 public class View {
+
+    public static final DefaultFont FONT;
+    public static final Palette PALETTE = new DarkPalette();
+
+    static {
+        loadFont();
+        FONT = new DefaultFont("IBM Plex Sans");
+    }
 
     public View() {
         frame = new JFrame("Blackjack");
@@ -49,17 +63,14 @@ public class View {
             System.err.println("Could not find " + path);
         }
 
-        font = new DefaultFont("Segoe UI");
-        palette = new DarkPalette();
-
         // Styling for the option pane
-        UIManager.put("OptionPane.messageFont", font.generate(14));
-        UIManager.put("OptionPane.background", palette.menu());
-        UIManager.put("OptionPane.messageForeground", palette.text());
-        UIManager.put("Panel.background", palette.menu());
-        UIManager.put("OptionPane.buttonFont", font.generate(12));
-        UIManager.put("Button.foreground", palette.text());
-        UIManager.put("Button.background", palette.menu());
+        UIManager.put("OptionPane.messageFont", FONT.generate(14));
+        UIManager.put("OptionPane.background", PALETTE.menu());
+        UIManager.put("OptionPane.messageForeground", PALETTE.text());
+        UIManager.put("Panel.background", PALETTE.menu());
+        UIManager.put("OptionPane.buttonFont", FONT.generate(12));
+        UIManager.put("Button.foreground", PALETTE.menu());
+        UIManager.put("Button.background", PALETTE.button());
 
         startPanel = new JPanel();
         topPanel = new JPanel();
@@ -67,10 +78,38 @@ public class View {
 
         setIcon(titleLabel, "/images/default_logo.png", 150);
 
+        messagePanel = new JPanel();
+        messageHeader = new JLabel("MESSAGE");
         messageLabel = new JLabel();
+
+        messageHeader.setForeground(PALETTE.heading());
+        messageHeader.setFont(FONT.generate(12, Font.BOLD));
+
+        messagePanel.setBorder(new LineBorder(PALETTE.separator()));
+        messagePanel.setBackground(PALETTE.menu());
+        messagePanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(10, 10, 2, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        messagePanel.add(messageHeader, gbc);
+
+        JSeparator separator = new JSeparator();
+        separator.setForeground(PALETTE.separator());
+        separator.setBackground(PALETTE.separator());
+
+        gbc.gridy++;
+        gbc.insets = new Insets(0, 10, 10, 10);
+        messagePanel.add(separator, gbc);
+
+        gbc.gridy++;
+        gbc.insets = new Insets(0, 10, 10, 10);
+        messagePanel.add(messageLabel, gbc);
+
         chipsLabel = new JLabel();
 
-        settingsPanel = new SettingsPanel(font, palette);
+        settingsPanel = new SettingsPanel((ImageIcon) titleLabel.getIcon());
 
         tablePanel = new JPanel();
         dealerHandValueLabel = new JLabel();        
@@ -92,38 +131,39 @@ public class View {
         handOptionsPanel = new JPanel();
         handOptions = new HashMap<>();
 
-        topPanel.setBackground(palette.table());
-        messageLabel.setForeground(Color.WHITE);
-        messageLabel.setFont(font.generate(18));
+        topPanel.setBackground(PALETTE.table());
+        messageLabel.setForeground(PALETTE.text());
+        messageLabel.setFont(FONT.generate(18));
 
         chipsLabel.setForeground(Color.WHITE);
-        chipsLabel.setFont(font.generate(36));
+        chipsLabel.setFont(FONT.generate(36));
 
         setIcon(chipsLabel, "/images/chip.png", 36);
-        setIcon(deckCountLabel, "/images/deck.png", 30);
-        setIcon(trueCountLabel, "/images/card_count.png", 30);
-        setIcon(currentBetValueLabel, "/images/bet.png", 30);
+        String mode = (PALETTE instanceof LightPalette) ? "light" : "dark";
+        setIcon(deckCountLabel, "/images/" + mode + "/deck.png", 36);
+        setIcon(trueCountLabel, "/images/" + mode + "/card_count.png", 36);
+        setIcon(currentBetValueLabel, "/images/" + mode + "/bet.png", 36);
 
-        tablePanel.setBackground(palette.table());
+        tablePanel.setBackground(PALETTE.table());
         dealerHandValueLabel.setForeground(Color.WHITE);
-        dealerPanel.setBackground(palette.table());
+        dealerPanel.setBackground(PALETTE.table());
         playerHandValueLabel.setForeground(Color.WHITE);
-        playerPanel.setBackground(palette.table());
-        dealerHandValueLabel.setFont(font.generate(16));
-        playerHandValueLabel.setFont(font.generate(16));
+        playerPanel.setBackground(PALETTE.table());
+        dealerHandValueLabel.setFont(FONT.generate(16));
+        playerHandValueLabel.setFont(FONT.generate(16));
 
-        startPanel.setBackground(palette.table());
-        optionsPanel.setBackground(palette.table());
-        currentBetPanel.setBackground(palette.table());
-        betOptionsPanel.setBackground(palette.menu());
-        playOptionsPanel.setBackground(palette.menu());
-        handOptionsPanel.setBackground(palette.menu());
-        deckCountLabel.setForeground(Color.WHITE);
-        trueCountLabel.setForeground(Color.WHITE);
-        currentBetValueLabel.setForeground(Color.WHITE);
-        deckCountLabel.setFont(font.generate(30));
-        trueCountLabel.setFont(font.generate(30));
-        currentBetValueLabel.setFont(font.generate(30));
+        startPanel.setBackground(PALETTE.table());
+        optionsPanel.setBackground(PALETTE.table());
+        currentBetPanel.setBackground(PALETTE.table());
+        betOptionsPanel.setBackground(PALETTE.menu());
+        playOptionsPanel.setBackground(PALETTE.menu());
+        handOptionsPanel.setBackground(PALETTE.menu());
+        deckCountLabel.setForeground(PALETTE.text());
+        trueCountLabel.setForeground(PALETTE.text());
+        currentBetValueLabel.setForeground(PALETTE.text());
+        deckCountLabel.setFont(FONT.generate(36));
+        trueCountLabel.setFont(FONT.generate(36));
+        currentBetValueLabel.setFont(FONT.generate(36));
 
         frame.add(backgroundPanel, BorderLayout.CENTER);
 
@@ -154,13 +194,14 @@ public class View {
         layoutOptionsPanel();
 
         // Remove background from every panel so texture can be seen
-        if (backgroundPanel.getBackground() != palette.table()) {
+        if (backgroundPanel.getBackground() != PALETTE.table()) {
             startPanel.setOpaque(false);
             playerPanel.setOpaque(false);
             dealerPanel.setOpaque(false);
             topPanel.setOpaque(false);
             tablePanel.setOpaque(false);
-            optionsPanel.setOpaque(false);
+            optionsPanel.setBackground(PALETTE.background());
+            // optionsPanel.setOpaque(false);
             currentBetPanel.setOpaque(false);
         }
     }
@@ -177,9 +218,9 @@ public class View {
         String path = "/images/blank.png";
         try {
             ImageIcon icon = new ImageIcon(View.class.getResource(path));
-            resetImages(ImageResizer.getScaledImage(icon, cardSize),
+            resetImages(ImageResizer.getScaledImage(icon, CARD_SIZE),
                         playerHand);
-            resetImages(ImageResizer.getScaledImage(icon, cardSize),
+            resetImages(ImageResizer.getScaledImage(icon, CARD_SIZE),
                         dealerHand);
         } catch (NullPointerException ex) {
             resetImages(null, playerHand);
@@ -194,6 +235,7 @@ public class View {
     public void clearMessage() {
         messageLabel.setText("");
         messageLabel.setIcon(null);
+        messagePanel.setVisible(false);
     }
 
     /**
@@ -223,18 +265,23 @@ public class View {
      * @param message the message
      */
     public void displayMessage(String message) {
-        displayMessage(message, "/images/message.png");
+        displayMessage("MESSAGE", message, "message.png");
     }
 
     /**
      * Displays a message on the screen with the specified icon.
+     * @param header the type of message
      * @param message the message
-     * @param path the path to the icon
+     * @param filename the filename of the icon
      */
-    public void displayMessage(String message, String path) {
+    public void displayMessage(String header, String message, String filename) {
+        messagePanel.setVisible(true);
+        messageHeader.setText(header);
         messageLabel.setText(message);
-        int size = messageLabel.getFont().getSize();
-        setIcon(messageLabel, path, size);
+        int size = messageHeader.getFont().getSize();
+        String path = "/images/" 
+                + ((PALETTE instanceof LightPalette) ? "light/" : "dark/");
+        setIcon(messageHeader, path + filename, size);
     }
 
     public boolean prompt(String message, String title) {
@@ -253,10 +300,10 @@ public class View {
      * initial deal. This hidden card is called the hole card.
      */
     public void hideHoleCard() {
-        String path = "/images/" + cardStyle + "_back.png";
+        String path = "/images/" + CARD_STYLE + "_back.png";
         try {
             ImageIcon icon = new ImageIcon(View.class.getResource(path));
-            dealerHand[0].setIcon(ImageResizer.getScaledImage(icon, cardSize));
+            dealerHand[0].setIcon(ImageResizer.getScaledImage(icon, CARD_SIZE));
         } catch (NullPointerException ex) {
             System.err.println("Could not find " + path);
         }
@@ -279,8 +326,8 @@ public class View {
         String[] comp = holeCardName.split(" ");
         String value = comp[0], suit = comp[2];
         String path;
-        path = "/images/" + cardStyle + "/" + suit + "/" + value + ".png";
-        setIcon(label, path, cardSize);
+        path = "/images/" + CARD_STYLE + "/" + suit + "/" + value + ".png";
+        setIcon(label, path, CARD_SIZE);
     }
 
     /**
@@ -557,8 +604,10 @@ public class View {
                              boolean hasIcon)
     {
         JLabel label = new JLabel(name);
-        label.setFont(font.generate(12, Font.BOLD));
-        label.setForeground(palette.heading());
+        label.setFont(FONT.generate(12, Font.BOLD));
+        label.setForeground(PALETTE.heading());
+
+        panel.setBorder(new LineBorder(PALETTE.separator()));
 
         panel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -570,8 +619,8 @@ public class View {
         panel.add(label, gbc);
 
         JSeparator separator = new JSeparator();
-        separator.setForeground(palette.separator());
-        separator.setBackground(palette.separator());
+        separator.setForeground(PALETTE.separator());
+        separator.setBackground(PALETTE.separator());
 
         gbc.gridy++;
         gbc.insets = new Insets(0, 10, 10, 10);
@@ -585,9 +634,9 @@ public class View {
             int right = (i == options.length - 1) ? 10 : 0;
             gbc.insets = new Insets(0, 10, 10, right);
             JButton option = new JButton(options[i]);
-            option.setForeground(palette.text());
-            option.setBackground(palette.menu());
-            option.setFont(font.generate(16));
+            option.setForeground(PALETTE.text());
+            option.setBackground(PALETTE.altButton());
+            option.setFont(FONT.generate(16));
 
             if (hasIcon) {
                 String path = "/images/" + options[i] + ".png";
@@ -622,7 +671,7 @@ public class View {
         gbc.gridx++;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(0, 0, 0, 0);
-        topPanel.add(messageLabel, gbc);
+        topPanel.add(messagePanel, gbc);
 
         gbc.gridx++;
         gbc.anchor = GridBagConstraints.LINE_END;
@@ -693,6 +742,18 @@ public class View {
         currentBetPanel.add(currentBetValueLabel);
     }
 
+    private static void loadFont() {
+        String path = "/design/IBMPlexSans-Regular.ttf";
+        try {
+            GraphicsEnvironment ge = GraphicsEnvironment
+                    .getLocalGraphicsEnvironment();
+            InputStream in = View.class.getResourceAsStream(path);
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, in));
+        } catch (IOException | FontFormatException e) {
+            System.err.println("Could not register font " + path);
+        }
+    }
+
     private void resetImages(ImageIcon image, JLabel[] playerHand) {
         Arrays.asList(playerHand).forEach((label) -> {
             label.setIcon(image);
@@ -722,8 +783,8 @@ public class View {
             String[] comp = cardNames[i].split(" ");
             String value = comp[0], suit = comp[2];
             String path;
-            path = "/images/" + cardStyle + "/" + suit + "/" + value + ".png";
-            setIcon(labels[i], path, cardSize);
+            path = "/images/" + CARD_STYLE + "/" + suit + "/" + value + ".png";
+            setIcon(labels[i], path, CARD_SIZE);
         }
     }
 
@@ -732,6 +793,8 @@ public class View {
     private final JPanel backgroundPanel;
     private final JPanel topPanel;
     private final JLabel titleLabel;
+    private final JPanel messagePanel;
+    private final JLabel messageHeader;
     private final JLabel messageLabel;
     private final JLabel chipsLabel;
     private final JPanel tablePanel;
@@ -753,9 +816,7 @@ public class View {
     private final Map<String, JButton> playOptions;
     private final JPanel handOptionsPanel;
     private final Map<String, JButton> handOptions;
-    private final DefaultFont font;
-    private final Palette palette;
-    
-    private final String cardStyle = "classic";
-    private final int cardSize = 115;
+
+    private static final String CARD_STYLE = "classic";
+    private static final int CARD_SIZE = 115;
 }

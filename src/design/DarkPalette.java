@@ -33,4 +33,9 @@ public class DarkPalette implements Palette {
     public Color button() {
         return new Color(215, 218, 220);
     }
+
+    @Override
+    public Color altButton() {
+        return new Color(39, 39, 41);
+    }
 }

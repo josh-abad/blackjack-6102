@@ -1,8 +1,6 @@
 package blackjack;
 
-import design.DefaultFont;
 import design.ImageResizer;
-import design.Palette;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -27,8 +25,8 @@ import javax.swing.border.LineBorder;
 
 public class SettingsPanel extends JPanel {
 
-    public SettingsPanel(DefaultFont font, Palette palette) {
-        initPanel(font, palette);
+    public SettingsPanel(ImageIcon logo) {
+        initPanel(logo);
     }
 
     public Object[] getSettings() {
@@ -37,7 +35,6 @@ public class SettingsPanel extends JPanel {
             deckAmount(),
             minimumBet(),
             dealerBehavior(),
-            // handValueVisible()
         };
         return settings;
     }
@@ -58,11 +55,7 @@ public class SettingsPanel extends JPanel {
         return (int) betSpinner.getValue();
     }
 
-    private int handValueVisible() {
-        return (displayHandValue.isSelected()) ? 1 : 0;
-    }
-
-    private void initPanel(DefaultFont font, Palette palette) {
+    private void initPanel(ImageIcon logo) {
         menuItemsPanel = new JPanel();
         logoLabel = new JLabel();
         playerLabel = new JLabel("PLAYER");
@@ -80,15 +73,9 @@ public class SettingsPanel extends JPanel {
         hitRadioButton = new JRadioButton("H17");
         dealerBehaviorGroup = new ButtonGroup();
         displayHandValue = new JCheckBox("Show hand value");
-        playButton = new JButton("Play");
+        playButton = new JButton("PLAY");
 
-        String path = "/images/default_logo.png";
-        try {
-            ImageIcon icon = new ImageIcon(View.class.getResource(path));
-            logoLabel.setIcon(ImageResizer.getScaledImage(icon, 150));
-        } catch (NullPointerException ex) {
-            System.err.println("Could not find " + path);
-        }
+        logoLabel.setIcon(ImageResizer.getScaledImage(logo, 150));
 
         hitRadioButton.setSelected(true);
         dealerBehaviorGroup.add(standRadioButton);
@@ -101,58 +88,59 @@ public class SettingsPanel extends JPanel {
         int len = deckSpinner.getEditor().getComponentCount();
         for (int i = 0; i < len; i++) {
             Component dc = deckSpinner.getEditor().getComponent(i);
-            dc.setBackground(palette.menu());
-            dc.setForeground(palette.text());
+            dc.setBackground(View.PALETTE.menu());
+            dc.setForeground(View.PALETTE.text());
 
             Component bc = betSpinner.getEditor().getComponent(i);
-            bc.setBackground(palette.menu());
-            bc.setForeground(palette.text());
+            bc.setBackground(View.PALETTE.menu());
+            bc.setForeground(View.PALETTE.text());
         }
 
-        playerLabel.setFont(font.generate(12, Font.BOLD));
-        nameLabel.setFont(font.generate(14));
-        houseRulesLabel.setFont(font.generate(12, Font.BOLD));
-        deckAmountLabel.setFont(font.generate(14));
-        minimumBetLabel.setFont(font.generate(14));
-        nameTextField.setFont(font.generate(14));
-        deckSpinner.setFont(font.generate(14));
-        betSpinner.setFont(font.generate(14));
-        dealerBehaviorLabel.setFont(font.generate(12, Font.BOLD));
-        standDescriptionLabel.setFont(font.generate(12));
-        hitDescriptionLabel.setFont(font.generate(12));
-        standRadioButton.setFont(font.generate(14));
-        hitRadioButton.setFont(font.generate(14));
-        displayHandValue.setFont(font.generate(14));
-        playButton.setFont(font.generate(14));
+        playerLabel.setFont(View.FONT.generate(12, Font.BOLD));
+        nameLabel.setFont(View.FONT.generate(14));
+        houseRulesLabel.setFont(View.FONT.generate(12, Font.BOLD));
+        deckAmountLabel.setFont(View.FONT.generate(14));
+        minimumBetLabel.setFont(View.FONT.generate(14));
+        nameTextField.setFont(View.FONT.generate(14));
+        deckSpinner.setFont(View.FONT.generate(14));
+        betSpinner.setFont(View.FONT.generate(14));
+        dealerBehaviorLabel.setFont(View.FONT.generate(12, Font.BOLD));
+        standDescriptionLabel.setFont(View.FONT.generate(12));
+        hitDescriptionLabel.setFont(View.FONT.generate(12));
+        standRadioButton.setFont(View.FONT.generate(14));
+        hitRadioButton.setFont(View.FONT.generate(14));
+        displayHandValue.setFont(View.FONT.generate(14));
+        playButton.setFont(View.FONT.generate(14, Font.BOLD));
 
-        playerLabel.setForeground(palette.heading());
-        nameLabel.setForeground(palette.text());
-        houseRulesLabel.setForeground(palette.heading());
-        deckAmountLabel.setForeground(palette.text());
-        minimumBetLabel.setForeground(palette.text());
-        dealerBehaviorLabel.setForeground(palette.heading());
-        standDescriptionLabel.setForeground(palette.heading());
-        hitDescriptionLabel.setForeground(palette.heading());
-        nameTextField.setForeground(palette.text());
-        standRadioButton.setForeground(palette.text());
-        hitRadioButton.setForeground(palette.text());
-        displayHandValue.setForeground(palette.text());
-        playButton.setForeground(palette.menu());
+        playerLabel.setForeground(View.PALETTE.heading());
+        nameLabel.setForeground(View.PALETTE.text());
+        houseRulesLabel.setForeground(View.PALETTE.heading());
+        deckAmountLabel.setForeground(View.PALETTE.text());
+        minimumBetLabel.setForeground(View.PALETTE.text());
+        dealerBehaviorLabel.setForeground(View.PALETTE.heading());
+        standDescriptionLabel.setForeground(View.PALETTE.heading());
+        hitDescriptionLabel.setForeground(View.PALETTE.heading());
+        nameTextField.setForeground(View.PALETTE.text());
+        standRadioButton.setForeground(View.PALETTE.text());
+        hitRadioButton.setForeground(View.PALETTE.text());
+        displayHandValue.setForeground(View.PALETTE.text());
+        playButton.setForeground(View.PALETTE.menu());
 
         EmptyBorder eb = new EmptyBorder(1, 1, 1, 1);
-        LineBorder lb = new LineBorder(palette.separator());
+        LineBorder lb = new LineBorder(View.PALETTE.separator());
         nameTextField.setBorder(new CompoundBorder(lb, eb));
         deckSpinner.setBorder(eb);
         betSpinner.setBorder(eb);
 
-        nameTextField.setBackground(palette.menu());
-        deckSpinner.setBackground(palette.separator());
-        betSpinner.setBackground(palette.separator());
-        menuItemsPanel.setBackground(palette.menu());
-        standRadioButton.setBackground(palette.menu());
-        hitRadioButton.setBackground(palette.menu());
-        displayHandValue.setBackground(palette.menu());
-        playButton.setBackground(palette.button());
+        nameTextField.setBackground(View.PALETTE.menu());
+        deckSpinner.setBackground(View.PALETTE.separator());
+        betSpinner.setBackground(View.PALETTE.separator());
+        menuItemsPanel.setBackground(View.PALETTE.menu());
+        standRadioButton.setBackground(View.PALETTE.menu());
+        hitRadioButton.setBackground(View.PALETTE.menu());
+        displayHandValue.setBackground(View.PALETTE.menu());
+        playButton.setBackground(View.PALETTE.button());
+        menuItemsPanel.setBorder(new LineBorder(View.PALETTE.separator()));
         setOpaque(false);
 
         menuItemsPanel.setLayout(new GridBagLayout());
@@ -180,7 +168,7 @@ public class SettingsPanel extends JPanel {
 
         innerGBC.gridy++;
         innerGBC.insets = new Insets(0, 10, 10, 10);
-        menuItemsPanel.add(createSeparator(palette.separator()), innerGBC);
+        menuItemsPanel.add(createSeparator(View.PALETTE.separator()), innerGBC);
 
         innerGBC.gridy++;
         innerGBC.gridwidth = 1;
@@ -199,7 +187,7 @@ public class SettingsPanel extends JPanel {
 
         innerGBC.gridy++;
         innerGBC.insets = new Insets(0, 10, 10, 10);
-        menuItemsPanel.add(createSeparator(palette.separator()), innerGBC);
+        menuItemsPanel.add(createSeparator(View.PALETTE.separator()), innerGBC);
 
         innerGBC.gridy++;
         innerGBC.gridwidth = 1;
@@ -227,7 +215,7 @@ public class SettingsPanel extends JPanel {
 
         innerGBC.gridy++;
         innerGBC.insets = new Insets(0, 10, 10, 10);
-        menuItemsPanel.add(createSeparator(palette.separator()), innerGBC);
+        menuItemsPanel.add(createSeparator(View.PALETTE.separator()), innerGBC);
 
         innerGBC.gridy++;
         innerGBC.gridwidth = 1;
@@ -248,12 +236,6 @@ public class SettingsPanel extends JPanel {
         innerGBC.gridwidth = 2;
         innerGBC.insets = new Insets(0, 10, 10, 10);
         menuItemsPanel.add(standDescriptionLabel, innerGBC);
-
-        /*
-        innerGBC.gridy++;
-        innerGBC.insets = new Insets(0, 10, 20, 10);
-        menuItemsPanel.add(displayHandValue, innerGBC);
-        */
 
         innerGBC.gridy++;
         innerGBC.fill = GridBagConstraints.NONE;

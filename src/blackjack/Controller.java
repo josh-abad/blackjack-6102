@@ -262,7 +262,7 @@ public class Controller {
             if (hint == null) {
                 hint = action.toString();
             }
-            view.displayMessage(hint, "/images/hint.png");
+            view.displayMessage("HINT", Message.hint(hint), "hint.png");
         }
     }
 

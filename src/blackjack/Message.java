@@ -35,6 +35,16 @@ public class Message {
              + "and draw " + card + ".";
     }
 
+    public static String hint(String action) {
+        String[] templates = {
+            "You should " + action.toLowerCase() + ".",
+            "Your best option is to " + action.toLowerCase() + ".",
+            action + " is your best option.",
+            "The cards dictate that you should " + action.toLowerCase() + "." 
+        };
+        return templates[(int) (Math.random() * templates.length)];
+    }
+
     public static String hit(Card card) {
         return "You draw " + card + ".";
     }
