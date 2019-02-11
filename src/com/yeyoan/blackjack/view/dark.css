@@ -1,0 +1,45 @@
+@font-face {
+    font-family: 'IBM Plex Sans';
+    src: url('../resources/IBMPlexSans-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'IBM Plex Sans Bold';
+    src: url('../resources/IBMPlexSans-Bold.ttf');
+}
+
+#pane {
+    -fx-background-image: url('../resources/table.png');
+    -fx-background-repeat: stretch;
+    -fx-background-position: top left;
+}
+
+#front_panel {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 25, 0.5, 0.0, 3.0);
+    -fx-background-color: rgb(26, 26, 27);
+}
+
+.separator .line {
+    -fx-border-color: rgb(52, 53, 54);
+    -fx-border-width: 1
+}
+
+#header {
+    -fx-fill: rgb(129, 131, 132);
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'IBM Plex Sans Bold';
+}
+
+#text {
+    -fx-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-family: 'IBM Plex Sans';
+}
+
+#chips {
+    -fx-text-fill: white;
+    -fx-font-size: 36px;
+    -fx-font-family: 'Segoe UI';
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 3.0);
+}
