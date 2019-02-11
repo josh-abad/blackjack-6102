@@ -8,14 +8,14 @@ import static com.yeyoan.blackjack.model.BasicStrategy.Action.RS;
 import com.yeyoan.blackjack.model.Model;
 import com.yeyoan.blackjack.model.Payout;
 import com.yeyoan.blackjack.view.Message;
-import com.yeyoan.blackjack.view.View;
+import com.yeyoan.blackjack.view.Sandbox;
 import com.yeyoan.playingcards.Card;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Controller {
 
-    public Controller(Model model, View view) {
+    public Controller(Model model, Sandbox view) {
         this.model = model;
         this.view = view;
         initController();
@@ -23,14 +23,15 @@ public class Controller {
     }
 
     public void run() {
-        view.displayFrame();
+        // view.displayFrame();
+        view.display();
     }
 
     public class PlayAction implements ActionListener {
 
         @Override 
         public void actionPerformed(ActionEvent e) {
-            model.loadSettings(view.getSettings());
+            // model.loadSettings(view.getSettings());
             view.displayTable();
             view.resetHandValue();
             view.clearCards();
@@ -360,5 +361,5 @@ public class Controller {
     }
     
     private final Model model;
-    private final View view;
+    private final Sandbox view;
 }

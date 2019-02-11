@@ -1,5 +1,7 @@
 package com.yeyoan.blackjack.view;
 
+import com.yeyoan.util.Format;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.application.Application;
@@ -20,8 +22,142 @@ import javafx.stage.Stage;
 
 public class Sandbox extends Application {
 
+    public static final String RESOURCE_PATH = "/com/yeyoan/blackjack/resources/";
+    public static final String MODE = "dark";
+    public static final int CARD_SIZE = 115;
+    public static final String CARD_STYLE = "classic";
+    
+    public Sandbox(Str)
+
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public void display() {
+        launch(new String[0]);
+    }
+
+    /**
+     * Removes all card images on the screen.
+     * 
+     * <p>This method <b>doesn't</b> actually remove every image on the screen,
+     * but rather it replaces the images with a blank image that has the same 
+     * size as the card images. This is to keep the table border stretched along
+     * the length of the screen even if no cards are displayed.
+     */
+    public void clearCards() {
+        String path = RESOURCE_PATH + "blank.png";
+        try {
+            Image image = new Image(View.class.getResourceAsStream(path));
+            resetImages(image, playerHand);
+            resetImages(image, dealerHand);
+        } catch (NullPointerException ex) {
+            resetImages(null, playerHand);
+            resetImages(null, dealerHand);
+            System.err.println("Could not find " + path);
+        }
+    }
+
+    /**
+     * Displays a message on the screen with a message bubble icon.
+     * @param message the message
+     */
+    public void displayMessage(String message) {
+        displayMessage("MESSAGE", message, "message.png");
+    }
+
+    /**
+     * Displays a message on the screen with the specified icon.
+     * @param header the type of message
+     * @param message the message
+     * @param filename the filename of the icon
+     */
+    public void displayMessage(String header, String message, String filename) {
+        messagePane.setVisible(true);
+        messageHeader.setText(header);
+        messageText.setText(message);
+        double size = messageHeader.getFont().getSize();
+        messageHeader.setGraphic(createImageView(RESOURCE_PATH + MODE + "/" + filename + ".png", size));
+    }
+
+    public GridPane initBetOptions(int[] options) {
+        chipsPane = new GridPane();
+        String[] stringOptions = new String[options.length];
+        for (int i = 0; i < stringOptions.length; i++) {
+            stringOptions[i] = String.valueOf(options[i]);
+        }
+        return createMenuPane("CHIPS", stringOptions, chips, true);
+    }
+
+    public void initPlayOptions(String[] options) {
+        initOptions("CHOICES",          // Name of the panel, i.e. the header
+                    options,            // The text on the buttons
+                    this.playOptions,   // The buttons
+                    playOptionsPanel,   // The panel containing the buttons
+                    false);             // If the text has an icon next to it
+    }
+
+    public void initHandOptions(String[] options) {
+        initOptions("OPTIONS", options, this.handOptions, handOptionsPanel, false);
+    }
+
+    /**
+     * Updates the card images on the dealer's side of the screen.
+     * @param cardNames the names of the cards
+     */
+    public void updateDealerCards(String[] cardNames) {
+        updateImages(cardNames, dealerHand);
+    }
+
+    /**
+     * Updates the number of decks displayed on screen.
+     * @param count the number of decks
+     */
+    public void updateDeckCount(int count) {
+        deckCountLabel.setText(count + "");
+    }
+
+    /**
+     * Updates the card images on the player's side of the screen.
+     * @param cardNames the names of the cards
+     */
+    public void updatePlayerCards(String[] cardNames) {
+        updateImages(cardNames, playerHand);
+    }
+
+    /**
+     * Updates the amount of chips and the current bet of the player.
+     * @param chips the player's chips
+     * @param bet the player's bet
+     */
+    public void updateStats(double chips, double bet) {
+        chipsLabel.setText(Format.currency(chips));
+        betLabel.setText(Format.currency(bet));
+    }
+
+    /**
+     * Updates the true count of cards displayed on the screen.
+     * @param count the true count
+     */
+    public void updateTrueCount(int count) {
+        trueCountLabel.setText(count + "");
+    }
+
+    private void resetImages(Image image, ImageView[] hand) {
+        Arrays.asList(hand).forEach((imageView) -> {
+            imageView.setImage(image);
+        });
+    }
+
+    private void updateImages(String[] cardNames, ImageView[] images) {
+        for (int i = 0; i < cardNames.length; i++) {
+            String[] comp = cardNames[i].split(" ");
+            String value = CARD_STYLE + "_" + comp[0].toLowerCase();
+            String suit = comp[2].toLowerCase();
+            String path = suit + "/" + value + ".png";
+            Image image = new Image(Sandbox.class.getResourceAsStream(RESOURCE_PATH + path));
+            images[i].setImage(image);
+        }
     }
 
     @Override
@@ -29,6 +165,8 @@ public class Sandbox extends Application {
         this.chips = new HashMap<>();
         this.choices = new HashMap<>();
         this.options = new HashMap<>();
+        this.playerHand = new ImageView[10];
+        this.dealerHand = new ImageView[10];
 
         stage.setTitle("Blackjack");
         stage.setMaximized(true);
@@ -36,20 +174,20 @@ public class Sandbox extends Application {
         BorderPane rootNode = new BorderPane();
         rootNode.setId("pane");
         Scene myScene = new Scene(rootNode, 300, 200);
-        myScene.getStylesheets().add(Sandbox.class.getResource("dark.css").toExternalForm());
+        myScene.getStylesheets().add(Sandbox.class.getResource(MODE + ".css").toExternalForm());
 
         stage.setScene(myScene);
 
         GridPane topPane = new GridPane();
-        ImageView logo = createImageView("/com/yeyoan/blackjack/resources/default_logo_s.png", 150);
+        ImageView logo = createImageView(RESOURCE_PATH + "default_logo_s.png", 150);
 
-        Label chips = new Label("1000");
-        chips.setGraphic(createImageView("/com/yeyoan/blackjack/resources/chip.png", 36));
-        chips.setId("chips");
+        chipsLabel = new Label("1000");
+        chipsLabel.setGraphic(createImageView(RESOURCE_PATH + "chip.png", 36));
+        chipsLabel.setId("chips");
 
         // topPane.setId("front_panel");
 
-        GridPane messagePane = createMessagePane();
+        messagePane = createMessagePane();
 
         GridPane.setHgrow(logo, Priority.ALWAYS);
         GridPane.setValignment(logo, VPos.CENTER);
@@ -60,14 +198,14 @@ public class Sandbox extends Application {
         GridPane.setFillHeight(messagePane, Boolean.FALSE);
         // GridPane.setMargin(messagePane, new Insets(10, 0, 0, 0));
 
-        GridPane.setHalignment(chips, HPos.RIGHT);
-        GridPane.setValignment(chips, VPos.CENTER);
-        GridPane.setHgrow(chips, Priority.ALWAYS);
-        GridPane.setMargin(chips, new Insets(0, 10, 0, 0));
+        GridPane.setHalignment(chipsLabel, HPos.RIGHT);
+        GridPane.setValignment(chipsLabel, VPos.CENTER);
+        GridPane.setHgrow(chipsLabel, Priority.ALWAYS);
+        GridPane.setMargin(chipsLabel, new Insets(0, 10, 0, 0));
 
         topPane.add(logo, 0, 0);
         topPane.add(messagePane, 1, 0);
-        topPane.add(chips, 2, 0);
+        topPane.add(chipsLabel, 2, 0);
 
         GridPane tablePane = new GridPane();
         GridPane optionsPane = new GridPane();
@@ -78,7 +216,7 @@ public class Sandbox extends Application {
         // optionsPane.setId("front_panel");
 
         GridPane statsPane = createStatPane();
-        GridPane chipsPane = createMenuPane("CHIPS", new String[] {"5", "10", "25", "50", "100"}, this.chips, false);
+        chipsPane = createMenuPane("CHIPS", new String[] {"5", "10", "25", "50", "100"}, this.chips, false);
         GridPane choicePane = createMenuPane("CHOICES", new String[] {"Hit", "Double Down", "Surrender", "Stand"}, this.choices, false);
         GridPane optionPane = createMenuPane("OPTIONS", new String[] {"New Game", "Quit Game"}, this.options, false);
 
@@ -123,8 +261,8 @@ public class Sandbox extends Application {
         tablePane.getChildren().addAll(dealerHandValue, dealerPanel, playerHandValue, playerPanel);
 
         for (int i = 0; i < 10; i++) {
-            ImageView emptyPlayerCard = createImageView("/com/yeyoan/blackjack/resources/blank.png", 115);
-            ImageView emptyDealerCard = createImageView("/com/yeyoan/blackjack/resources/blank.png", 115);
+            ImageView emptyPlayerCard = createImageView(RESOURCE_PATH + "blank.png", 115);
+            ImageView emptyDealerCard = createImageView(RESOURCE_PATH + "blank.png", 115);
             emptyDealerCard.setOpacity(0.5f);
             emptyPlayerCard.setOpacity(0.5f);
             playerPanel.getChildren().add(emptyPlayerCard);
@@ -152,29 +290,29 @@ public class Sandbox extends Application {
         return imageView;
     }
     
-    private static GridPane createStatPane() {
+    private GridPane createStatPane() {
         GridPane statPane = new GridPane();
-        Label deckCount = new Label("4");
-        Label trueCount = new Label("0");
-        Label bet = new Label("25");
+        deckCountLabel = new Label("4");
+        trueCountLabel = new Label("0");
+        betLabel = new Label("25");
 
-        deckCount.setGraphic(createImageView("/com/yeyoan/blackjack/resources/dark/deck.png", 36));
-        trueCount.setGraphic(createImageView("/com/yeyoan/blackjack/resources/dark/card_count.png", 36));
-        bet.setGraphic(createImageView("/com/yeyoan/blackjack/resources/dark/bet.png", 36));
+        deckCountLabel.setGraphic(createImageView(RESOURCE_PATH + MODE + "/deck.png", 36));
+        trueCountLabel.setGraphic(createImageView(RESOURCE_PATH + MODE + "/card_count.png", 36));
+        betLabel.setGraphic(createImageView(RESOURCE_PATH + MODE + "/bet.png", 36));
 
-        GridPane.setConstraints(deckCount, 0, 0);
-        GridPane.setConstraints(trueCount, 1, 0);
-        GridPane.setConstraints(bet, 2, 0);
+        GridPane.setConstraints(deckCountLabel, 0, 0);
+        GridPane.setConstraints(trueCountLabel, 1, 0);
+        GridPane.setConstraints(betLabel, 2, 0);
 
-        GridPane.setMargin(deckCount, new Insets(10, 40, 10, 10));
-        GridPane.setMargin(trueCount, new Insets(10, 40, 10, 0));
-        GridPane.setMargin(bet, new Insets(10, 10, 10, 0));
+        GridPane.setMargin(deckCountLabel, new Insets(10, 40, 10, 10));
+        GridPane.setMargin(trueCountLabel, new Insets(10, 40, 10, 0));
+        GridPane.setMargin(betLabel, new Insets(10, 10, 10, 0));
 
-        deckCount.setId("chips");
-        trueCount.setId("chips");
-        bet.setId("chips");
+        deckCountLabel.setId("chips");
+        trueCountLabel.setId("chips");
+        betLabel.setId("chips");
 
-        statPane.getChildren().addAll(deckCount, trueCount, bet);
+        statPane.getChildren().addAll(deckCountLabel, trueCountLabel, betLabel);
         return statPane;
     }
 
@@ -216,29 +354,28 @@ public class Sandbox extends Application {
         return menuPane;
     }
 
-    private static GridPane createMessagePane() {
+    private GridPane createMessagePane() {
         GridPane messagePane = new GridPane();
 
-        Text header = new Text("MESSAGE");
+        messageHeader = new Label("MESSAGE");
         Separator separator = new Separator();
-        Text message = new Text("Welcome to Blackjack! Place a bet.");
+        messageText = new Text("Welcome to Blackjack! Place a bet.");
 
-        header.setFontSmoothingType(FontSmoothingType.LCD);
-        message.setFontSmoothingType(FontSmoothingType.LCD);
+        messageText.setFontSmoothingType(FontSmoothingType.LCD);
 
         messagePane.setId("front_panel");
-        header.setId("header");
-        message.setId("text");
+        messageHeader.setId("header");
+        messageText.setId("text");
 
-        GridPane.setConstraints(header, 0, 0);
+        GridPane.setConstraints(messageHeader, 0, 0);
         GridPane.setConstraints(separator, 0, 1);
-        GridPane.setConstraints(message, 0, 2);
+        GridPane.setConstraints(messageText, 0, 2);
 
-        GridPane.setMargin(header, new Insets(10, 10, 2, 10));
+        GridPane.setMargin(messageHeader, new Insets(10, 10, 2, 10));
         GridPane.setMargin(separator, new Insets(0, 10, 10, 10));
-        GridPane.setMargin(message, new Insets(0, 10, 10, 10));
+        GridPane.setMargin(messageText, new Insets(0, 10, 10, 10));
 
-        messagePane.getChildren().addAll(header, separator, message);
+        messagePane.getChildren().addAll(messageHeader, separator, messageText);
 
         return messagePane;
     }
@@ -246,4 +383,14 @@ public class Sandbox extends Application {
     private Map<String, Button> chips;
     private Map<String, Button> choices;
     private Map<String, Button> options;
+    private ImageView[] playerHand;
+    private ImageView[] dealerHand;
+    private Label chipsLabel;
+    private Label betLabel;
+    private Label trueCountLabel;
+    private Label deckCountLabel;
+    private GridPane messagePane;
+    private Label messageHeader;
+    private Text messageText;
+    private GridPane chipsPane;
 } 
