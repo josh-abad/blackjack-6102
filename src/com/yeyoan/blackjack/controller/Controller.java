@@ -1,9 +1,13 @@
 package com.yeyoan.blackjack.controller;
 
 import com.yeyoan.blackjack.model.BasicStrategy;
-import com.yeyoan.blackjack.view.Message;
-import com.yeyoan.blackjack.model.Payout;
+import static com.yeyoan.blackjack.model.BasicStrategy.Action.DH;
+import static com.yeyoan.blackjack.model.BasicStrategy.Action.DS;
+import static com.yeyoan.blackjack.model.BasicStrategy.Action.RH;
+import static com.yeyoan.blackjack.model.BasicStrategy.Action.RS;
 import com.yeyoan.blackjack.model.Model;
+import com.yeyoan.blackjack.model.Payout;
+import com.yeyoan.blackjack.view.Message;
 import com.yeyoan.blackjack.view.View;
 import com.yeyoan.playingcards.Card;
 import java.awt.event.ActionEvent;
