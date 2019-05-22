@@ -1,0 +1,96 @@
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/roboto/Roboto-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Roboto Medium";
+  src: url("../fonts/roboto/Roboto-Medium.ttf");
+}
+
+.root {
+  -fx-font-family: "Roboto";
+  -fx-font-size: 14px;
+}
+
+.jfx-button {
+  -fx-cursor: hand;
+  -fx-font-family: "Roboto Medium";
+  -fx-text-fill: rgb(33, 143, 61);
+}
+
+.card {
+  -fx-background-color: white;
+  -fx-background-radius: 2px;
+}
+
+.card:hover {
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 20, 0.0, 0, 1);
+}
+
+.depth-low {
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 5, 0.0, 0, 1);
+}
+
+.depth-medium {
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 20, 0.0, 0, 1);
+}
+
+.depth-high {
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 30, 0.0, 0, 1);
+}
+
+.glyph-icon {
+  -fx-font-family: "Material Design Icons";
+}
+
+.separator .line {
+  -fx-border-color: rgba(0, 0, 0, 0.12);
+  -fx-border-width: 0.75;
+}
+
+.jfx-snackbar-content {
+  -fx-background-color: #323232;
+  -fx-background-radius: 2px;
+}
+
+.jfx-snackbar-toast {
+  -fx-text-fill: white;
+}
+
+.jfx-snackbar-action {
+  -fx-text-fill: -secondary-color;
+  -fx-font-family: "Roboto Medium";
+}
+
+#pane {
+  -fx-background-image: url('../green_felt.jpg');
+  -fx-background-position: center center;
+  -fx-background-repeat: stretch;
+  -fx-background-size: cover;
+}
+
+#front_panel {
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 25, 0.5, 0, 3);
+  -fx-background-color: white;
+}
+
+#header {
+  -fx-fill: rgb(119, 98, 95);
+  -fx-font-size: 12px;
+  -fx-font-weight: bold;
+  -fx-font-family: "IBM Plex Sans Bold";
+}
+
+#text {
+  -fx-fill: rgb(43, 43, 43);
+  -fx-font-size: 18px;
+  -fx-font-family: "IBM Plex Sans";
+}
+
+#chips {
+  -fx-text-fill: white;
+  -fx-font-size: 36px;
+  -fx-font-family: "Segoe UI";
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0, 3);
+}
