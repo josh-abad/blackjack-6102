@@ -53,6 +53,16 @@ public class Model {
         return cardImage; 
     }
 
+    public ImageView getCardBack() {
+        Image image = new Image(Model.class.getResource("/Cards/cardBack_red4.png").toExternalForm());
+        ImageView cardBack = new ImageView(image);
+        cardBack.setPreserveRatio(true);
+        cardBack.setFitWidth(100.0);
+        JFXDepthManager.setDepth(cardBack, player.getHand().size());
+
+        return cardBack;
+    }
+
     /**
      * Returns the possible choices for the player when they are playing.
      * @return the choices
@@ -140,15 +150,22 @@ public class Model {
      * 16. The dealer may also hit a soft 17 in some games, depending on the
      * casino rules.
      */
-    public void dealerTurn() {
+    public int dealerTurn() {
+        int numberOfCards = 0;
         while (dealer.hasSoft17() || dealer.getHandValue() <= 16) {
             if ((dealer.hasSoft17() && stand17) || shoe.isEmpty()) {
-                return;
+                break;
             }
             Card card = shoe.drawCard();
             dealer.hit(card);
+            numberOfCards++;
             updateRunningCount(card.getRank());
         }
+        return numberOfCards;
+    }
+
+    public boolean dealerHasSoft17() {
+        return dealer.hasSoft17();
     }
 
     /**
@@ -440,7 +457,7 @@ public class Model {
     }
 
     public Card holeCard() {
-        return dealer.getHand().get(0);
+        return dealer.getHand().get(1);
     }
 
     public String[] playerCardNames() {
