@@ -1,10 +1,12 @@
 package com.yeyoan.blackjack.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXSnackbar.SnackbarEvent;
 import com.jfoenix.controls.JFXSnackbarLayout;
@@ -24,19 +26,20 @@ import javafx.scene.text.Text;
 public class Controller implements Initializable {
 
     @FXML
-    private HBox playerSide;
+    private StackPane root;
+
+    @FXML private HBox playerSide;
+    @FXML private HBox dealerSide;
 
     @FXML private Text playerHandValue;
     @FXML private Text dealerHandValue;
 
-    @FXML
-    private HBox dealerSide;
-
-    @FXML
-    private StackPane root;
-
     @FXML private Label deckCountLabel;
     @FXML private Label trueCountLabel;
+    @FXML private Label playerBet;
+    @FXML private Label playerChips;
+
+    @FXML private HBox chipsPane;
 
     @FXML private JFXButton hitButton;
     @FXML private JFXButton doubleDownButton;
@@ -48,18 +51,17 @@ public class Controller implements Initializable {
     @FXML private JFXButton nextHandButton;
 
     private JFXSnackbar snackbar;
-    @FXML private JFXDialog dialog;
-    @FXML private DialogController dialogController;
 
     private Model model;
+    private List<JFXButton> chips;
 
     @FXML
     protected void handleHitAction() {
         Card card = model.drawCard();
         model.playerHit(card);
         model.updateRunningCount(card.getRank());
-        deckCountLabel.setText(model.deckCount() + "");
-        trueCountLabel.setText(model.getTrueCount() + "");
+        deckCountLabel.setText(model.dCount() + "");
+        trueCountLabel.setText(model.tCount() + "");
         displayMessage(Message.hit(card + ""));
         playerHandValue.setText((model.playerHasSoftHand() ? "Soft" : "Hard") + " " + model.playerHandValue());
         surrenderButton.setDisable(true);
@@ -81,12 +83,11 @@ public class Controller implements Initializable {
         Card card = model.drawCard();
         model.playerHit(card);
         model.updateRunningCount(card.getRank());
-        deckCountLabel.setText(model.deckCount() + "");
-        trueCountLabel.setText(model.getTrueCount() + "");
+        deckCountLabel.setText(model.dCount() + "");
+        trueCountLabel.setText(model.tCount() + "");
         displayMessage(Message.doubleDown(model.playerBet(), card + ""));
         playerHandValue.setText((model.playerHasSoftHand() ? "Soft" : "Hard") + " " + model.playerHandValue());
-        // TODO: do this
-        // view.updateStats(model.playerChips(), model.playerBet());
+        updateStats(model.playerBet(), model.playerChips(), model.tCount(), model.dCount()); 
         hitButton.setDisable(true);
         doubleDownButton.setDisable(true);
         surrenderButton.setDisable(true);
@@ -99,25 +100,18 @@ public class Controller implements Initializable {
         displayMessage(Message.surrender(model.playerBet()));
         model.givePayout(Payout.HALF);
         model.resetBet();
-        // view.revealHoleCard(model.holeCard());
-        // model.updateRunningCount(model.holeCard().getRank());
-        trueCountLabel.setText(model.getTrueCount() + "");
-        dealerHandValue.setText((model.dealerHasSoftHand() ? "Soft" : "Hard") + " " + model.dealerHandValue());
-        // view.updateStats(model.playerChips(), model.playerBet());
-        hitButton.setDisable(true);
-        doubleDownButton.setDisable(true);
-        surrenderButton.setDisable(true);
-        standButton.setDisable(true);
+        dealerSide.getChildren().remove(1);
+        dealerSide.getChildren().add(model.getCardImage(model.holeCard()));
+        model.updateRunningCount(model.holeCard().getRank());
+        updateStats(model.playerBet(), model.playerChips(), model.tCount(), model.dCount()); 
+        disableAllChoices(true);
         nextHandButton.setDisable(false);
         hintButton.setDisable(true);
     }
 
     @FXML
     protected void handleStandAction() {
-        hitButton.setDisable(true);
-        doubleDownButton.setDisable(true);
-        surrenderButton.setDisable(true);
-        standButton.setDisable(true);
+        disableAllChoices(true);
         hintButton.setDisable(true);
         dealerSide.getChildren().remove(1);
         dealerSide.getChildren().add(model.getCardImage(model.holeCard()));
@@ -131,9 +125,6 @@ public class Controller implements Initializable {
             dealerSide.getChildren().add(model.getCardImage(card));
             model.updateRunningCount(card.getRank());
         }
-
-        deckCountLabel.setText(model.deckCount() + "");
-        trueCountLabel.setText(model.getTrueCount() + "");
 
         playerHandValue.setText((model.playerHasSoftHand() ? "Soft" : "Hard") + " " + model.playerHandValue());
         dealerHandValue.setText((model.dealerHasSoftHand() ? "Soft" : "Hard") + " " + model.dealerHandValue());
@@ -167,16 +158,13 @@ public class Controller implements Initializable {
             nextHandButton.setDisable(false);
         }
     
-        // view.updateStats(model.playerChips(), model.playerBet()); 
+        updateStats(model.playerBet(), model.playerChips(), model.tCount(), model.dCount()); 
     }
 
     @FXML
     protected void handleDealAction() {
-        // view.disableAllChips();
-        hitButton.setDisable(false);
-        doubleDownButton.setDisable(false);
-        surrenderButton.setDisable(false);
-        standButton.setDisable(false);
+        disableAllChips(chips, true);
+        disableAllChoices(false);
         hintButton.setDisable(false);
         dealButton.setDisable(true);
 
@@ -198,13 +186,12 @@ public class Controller implements Initializable {
                 dealerSide.getChildren().add(model.getCardImage(dealerCard));
             }
         }
-        trueCountLabel.setText(model.getTrueCount() + "");
+        trueCountLabel.setText(model.tCount() + "");
         displayMessage(Message.deal(model.initialCards()));
 
         playerHandValue.setText((model.playerHasSoftHand() ? "Soft" : "Hard") + " " + model.playerHandValue());
-        // view.updateDealerHandValue(model.dealerFrontCard());
-        // view.hideHoleCard();
-        deckCountLabel.setText(model.deckCount() + "");
+        dealerHandValue.setText(model.guessDealerHandValue());
+        deckCountLabel.setText(model.dCount() + "");
     }
 
     @FXML
@@ -225,26 +212,34 @@ public class Controller implements Initializable {
         hintButton.setDisable(true);
         model.resetHand();
 
-        hitButton.setDisable(true);
-        doubleDownButton.setDisable(true);
-        surrenderButton.setDisable(true);
-        standButton.setDisable(true);
+        disableAllChoices(true);
         if (model.betIsSufficient()) {
             dealButton.setDisable(false);
         } else {
-            displayBetDialog();
             dealButton.setDisable(true);
         }
 
-        // view.enableAllChips();
-        // view.updateChips(model.playerChips(), Model.chips());
-        // view.updateStats(model.playerChips(), model.playerBet());
-        deckCountLabel.setText(model.deckCount() + "");
+        disableAllChips(chips, false);
+
+        updateChips(model.playerChips(), chips);
+        updateStats(model.playerBet(), model.playerChips(), model.tCount(), model.dCount()); 
+        deckCountLabel.setText(model.dCount() + "");
     }
 
     @FXML
     protected void handleQuitAction() {
         Platform.exit();
+    }
+
+    private void disableAllChoices(boolean value) {
+        hitButton.setDisable(value);
+        doubleDownButton.setDisable(value);
+        surrenderButton.setDisable(value);
+        standButton.setDisable(value);
+    }
+
+    private void disableAllChips(List<JFXButton> chips, boolean value) {
+        chips.forEach(chip -> chip.setDisable(value));
     }
 
     private void displayMessage(String message) {
@@ -255,13 +250,39 @@ public class Controller implements Initializable {
         );
     }
 
-    private void displayBetDialog() {
-        dialog.show();
+    private void updateChips(double amount, List<JFXButton> chips) {
+        chips.stream()
+            .filter(chip -> Integer.parseInt(chip.getText()) > amount)
+            .forEach(chip -> chip.setDisable(true));
+    }
+
+    private void updateStats(double bet, double chips, int tCount, int dCount) {
+        playerBet.setText(String.valueOf(bet));
+        playerChips.setText(String.valueOf(chips));
     }
 
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
         snackbar = new JFXSnackbar(root);
         model = new Model();
+        playerChips.setText(model.playerChips() + "");
+        chips = new ArrayList<>();
+        Arrays.stream(Model.chips())
+            .mapToObj(Integer::toString)
+            .map(JFXButton::new)
+            .forEach(button -> {
+                chips.add(button);
+                chipsPane.getChildren().add(button);
+            });
+        chips.forEach(chip -> {
+            chip.setOnAction(event -> {
+                model.bet(Integer.parseInt(chip.getText()));
+                if (model.betIsSufficient()) {
+                    dealButton.setDisable(false);
+                }
+                updateStats(model.playerBet(), model.playerChips(), model.tCount(), model.dCount());
+                updateChips(model.playerChips(), chips);
+            });
+        });
     }
 }
