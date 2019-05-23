@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+
+<?import com.jfoenix.controls.*?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<JFXDialog>
+    <content>
+        <JFXDialogLayout>
+            <heading>
+                <Text text="Place a bet"/>
+            </heading>
+            <body>
+                <Text text="You currently have 1000 chips. The minimum bet is 25 chips. Place your bet to continue playing."/>
+            </body>
+            <actions>
+                <JFXButton text="CANCEL"/>
+                <JFXButton text="PLACE BET"/>
+            </actions>
+        </JFXDialogLayout>
+    </content>
+</JFXDialog> 
