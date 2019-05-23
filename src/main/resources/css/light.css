@@ -8,46 +8,118 @@
   src: url("../fonts/roboto/Roboto-Medium.ttf");
 }
 
+* {
+  -primary: #4caf50;
+  -primary-variant: #388e3c;
+  -secondary: #ffeb3b;
+  -secondary-variant: #fbc02d;
+
+  -background: white;
+  -surface: white;
+  -error: #b00020;
+
+  -on-primary: white;
+  -on-secondary: black;
+  -on-background: black;
+  -on-surface: black;
+  -on-error: white;
+
+  -high-emphasis: rgba(0, 0, 0, 0.87);
+  -medium-emphasis: rgba(0, 0, 0, 0.6);
+  -disabled: rgba(0, 0, 0, 0.38);
+
+  -divider: rgba(0, 0, 0, 0.12);
+}
+
 .root {
   -fx-font-family: "Roboto";
   -fx-font-size: 14px;
+  -icons-color: -high-emphasis;
 }
 
-.jfx-button {
-  -fx-cursor: hand;
-  -fx-font-family: "Roboto Medium";
-  -fx-text-fill: rgb(33, 143, 61);
+.background {
+  -fx-background-image: url("../background/green_felt.jpg");
+  -fx-background-position: center center;
+  -fx-background-repeat: stretch;
+  -fx-background-size: cover;
 }
+
+/* ------------------- *
+ * --- Text Colors --- * 
+ * ------------------- */
+
+.high-emphasis {
+  -fx-fill: -high-emphasis;
+  -fx-text-fill: -high-emphasis;
+}
+
+.medium-emphasis {
+  -fx-fill: -medium-emphasis;
+  -fx-text-fill: -medium-emphasis;
+}
+
+.disabled {
+  -fx-fill: -disabled;
+  -fx-text-fill: -disabled;
+}
+
+/* ----------------------------- *
+ * --- Material Design Cards --- * 
+ * ----------------------------- */
 
 .card {
-  -fx-background-color: white;
+  -fx-background-color: -surface;
   -fx-background-radius: 2px;
 }
 
 .card:hover {
-  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 20, 0.0, 0, 1);
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 20, 0, 0, 1);
 }
 
+/* --------------- *
+ * --- Shadows --- * 
+ * --------------- */
+
 .depth-low {
-  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 5, 0.0, 0, 1);
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 5, 0, 0, 1);
 }
 
 .depth-medium {
-  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 20, 0.0, 0, 1);
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 20, 0, 0, 1);
 }
 
 .depth-high {
-  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 30, 0.0, 0, 1);
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 30, 0, 0, 1);
+}
+
+.dialog-heading {
+  -fx-font-family: "Roboto Medium";
+  -fx-font-size: 16px;
 }
 
 .glyph-icon {
   -fx-font-family: "Material Design Icons";
+  -fx-fill: -icons-color;
 }
 
 .separator .line {
-  -fx-border-color: rgba(0, 0, 0, 0.12);
+  -fx-border-color: -divider;
   -fx-border-width: 0.75;
 }
+
+/* -------------- *
+ * --- Button --- *
+ * -------------- */
+
+.jfx-button {
+  -fx-cursor: hand;
+  -fx-font-family: "Roboto Medium";
+  -fx-text-fill: -primary;
+}
+
+/* ---------------- *
+ * --- Snackbar --- *
+ * ---------------- */
 
 .jfx-snackbar-content {
   -fx-background-color: #323232;
@@ -59,38 +131,6 @@
 }
 
 .jfx-snackbar-action {
-  -fx-text-fill: rgb(33, 143, 61);
+  -fx-text-fill: -primary;
   -fx-font-family: "Roboto Medium";
-}
-
-#pane {
-  -fx-background-image: url('../green_felt.jpg');
-  -fx-background-position: center center;
-  -fx-background-repeat: stretch;
-  -fx-background-size: cover;
-}
-
-#front_panel {
-  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 25, 0.5, 0, 3);
-  -fx-background-color: white;
-}
-
-#header {
-  -fx-fill: rgb(119, 98, 95);
-  -fx-font-size: 12px;
-  -fx-font-weight: bold;
-  -fx-font-family: "IBM Plex Sans Bold";
-}
-
-#text {
-  -fx-fill: rgb(43, 43, 43);
-  -fx-font-size: 18px;
-  -fx-font-family: "IBM Plex Sans";
-}
-
-#chips {
-  -fx-text-fill: white;
-  -fx-font-size: 36px;
-  -fx-font-family: "Segoe UI";
-  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0, 3);
 }
