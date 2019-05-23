@@ -172,7 +172,7 @@ public class Model {
      * Returns the number of decks in the shoe.
      * @return the number of decks
      */
-    public int deckCount() {
+    public int dCount() {
         if (shoe instanceof Shoe) {
             Shoe s = (Shoe) shoe;
             return s.deckCount();
@@ -323,7 +323,7 @@ public class Model {
      * 
      * @return the true count 
      */
-    public int getTrueCount() {
+    public int tCount() {
         if (shoe.getClass() == Shoe.class) {
             Shoe s = (Shoe) this.shoe;
             if (s.deckCount() > 0) {
@@ -431,6 +431,14 @@ public class Model {
         return player.getBankroll();
     }
 
+    public String guessDealerHandValue() {
+        int visible = dealerFrontCard();
+        if (visible == 11) {
+            return "12-21";
+        }
+        return visible + "-" + (visible + 11);
+    }
+
     public String[] dealerCardNames() {
         int handSize = dealer.getHand().size();
         String[] cardNames = new String[handSize];
@@ -441,11 +449,8 @@ public class Model {
     }
 
     public int dealerFrontCard() {
-        int value = dealer.getHand().get(1).getRank();
-        if (value == 1) {
-            return 11;
-        }
-        return value;
+        int value = dealer.getHand().get(0).getRank();
+        return value == 1 ? 11 : value;
     }
 
     public int dealerHandValue() {
@@ -524,6 +529,6 @@ public class Model {
     private static final String[] OPTIONS = {
         "Deal", "Next Hand", "Hint", "New Game", "Quit Game"
     };
-    private static final int[] CHIPS = {100, 50, 25, 10, 5};
+    private static final int[] CHIPS = {5, 10, 25, 50, 100};
     private boolean stand17;
 }
