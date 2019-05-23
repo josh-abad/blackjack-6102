@@ -59,7 +59,7 @@
 }
 
 .jfx-snackbar-action {
-  -fx-text-fill: -secondary-color;
+  -fx-text-fill: rgb(33, 143, 61);
   -fx-font-family: "Roboto Medium";
 }
 
