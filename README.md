@@ -1,5 +1,7 @@
 # BlackjackFX
 A WIP reimplementation of Blackjack, using JavaFX.
+![New default look](./screenshots/default.png?raw=true "New default look")
+![Dark mode](./screenshots/dark_mode.png?raw=true "Dark mode")
 
 ## Note
 Back when I was still working on this, I made another branch for rewriting the game in JavaFX. I was still new to FX at the time, thus that branch went nowhere. Now, I've mostly abandoned the development as this was just for a school project, which is now over. However, I wanted to finish the new, sleeker version I wanted to do back when I was first messing around in JavaFX. So this, essentially, has totally rewritten GUI code, using FXML and CSS for layout and styling, respectively. The model, or logic of the game, remains more or less the same.
