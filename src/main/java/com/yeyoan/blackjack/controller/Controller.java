@@ -3,7 +3,6 @@ package com.yeyoan.blackjack.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.IntConsumer;
-import java.util.function.IntFunction;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSnackbar;
@@ -64,13 +63,12 @@ public class Controller implements Initializable {
 
     private Model model;
 
+    // TODO: disable choice buttons while animation is ongoing
     private void createTransition(Node node, HBox parent, Runnable action) {
         Path path = new Path(new MoveTo(1000, 68), new LineTo(50, 68));
         PathTransition transition = new PathTransition(Duration.millis(1000), path, node);
         transition.setOnFinished(event -> {
             animationTest(node, 19);
-            // node.getStyleClass().remove("depth-high");
-            // node.getStyleClass().add("depth-low");
             action.run();
         });
         transition.play();
@@ -91,7 +89,7 @@ public class Controller implements Initializable {
         Timeline timeline = new Timeline();
 
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5),
-            new KeyValue(node.styleProperty(), depth, Interpolator.EASE_OUT)
+            new KeyValue(node.styleProperty(), depth)
         ));
 
         timeline.setOnFinished(next -> {
@@ -225,11 +223,31 @@ public class Controller implements Initializable {
         statsPaneController.updateStats(model.playerBet(), model.playerChips(), model.tCount(), model.dCount()); 
     }
 
+    private void createLeaveTransition(int i, HBox parent, Runnable action) {
+        if (i == parent.getChildren().size()) {
+            return;
+        }
+        Path path = new Path(new MoveTo(50, 68), new LineTo(-1000, 68));
+        Node node = parent.getChildren().get(i);
+        PathTransition transition = new PathTransition(Duration.millis(1000), path, node);
+        if (i == parent.getChildren().size()-1) {
+            transition.setOnFinished(event -> {
+                action.run();
+            });
+        }
+        transition.play();
+        createLeaveTransition(i + 1, parent, action);
+    }
+
     @FXML
     protected void handleNextHandAction() {
-        displayMessage(Message.nextHand());
-        playerSide.getChildren().clear();
-        dealerSide.getChildren().clear();
+        createLeaveTransition(0, playerSide, () -> {
+            displayMessage(Message.nextHand());
+            playerSide.getChildren().clear();
+        });
+        createLeaveTransition(0, dealerSide, () -> {
+            dealerSide.getChildren().clear();
+        });
 
         if (!model.shoeIsSufficient()) {
             model.shuffleDeck();
