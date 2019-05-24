@@ -34,6 +34,7 @@
 .root {
   -fx-font-family: "Roboto";
   -fx-font-size: 14px;
+  -fx-font-smoothing-type: lcd;
   -icons-color: -high-emphasis;
 }
 
