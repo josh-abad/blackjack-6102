@@ -26,22 +26,22 @@
         </padding>
         <Label styleClass="high-emphasis" fx:id="deckCountLabel" text="3">
             <graphic>
-                <MaterialDesignIconView glyphName="ARRANGE_BRING_FORWARD" glyphSize="52"/>
+                <MaterialDesignIconView glyphName="ARRANGE_BRING_FORWARD"/>
             </graphic>
         </Label>
         <Label styleClass="high-emphasis" fx:id="trueCountLabel" text="0">
             <graphic>
-                <MaterialDesignIconView glyphName="ARROW_UP" glyphSize="52"/>
+                <MaterialDesignIconView glyphName="ARROW_UP"/>
             </graphic>
         </Label>
         <Label styleClass="high-emphasis" fx:id="playerBet" text="0">
             <graphic>
-                <MaterialDesignIconView glyphName="STAR" glyphSize="52"/>
+                <MaterialDesignIconView glyphName="STAR"/>
             </graphic>
         </Label>
         <Label styleClass="high-emphasis" fx:id="playerChips">
             <graphic>
-                <MaterialDesignIconView glyphName="COIN" glyphSize="52"/>
+                <MaterialDesignIconView glyphName="COIN"/>
             </graphic>
         </Label>
     </HBox>
