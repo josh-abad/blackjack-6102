@@ -15,13 +15,21 @@ import com.yeyoan.blackjack.model.Payout;
 import com.yeyoan.blackjack.playingcards.Card;
 import com.yeyoan.blackjack.view.Message;
 
+import javafx.animation.PathTransition;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 public class Controller implements Initializable {
 
@@ -55,6 +63,19 @@ public class Controller implements Initializable {
     private Model model;
     private List<JFXButton> chips;
 
+    private void createTransition(Node node, HBox parent, EventHandler<ActionEvent> event) {
+        MoveTo moveTo = new MoveTo(1000, 68);
+        LineTo lineTo = new LineTo(50, 68);
+
+        Path path = new Path(moveTo, lineTo);
+
+        PathTransition transition = new PathTransition(Duration.millis(1000), path, node);
+        transition.setOnFinished(event);
+        transition.play();
+
+        parent.getChildren().add(node);
+    }
+
     @FXML
     protected void handleHitAction() {
         Card card = model.drawCard();
@@ -62,19 +83,21 @@ public class Controller implements Initializable {
         model.updateRunningCount(card.getRank());
         deckCountLabel.setText(model.dCount() + "");
         trueCountLabel.setText(model.tCount() + "");
-        displayMessage(Message.hit(card + ""));
         playerHandValue.setText((model.playerHasSoftHand() ? "Soft" : "Hard") + " " + model.playerHandValue());
         surrenderButton.setDisable(true);
-        if (model.wentOver() || model.shoeIsEmpty()) {
-            hitButton.setDisable(true);
-            doubleDownButton.setDisable(true);
-            surrenderButton.setDisable(true);
-            hintButton.setDisable(true);
-            if (model.shoeIsEmpty()) {
-                displayMessage(Message.deckIsEmpty());
+
+        createTransition(model.getCardImage(card), playerSide, event -> {
+            displayMessage(Message.hit(card + ""));
+            if (model.wentOver() || model.shoeIsEmpty()) {
+                hitButton.setDisable(true);
+                doubleDownButton.setDisable(true);
+                surrenderButton.setDisable(true);
+                hintButton.setDisable(true);
+                if (model.shoeIsEmpty()) {
+                    displayMessage(Message.deckIsEmpty());
+                }
             }
-        }
-        playerSide.getChildren().add(model.getCardImage(card));
+        });
     }
 
     @FXML
@@ -85,14 +108,15 @@ public class Controller implements Initializable {
         model.updateRunningCount(card.getRank());
         deckCountLabel.setText(model.dCount() + "");
         trueCountLabel.setText(model.tCount() + "");
-        displayMessage(Message.doubleDown(model.playerBet(), card + ""));
         playerHandValue.setText((model.playerHasSoftHand() ? "Soft" : "Hard") + " " + model.playerHandValue());
         updateStats(model.playerBet(), model.playerChips(), model.tCount(), model.dCount()); 
         hitButton.setDisable(true);
         doubleDownButton.setDisable(true);
         surrenderButton.setDisable(true);
         hintButton.setDisable(true);
-        playerSide.getChildren().add(model.getCardImage(card));
+        createTransition(model.getCardImage(card), playerSide, event -> {
+            displayMessage(Message.doubleDown(model.playerBet(), card + ""));
+        });
     }
 
     @FXML
@@ -109,26 +133,21 @@ public class Controller implements Initializable {
         hintButton.setDisable(true);
     }
 
-    @FXML
-    protected void handleStandAction() {
-        disableAllChoices(true);
-        hintButton.setDisable(true);
-        dealerSide.getChildren().remove(1);
-        dealerSide.getChildren().add(model.getCardImage(model.holeCard()));
-
-        while (model.dealerHasSoft17() || model.dealerHandValue() <= 16) {
-            if (model.shoeIsEmpty()) {
-                break;
-            }
-            Card card = model.drawCard();
-            model.dealerHit(card);
-            dealerSide.getChildren().add(model.getCardImage(card));
-            model.updateRunningCount(card.getRank());
-        }
-
-        playerHandValue.setText((model.playerHasSoftHand() ? "Soft" : "Hard") + " " + model.playerHandValue());
+    private void dealerTurn() {
         dealerHandValue.setText((model.dealerHasSoftHand() ? "Soft" : "Hard") + " " + model.dealerHandValue());
+        if (model.dealerHasSoft17() || model.dealerHandValue() <= 16) {
+                if (!model.shoeIsEmpty()) {
+                Card card = model.drawCard();
+                model.dealerHit(card);
+                createTransition(model.getCardImage(card), dealerSide, event -> {
+                    dealerTurn();
+                });
+            }
+        }
+        displayResult();
+    }
 
+    private void displayResult() {
         String message;
         if (model.isTie()) {
             displayMessage(Message.tie());
@@ -157,8 +176,43 @@ public class Controller implements Initializable {
         } else {
             nextHandButton.setDisable(false);
         }
-    
         updateStats(model.playerBet(), model.playerChips(), model.tCount(), model.dCount()); 
+    }
+
+    @FXML
+    protected void handleStandAction() {
+        disableAllChoices(true);
+        hintButton.setDisable(true);
+        dealerSide.getChildren().remove(1);
+        dealerSide.getChildren().add(model.getCardImage(model.holeCard()));
+
+        dealerTurn();
+
+        playerHandValue.setText((model.playerHasSoftHand() ? "Soft" : "Hard") + " " + model.playerHandValue());
+
+        // String message;
+        // if (model.isTie()) {
+        //     displayMessage(Message.tie());
+        //     model.returnBet();
+        // } else if (model.playerWon()) {
+        //     if (model.playerHasBlackjack()) {
+        //         message = Message.playerBlackjack(model.playerBet());
+        //         model.givePayout(Payout.BLACKJACK);
+        //     } else {
+        //         message = Message.playerWon(model.playerBet());
+        //         model.givePayout(Payout.REGULAR);
+        //     }
+        //     displayMessage(message);
+        // } else if (model.playerLost()) {
+        //     message = (model.dealerHasBlackjack()) ?
+        //             Message.dealerBlackjack(model.playerBet()) :
+        //             Message.playerLost(model.playerBet());
+        //     displayMessage(message);
+        //     model.resetBet();
+        // } else {
+        //     displayMessage(Message.bothOver());
+        // }
+
     }
 
     @FXML
@@ -178,12 +232,18 @@ public class Controller implements Initializable {
             model.playerHit(playerCard);
             model.updateRunningCount(playerCard.getRank());
             model.dealerHit(dealerCard);
-            playerSide.getChildren().add(model.getCardImage(playerCard));
+            createTransition(model.getCardImage(playerCard), playerSide, event -> {
+
+            });
             if (i != 0) {
                 model.updateRunningCount(dealerCard.getRank());
-                dealerSide.getChildren().add(model.getCardBack());
+                createTransition(model.getCardBack(), dealerSide, event -> {
+                
+                });
             } else {
-                dealerSide.getChildren().add(model.getCardImage(dealerCard));
+                createTransition(model.getCardImage(dealerCard), dealerSide, event -> {
+                
+                });
             }
         }
         trueCountLabel.setText(model.tCount() + "");
