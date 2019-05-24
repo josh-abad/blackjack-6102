@@ -143,8 +143,9 @@ public class Controller implements Initializable {
                     dealerTurn();
                 });
             }
+        } else {
+            displayResult();
         }
-        displayResult();
     }
 
     private void displayResult() {
