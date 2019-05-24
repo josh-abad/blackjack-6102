@@ -3,11 +3,13 @@ package com.yeyoan.blackjack.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.DoubleFunction;
 
 import com.jfoenix.effects.JFXDepthManager;
 import com.yeyoan.blackjack.playingcards.Card;
 import com.yeyoan.blackjack.playingcards.CardContainer;
 import com.yeyoan.blackjack.playingcards.Shoe;
+import com.yeyoan.blackjack.view.Message;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -32,6 +34,47 @@ public class Model {
         shoe.shuffle();
     }
 
+    public enum Result {
+        TIE(bet -> Message.tie()),
+        PLAYER_WIN(bet -> Message.playerWon(bet)),
+        PLAYER_BLACKJACK(bet -> Message.playerBlackjack(bet)),
+        DEALER_WIN(bet -> Message.playerLost(bet)),
+        DEALER_BLACKJACK(bet -> Message.dealerBlackjack(bet)),
+        BOTH_OVER(bet -> Message.bothOver());
+
+        Result(DoubleFunction<String> message) {
+            this.message = message;
+        }
+
+        public String getMessage(double bet) {
+            return message.apply(bet);
+        }
+
+        private final DoubleFunction<String> message;
+    }
+
+    public Result getResult() {
+        if (isTie()) {
+            returnBet();
+            return Result.TIE;
+        } else if (playerWon()) {
+            if (playerHasBlackjack()) {
+                givePayout(Payout.BLACKJACK);
+                return Result.PLAYER_BLACKJACK;
+            } else {
+                givePayout(Payout.REGULAR);
+                return Result.PLAYER_WIN;
+            }
+        } else if (playerLost()) {
+            resetBet();
+            return dealer.hasBlackjack()
+                ? Result.DEALER_BLACKJACK
+                : Result.DEALER_WIN;
+        } else {
+            return Result.BOTH_OVER;
+        }
+    }
+
     public ImageView getCardImage(Card card) {
         String value = null;
         try {
@@ -48,7 +91,11 @@ public class Model {
 
         cardImage.setPreserveRatio(true);
         cardImage.setFitWidth(100.0);
-        JFXDepthManager.setDepth(cardImage, player.getHand().size());
+        // JFXDepthManager.setDepth(cardImage, player.getHand().size());
+        // cardImage.getStyleClass().add("depth-high");
+        cardImage.setStyle(
+            "-fx-effect:dropshadow(three-pass-box,rgba(0,0,0,0.5),20,0,0,1);"
+        );
 
         return cardImage; 
     }
