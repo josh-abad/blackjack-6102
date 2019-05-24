@@ -13,7 +13,7 @@
 <HBox fx:controller="com.yeyoan.blackjack.controller.MiniPlayerPaneController"
       alignment="CENTER"
       xmlns:fx="http://javafx.com/fxml">
-    <HBox styleClass="card, depth-low">
+    <HBox styleClass="card, depth-medium">
         <HBox>
             <padding>
                 <Insets topRightBottomLeft="16"/>
@@ -21,10 +21,11 @@
             <Text styleClass="high-emphasis" fx:id="name"/>
         </HBox>
         <Separator orientation="VERTICAL"/>
-        <HBox>
+        <HBox spacing="8">
             <padding>
                 <Insets topRightBottomLeft="16"/>
             </padding>
+            <fx:include fx:id="handIndicator" source="hand_indicator.fxml"/>
             <Text styleClass="medium-emphasis" text="No cards" fx:id="handValue"/>
         </HBox>
     </HBox>

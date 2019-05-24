@@ -73,9 +73,9 @@
   -fx-background-radius: 2px;
 }
 
-.card:hover {
+/* .card:hover {
   -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 20, 0, 0, 1);
-}
+} */
 
 /* --------------- *
  * --- Shadows --- * 
@@ -106,6 +106,20 @@
 .separator .line {
   -fx-border-color: -divider;
   -fx-border-width: 0.75;
+}
+
+/* ---------------------- *
+ * --- Hand Indicator --- *
+ * ---------------------- */
+
+.hand-indicator {
+  -fx-background-color: -medium-emphasis;
+  -fx-background-radius: 2px;
+}
+
+.hand-indicator-text {
+  -fx-fill: -surface;
+  -fx-font-family: "Roboto Medium";
 }
 
 /* -------------- *
