@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+
+<?import de.jensd.fx.glyphs.materialdesignicons.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox fx:controller="com.yeyoan.blackjack.controller.StatsPaneController"
+      styleClass="card, depth-low"
+      xmlns:fx="http://javafx.com/fxml">
+    <HBox>
+        <padding>
+            <Insets top="16" right="16" bottom="8" left="16"/>
+        </padding>
+        <Text styleClass="medium-emphasis" text="Stats"/>
+    </HBox>
+    <Separator/>
+    <HBox spacing="16">
+        <padding>
+            <Insets topRightBottomLeft="16"/>
+        </padding>
+        <Label styleClass="high-emphasis" fx:id="deckCountLabel" text="3">
+            <graphic>
+                <MaterialDesignIconView glyphName="ARRANGE_BRING_FORWARD" glyphSize="52"/>
+            </graphic>
+        </Label>
+        <Label styleClass="high-emphasis" fx:id="trueCountLabel" text="0">
+            <graphic>
+                <MaterialDesignIconView glyphName="ARROW_UP" glyphSize="52"/>
+            </graphic>
+        </Label>
+        <Label styleClass="high-emphasis" fx:id="playerBet" text="0">
+            <graphic>
+                <MaterialDesignIconView glyphName="STAR" glyphSize="52"/>
+            </graphic>
+        </Label>
+        <Label styleClass="high-emphasis" fx:id="playerChips">
+            <graphic>
+                <MaterialDesignIconView glyphName="COIN" glyphSize="52"/>
+            </graphic>
+        </Label>
+    </HBox>
+</VBox>
