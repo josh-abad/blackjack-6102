@@ -13,7 +13,6 @@ import com.yeyoan.blackjack.model.Payout;
 import com.yeyoan.blackjack.playingcards.Card;
 import com.yeyoan.blackjack.view.Message;
 
-import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.PathTransition;
@@ -63,7 +62,6 @@ public class Controller implements Initializable {
 
     private Model model;
 
-    // TODO: disable choice buttons while animation is ongoing
     private void createTransition(Node node, HBox parent, Runnable action) {
         Path path = new Path(new MoveTo(1000, 68), new LineTo(50, 68));
         PathTransition transition = new PathTransition(Duration.millis(1000), path, node);
@@ -105,9 +103,15 @@ public class Controller implements Initializable {
         model.playerHit(card);
         model.updateRunningCount(card.getRank());
         playerMiniPaneController.updateHandValue(model.playerHandValue(), model.playerHasSoftHand());
+        hitButton.setDisable(true);
+        doubleDownButton.setDisable(true);
         surrenderButton.setDisable(true);
+        standButton.setDisable(true);
 
         createTransition(model.getCardImage(card), playerSide, () -> {
+            hitButton.setDisable(false);
+            doubleDownButton.setDisable(false);
+            standButton.setDisable(false);
             displayMessage(Message.hit(card + ""));
             if (model.wentOver() || model.shoeIsEmpty()) {
                 hitButton.setDisable(true);
