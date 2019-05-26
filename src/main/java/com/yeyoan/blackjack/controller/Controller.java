@@ -9,26 +9,18 @@ import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXSnackbar.SnackbarEvent;
 import com.jfoenix.controls.JFXSnackbarLayout;
 import com.yeyoan.blackjack.model.Model;
+import com.yeyoan.blackjack.model.Model.Result;
 import com.yeyoan.blackjack.model.Payout;
 import com.yeyoan.blackjack.playingcards.Card;
+import com.yeyoan.blackjack.view.Animation;
 import com.yeyoan.blackjack.view.Message;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.PathTransition;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.util.Duration;
 
 public class Controller implements Initializable {
 
@@ -63,41 +55,6 @@ public class Controller implements Initializable {
 
     private Model model;
 
-    private void createTransition(Node node, HBox parent, Runnable action) {
-        Path path = new Path(new MoveTo(1000, 68), new LineTo(50, 68));
-        PathTransition transition = new PathTransition(Duration.millis(1000), path, node);
-        transition.setOnFinished(event -> {
-            animationTest(node, 19);
-            action.run();
-        });
-        transition.play();
-        parent.getChildren().add(node);
-    }
-
-    private void animationTest(Node node, int radius) {
-        if (radius < 5) {
-            return;
-        }
-
-        String depth = "-fx-effect: "
-            + "dropshadow(three-pass-box, "
-            + "rgba(0, 0, 0, 0.5), "
-            + radius
-            + ", 0, 0, 1);";
-
-        Timeline timeline = new Timeline();
-
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5),
-            new KeyValue(node.styleProperty(), depth)
-        ));
-
-        timeline.setOnFinished(next -> {
-            animationTest(node, radius - 1);
-        });
-
-        timeline.play();
-    }
-
     @FXML
     protected void handleHitAction() {
         Card card = model.drawCard();
@@ -109,7 +66,7 @@ public class Controller implements Initializable {
         surrenderButton.setDisable(true);
         standButton.setDisable(true);
 
-        createTransition(model.getCardImage(card), playerSide, () -> {
+        Animation.enter(model.getCardImage(card), playerSide, () -> {
             hitButton.setDisable(false);
             doubleDownButton.setDisable(false);
             standButton.setDisable(false);
@@ -139,7 +96,7 @@ public class Controller implements Initializable {
         doubleDownButton.setDisable(true);
         surrenderButton.setDisable(true);
         // hintButton.setDisable(true);
-        createTransition(model.getCardImage(card), playerSide, () -> {
+        Animation.enter(model.getCardImage(card), playerSide, () -> {
             displayMessage(Message.doubleDown(model.playerBet(), card + ""));
         });
     }
@@ -152,7 +109,7 @@ public class Controller implements Initializable {
         dealerSide.getChildren().remove(1);
         ImageView holeCard = model.getCardImage(model.holeCard());
         dealerSide.getChildren().add(holeCard);
-        animationTest(holeCard, 19);
+        Animation.lower(holeCard, 19);
         model.updateRunningCount(model.holeCard().getRank());
         chipsPaneController.updateBet(model.playerBet());
         playerInfoCardController.updatePlayerChips(model.playerChips());
@@ -167,9 +124,7 @@ public class Controller implements Initializable {
             if (!model.shoeIsEmpty()) {
                 Card card = model.drawCard();
                 model.dealerHit(card);
-                createTransition(model.getCardImage(card), dealerSide, () -> {
-                    dealerTurn();
-                });
+                Animation.enter(model.getCardImage(card), dealerSide, () -> dealerTurn());
             }
         } else {
             displayResult();
@@ -177,7 +132,9 @@ public class Controller implements Initializable {
     }
 
     private void displayResult() {
-        displayMessage(model.getResult().getMessage(model.playerBet()));
+        Result result = model.getResult();
+        displayMessage(result.getMessage(model.playerBet()));
+        model.finishRound(result);
 
         if (model.outOfChips()) {
             displayMessage(Message.outOfChips());
@@ -195,7 +152,7 @@ public class Controller implements Initializable {
         dealerSide.getChildren().remove(1);
         ImageView holeCard = model.getCardImage(model.holeCard());
         dealerSide.getChildren().add(holeCard);
-        animationTest(holeCard, 19);
+        Animation.lower(holeCard, 19);
         dealerTurn();
         playerInfoCardController.updateHandValue(model.playerHandValue(), model.playerHasSoftHand());
     }
@@ -217,12 +174,12 @@ public class Controller implements Initializable {
             model.playerHit(playerCard);
             model.updateRunningCount(playerCard.getRank());
             model.dealerHit(dealerCard);
-            createTransition(model.getCardImage(playerCard), playerSide, () -> { });
+            Animation.enter(model.getCardImage(playerCard), playerSide);
             if (i != 0) {
                 model.updateRunningCount(dealerCard.getRank());
-                createTransition(model.getCardBack(), dealerSide, () -> { });
+                Animation.enter(model.getCardBack(), dealerSide);
             } else {
-                createTransition(model.getCardImage(dealerCard), dealerSide, () -> { });
+                Animation.enter(model.getCardImage(dealerCard), dealerSide);
             }
         }
 
@@ -232,29 +189,13 @@ public class Controller implements Initializable {
         playerInfoCardController.updatePlayerChips(model.playerChips());
     }
 
-    private void createLeaveTransition(int i, HBox parent, Runnable action) {
-        if (i == parent.getChildren().size()) {
-            return;
-        }
-        Path path = new Path(new MoveTo(50, 68), new LineTo(-1000, 68));
-        Node node = parent.getChildren().get(i);
-        PathTransition transition = new PathTransition(Duration.millis(1000), path, node);
-        if (i == parent.getChildren().size()-1) {
-            transition.setOnFinished(event -> {
-                action.run();
-            });
-        }
-        transition.play();
-        createLeaveTransition(i + 1, parent, action);
-    }
-
     @FXML
     protected void handleNextHandAction() {
-        createLeaveTransition(0, playerSide, () -> {
+        Animation.leave(0, playerSide, () -> {
             displayMessage(Message.nextHand());
             playerSide.getChildren().clear();
         });
-        createLeaveTransition(0, dealerSide, () -> {
+        Animation.leave(0, dealerSide, () -> {
             dealerSide.getChildren().clear();
         });
 

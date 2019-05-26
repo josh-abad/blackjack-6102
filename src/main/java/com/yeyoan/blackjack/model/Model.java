@@ -9,6 +9,7 @@ import com.jfoenix.effects.JFXDepthManager;
 import com.yeyoan.blackjack.playingcards.Card;
 import com.yeyoan.blackjack.playingcards.CardContainer;
 import com.yeyoan.blackjack.playingcards.Shoe;
+import com.yeyoan.blackjack.view.DepthManager;
 import com.yeyoan.blackjack.view.Message;
 
 import javafx.scene.image.Image;
@@ -19,10 +20,9 @@ public class Model {
     /**
      * The initial amount of chips the player has at the start of the game
      */
-    public static final int BANKROLL = 1000;
+    public static final int BANKROLL = 1;
 
     public Model() {
-        player = new BlackjackPlayer();
         dealer = new Dealer();
         discardDeck = new ArrayList<>();
         String name = "Player";
@@ -53,20 +53,36 @@ public class Model {
         private final DoubleFunction<String> message;
     }
 
+    public void finishRound(Result result) {
+        switch (result) {
+            case TIE:
+                returnBet();
+                break;
+            case PLAYER_BLACKJACK:
+                givePayout(Payout.BLACKJACK);
+                break;
+            case PLAYER_WIN:
+                givePayout(Payout.REGULAR);
+                break;
+            case DEALER_BLACKJACK:
+            case DEALER_WIN:
+                resetBet();
+                break;
+            case BOTH_OVER:
+                break;
+        }
+    }
+
     public Result getResult() {
         if (isTie()) {
-            returnBet();
             return Result.TIE;
         } else if (playerWon()) {
             if (playerHasBlackjack()) {
-                givePayout(Payout.BLACKJACK);
                 return Result.PLAYER_BLACKJACK;
             } else {
-                givePayout(Payout.REGULAR);
                 return Result.PLAYER_WIN;
             }
         } else if (playerLost()) {
-            resetBet();
             return dealer.hasBlackjack()
                 ? Result.DEALER_BLACKJACK
                 : Result.DEALER_WIN;
@@ -84,19 +100,12 @@ public class Model {
             value = card.toString().substring(0, 1);
         }
         String fileName = "card" + card.getSuit() + value + ".png";
-
         Image image = new Image(Model.class.getResource("/Cards/" + fileName).toExternalForm());
-
         ImageView cardImage = new ImageView(image);
-
         cardImage.setPreserveRatio(true);
         cardImage.setFitWidth(100.0);
-        // JFXDepthManager.setDepth(cardImage, player.getHand().size());
-        // cardImage.getStyleClass().add("depth-high");
-        cardImage.setStyle(
-            "-fx-effect:dropshadow(three-pass-box,rgba(0,0,0,0.5),20,0,0,1);"
-        );
-
+        cardImage.setSmooth(true);
+        cardImage.setStyle(DepthManager.createDepth(DepthManager.HIGH));
         return cardImage; 
     }
 
