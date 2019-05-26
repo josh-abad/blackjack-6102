@@ -9,15 +9,20 @@ import java.util.function.IntConsumer;
 
 import com.jfoenix.controls.JFXButton;
 import com.yeyoan.blackjack.model.Model;
+import com.yeyoan.blackjack.util.Format;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 
 public class ChipsPaneController implements Initializable {
 
     @FXML
     private HBox chipsBox;
+
+    @FXML
+    private Text playerBet;
 
     private List<JFXButton> chips;
 
@@ -31,6 +36,10 @@ public class ChipsPaneController implements Initializable {
             .forEach(chip -> chip.setDisable(true));
     }
 
+    public void updateBet(double bet) {
+        playerBet.setText(Format.currency(bet));
+    }
+    
     public void setChipAction(IntConsumer chipAction) {
         chips.forEach(chip -> {
             chip.setOnAction(event -> {

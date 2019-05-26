@@ -21,6 +21,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -38,13 +39,13 @@ public class Controller implements Initializable {
     @FXML private HBox dealerSide;
 
     @FXML
-    private MiniPlayerPaneController dealerMiniPaneController;
+    private DealerInfoCardController dealerInfoCardController;
 
     @FXML
-    private MiniPlayerPaneController playerMiniPaneController;
+    private PlayerInfoCardController playerInfoCardController;
 
-    @FXML
-    private StatsPaneController statsPaneController;
+    // @FXML
+    // private StatsPaneController statsPaneController;
 
     @FXML
     private ChipsPaneController chipsPaneController;
@@ -54,7 +55,7 @@ public class Controller implements Initializable {
     @FXML private JFXButton surrenderButton;
     @FXML private JFXButton standButton;
 
-    @FXML private JFXButton hintButton;
+    // @FXML private JFXButton hintButton;
     @FXML private JFXButton dealButton;
     @FXML private JFXButton nextHandButton;
 
@@ -102,7 +103,7 @@ public class Controller implements Initializable {
         Card card = model.drawCard();
         model.playerHit(card);
         model.updateRunningCount(card.getRank());
-        playerMiniPaneController.updateHandValue(model.playerHandValue(), model.playerHasSoftHand());
+        playerInfoCardController.updateHandValue(model.playerHandValue(), model.playerHasSoftHand());
         hitButton.setDisable(true);
         doubleDownButton.setDisable(true);
         surrenderButton.setDisable(true);
@@ -117,7 +118,7 @@ public class Controller implements Initializable {
                 hitButton.setDisable(true);
                 doubleDownButton.setDisable(true);
                 surrenderButton.setDisable(true);
-                hintButton.setDisable(true);
+                // hintButton.setDisable(true);
                 if (model.shoeIsEmpty()) {
                     displayMessage(Message.deckIsEmpty());
                 }
@@ -131,12 +132,13 @@ public class Controller implements Initializable {
         Card card = model.drawCard();
         model.playerHit(card);
         model.updateRunningCount(card.getRank());
-        playerMiniPaneController.updateHandValue(model.playerHandValue(), model.playerHasSoftHand());
-        statsPaneController.updateStats(model.playerBet(), model.playerChips(), model.tCount(), model.dCount()); 
+        playerInfoCardController.updateHandValue(model.playerHandValue(), model.playerHasSoftHand());
+        playerInfoCardController.updatePlayerChips(model.playerChips());
+        chipsPaneController.updateBet(model.playerBet());
         hitButton.setDisable(true);
         doubleDownButton.setDisable(true);
         surrenderButton.setDisable(true);
-        hintButton.setDisable(true);
+        // hintButton.setDisable(true);
         createTransition(model.getCardImage(card), playerSide, () -> {
             displayMessage(Message.doubleDown(model.playerBet(), card + ""));
         });
@@ -152,14 +154,15 @@ public class Controller implements Initializable {
         dealerSide.getChildren().add(holeCard);
         animationTest(holeCard, 19);
         model.updateRunningCount(model.holeCard().getRank());
-        statsPaneController.updateStats(model.playerBet(), model.playerChips(), model.tCount(), model.dCount()); 
+        chipsPaneController.updateBet(model.playerBet());
+        playerInfoCardController.updatePlayerChips(model.playerChips());
         disableAllChoices(true);
         nextHandButton.setDisable(false);
-        hintButton.setDisable(true);
+        // hintButton.setDisable(true);
     }
 
     private void dealerTurn() {
-        dealerMiniPaneController.updateHandValue(model.dealerHandValue(), model.dealerHasSoftHand());
+        dealerInfoCardController.updateHandValue(model.dealerHandValue(), model.dealerHasSoftHand());
         if (model.dealerHasSoft17() || model.dealerHandValue() <= 16) {
             if (!model.shoeIsEmpty()) {
                 Card card = model.drawCard();
@@ -181,26 +184,27 @@ public class Controller implements Initializable {
         } else {
             nextHandButton.setDisable(false);
         }
-        statsPaneController.updateStats(model.playerBet(), model.playerChips(), model.tCount(), model.dCount()); 
+        chipsPaneController.updateBet(model.playerBet());
+        playerInfoCardController.updatePlayerChips(model.playerChips());
     }
 
     @FXML
     protected void handleStandAction() {
         disableAllChoices(true);
-        hintButton.setDisable(true);
+        // hintButton.setDisable(true);
         dealerSide.getChildren().remove(1);
         ImageView holeCard = model.getCardImage(model.holeCard());
         dealerSide.getChildren().add(holeCard);
         animationTest(holeCard, 19);
         dealerTurn();
-        playerMiniPaneController.updateHandValue(model.playerHandValue(), model.playerHasSoftHand());
+        playerInfoCardController.updateHandValue(model.playerHandValue(), model.playerHasSoftHand());
     }
 
     @FXML
     protected void handleDealAction() {
         chipsPaneController.disableAllChips(true);
         disableAllChoices(false);
-        hintButton.setDisable(false);
+        // hintButton.setDisable(false);
         dealButton.setDisable(true);
 
         if (model.betIsEmpty() || !model.canDoubleDown()) {
@@ -222,9 +226,10 @@ public class Controller implements Initializable {
             }
         }
 
-        playerMiniPaneController.updateHandValue(model.playerHandValue(), model.playerHasSoftHand());
-        dealerMiniPaneController.updatePartialHandValue(model.dealerFrontCard());
-        statsPaneController.updateStats(model.playerBet(), model.playerChips(), model.tCount(), model.dCount()); 
+        playerInfoCardController.updateHandValue(model.playerHandValue(), model.playerHasSoftHand());
+        dealerInfoCardController.updatePartialHandValue(model.dealerFrontCard());
+        chipsPaneController.updateBet(model.playerBet());
+        playerInfoCardController.updatePlayerChips(model.playerChips());
     }
 
     private void createLeaveTransition(int i, HBox parent, Runnable action) {
@@ -259,10 +264,10 @@ public class Controller implements Initializable {
             displayMessage(Message.reshuffle());
         }
 
-        playerMiniPaneController.clearHandValue();
-        dealerMiniPaneController.clearHandValue();
+        playerInfoCardController.clearHandValue();
+        dealerInfoCardController.clearHandValue();
         nextHandButton.setDisable(true);
-        hintButton.setDisable(true);
+        // hintButton.setDisable(true);
         model.resetHand();
 
         disableAllChoices(true);
@@ -275,7 +280,8 @@ public class Controller implements Initializable {
         chipsPaneController.disableAllChips(false);
 
         chipsPaneController.updateChips(model.playerChips());
-        statsPaneController.updateStats(model.playerBet(), model.playerChips(), model.tCount(), model.dCount()); 
+        chipsPaneController.updateBet(model.playerBet());
+        playerInfoCardController.updatePlayerChips(model.playerChips());
     }
 
     @FXML
@@ -300,17 +306,19 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle bundle) {
         snackbar = new JFXSnackbar(root);
         model = new Model();
-        statsPaneController.updateStats(model.playerBet(), model.playerChips(), model.tCount(), model.dCount()); 
+        chipsPaneController.updateBet(model.playerBet());
+        playerInfoCardController.updatePlayerChips(model.playerChips());
         IntConsumer chipAction = value -> {
             model.bet(value);
             if (model.betIsSufficient()) {
                 dealButton.setDisable(false);
             }
-            statsPaneController.updateStats(model.playerBet(), model.playerChips(), model.tCount(), model.dCount()); 
+            chipsPaneController.updateBet(model.playerBet());
+            playerInfoCardController.updatePlayerChips(model.playerChips());
             chipsPaneController.updateChips(model.playerChips());
         };
         chipsPaneController.setChipAction(chipAction);
-        dealerMiniPaneController.setName("Dealer");
-        playerMiniPaneController.setName(model.playerName());
+        dealerInfoCardController.setName("Dealer");
+        playerInfoCardController.setName(model.playerName());
     }
 }
