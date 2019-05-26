@@ -16,18 +16,17 @@
     <BorderPane styleClass="background">
         <center>
             <VBox alignment="CENTER" spacing="16">
-                <padding>
-                    <Insets topRightBottomLeft="16"/>
-                </padding>
-                <fx:include fx:id="dealerMiniPane" source="mini_player_pane.fxml"/>
+                <fx:include fx:id="dealerInfoCard" source="dealer_info_card.fxml"/>
                 <StackPane>
-                    <VBox.margin><Insets bottom="50"/></VBox.margin>
+                    <VBox.margin>
+                        <Insets bottom="50"/>
+                    </VBox.margin>
                     <HBox alignment="CENTER" spacing="16">
                         <fx:include source="blank_card.fxml"/>
                     </HBox>
                     <HBox fx:id="dealerSide" alignment="CENTER" spacing="-50"/>
                 </StackPane>
-                <fx:include fx:id="playerMiniPane" source="mini_player_pane.fxml"/>
+                <fx:include fx:id="playerInfoCard" source="player_info_card.fxml"/>
                 <StackPane>
                     <HBox alignment="CENTER" spacing="16">
                         <fx:include source="blank_card.fxml"/>
@@ -41,7 +40,7 @@
                 <padding>
                     <Insets topRightBottomLeft="16"/>
                 </padding>
-                <fx:include fx:id="statsPane" source="stats_pane.fxml"/>
+                <!-- <fx:include fx:id="statsPane" source="stats_pane.fxml"/> -->
                 <fx:include fx:id="chipsPane" source="chips_pane.fxml"/>
                 <VBox styleClass="card, depth-low">
                     <HBox>
@@ -80,15 +79,15 @@
                         <padding>
                             <Insets topRightBottomLeft="8"/>
                         </padding>
-                        <JFXButton fx:id="hintButton" text="HINT"
-                                   disable="true"/>
+                        <!-- <JFXButton fx:id="hintButton" text="HINT"
+                                   disable="true"/> -->
                         <JFXButton fx:id="dealButton" text="DEAL"
                                    onAction="#handleDealAction"
                                    disable="true"/>
                         <JFXButton fx:id="nextHandButton" text="NEXT HAND"
                                    onAction="#handleNextHandAction"
                                    disable="true"/>
-                        <JFXButton text="NEW GAME"/>
+                        <!-- <JFXButton text="NEW GAME"/> -->
                         <JFXButton text="QUIT" onAction="#handleQuitAction"/>
                     </HBox>
                 </VBox>

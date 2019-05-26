@@ -10,19 +10,35 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox fx:controller="com.yeyoan.blackjack.controller.ChipsPaneController"
-      styleClass="card, depth-low"
-      xmlns:fx="http://javafx.com/fxml">
-    <HBox>
-        <padding>
-            <Insets top="16" right="16" bottom="8" left="16"/>
-        </padding>
-        <Text styleClass="medium-emphasis" text="Chips"/>
-    </HBox>
-    <Separator/>
-    <HBox fx:id="chipsBox" spacing="8">
-        <padding>
-            <Insets topRightBottomLeft="8"/>
-        </padding>
-    </HBox>
-</VBox>
+<HBox fx:controller="com.yeyoan.blackjack.controller.ChipsPaneController"
+    styleClass="card, depth-low"
+    xmlns:fx="http://javafx.com/fxml">
+    <VBox alignment="CENTER">
+        <HBox spacing="8">
+            <padding>
+                <Insets topRightBottomLeft="16"/>
+            </padding>
+            <ImageView styleClass="depth-low" preserveRatio="true" fitWidth="24" smooth="true">
+                <image>
+                    <Image url="@/Chips/chipRedWhite.png"/>
+                </image>
+            </ImageView>
+            <Text fx:id="playerBet" text="0" styleClass="high-emphasis, h5"/>
+        </HBox>
+    </VBox>
+    <Separator orientation="VERTICAL"/>
+    <VBox alignment="CENTER">
+        <HBox>
+            <padding>
+                <Insets top="16" right="16" bottom="8" left="16"/>
+            </padding>
+            <Text styleClass="medium-emphasis" text="Bet"/>
+        </HBox>
+        <Separator/>
+        <HBox fx:id="chipsBox" spacing="8">
+            <padding>
+                <Insets topRightBottomLeft="8"/>
+            </padding>
+        </HBox>
+    </VBox>
+</HBox>
