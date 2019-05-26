@@ -18,7 +18,7 @@ public class Sandbox extends Application {
 
         Parent root = FXMLLoader.load(Sandbox.class.getResource("/fxml/blackjack.fxml"));
 
-        Scene scene = new Scene(root, 300, 200);
+        Scene scene = new Scene(root, 1280, 720);
         scene.getStylesheets().add(Sandbox.class.getResource("/css/light.css").toExternalForm());
         scene.getStylesheets().add(Sandbox.class.getResource("/css/dark.css").toExternalForm());
 
