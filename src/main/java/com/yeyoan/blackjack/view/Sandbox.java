@@ -20,7 +20,7 @@ public class Sandbox extends Application {
 
         Scene scene = new Scene(root, 1280, 720);
         scene.getStylesheets().add(Sandbox.class.getResource("/css/light.css").toExternalForm());
-        scene.getStylesheets().add(Sandbox.class.getResource("/css/dark.css").toExternalForm());
+        // scene.getStylesheets().add(Sandbox.class.getResource("/css/dark.css").toExternalForm());
 
         stage.setTitle("Blackjack");
         stage.setScene(scene);

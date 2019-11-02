@@ -2,11 +2,8 @@
 
 <?import com.jfoenix.controls.*?>
 
-<?import de.jensd.fx.glyphs.materialdesignicons.*?>
-<?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
